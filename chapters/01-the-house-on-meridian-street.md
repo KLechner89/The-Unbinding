@@ -1,3 +1,54 @@
 # Chapter I: The House on Meridian Street
 
-There had been a house once, on a street where the elms made a corridor of green in summer, and the children — whose children? everyone's, it seemed — played in a creek that ran behind the lots. Margaret remembered it, or believed she did, which was essentially the same thing these days. The kitchen had yellow curtains. Her mother's hands smelled of flour and iron. Her father came home at the same hour every day and hung his hat on the same hook, and the hat left a mark on the wall that darkened year by year like a sundial measuring something no one thought to name. Her father would not have called it anything. He repaired faucets. Not because they were always broken but because the repairing was the thing. Each repair called the next. The faucet dripped, and the dripping called his hand, and the hand fixed it, and the fixing wore the wrench in a particular way that made the next fixing easier, and the ease was not efficiency but familiarity, and the familiarity was not habit but something closer to an obligation that had begun the first time he answered it. He could not have said this. He would have said, "the faucet drips, so I fix it." But the so was everything. Thomas would not have put it that way. If asked, he would have said simply, "a man goes to church. A man repairs what is broken in his house. A man comes home." He would not have explained why. The why was the doing. To ask why was already to have stepped outside the thing that made the answer unnecessary. He went to the church on Maple and sat in the fourth pew and sang badly and believed, she thought, not in God exactly but in the act of sitting in the fourth pew. In the repetition. In the fact that the wood was worn where his hands had rested and where his father's hands had rested before him and to stop resting them there would be to let the wood forget. The hand wore the wood. The worn wood called the hand back. Neither could exist without the other. · · · Thomas is dead. The house on Meridian Street was torn down in 1987. A parking lot now. Margaret drives past it every evening on the route of her nightly ritual, heading to the store at Second and Clark where she buys two bottles of prosecco as faithfully as her father once sat in the fourth pew. She does not slow down. She buys what she buys and she goes home and the faucet drips and nobody answers it.
+There had been a house once, on a street where the elms made a corridor of green in summer, and the children — whose children? everyone's, it seemed — played in a creek that ran behind the lots. Margaret remembered it, or believed she did, which was essentially the same thing these days. The kitchen had yellow curtains. Her mother's hands smelled of flour and iron. Her father came home at the same hour every day and hung his hat on the same hook, and the hat left a mark on the wall that darkened year by year like a sundial measuring something no one thought to name.
+
+Her father would not have called it anything. He repaired faucets. Not because they were always broken but because the repairing was the thing. Each repair called the next. The faucet dripped, and the dripping called his hand, and the hand fixed it, and the fixing wore the wrench in a particular way that made the next fixing easier, and the ease was not efficiency but familiarity, and the familiarity was not habit but something closer to an obligation that had begun the first time he answered it. He could not have said this. He would have said, "the faucet drips, so I fix it." But the so was everything.
+
+Thomas would not have put it that way. If asked, he would have said simply, "a man goes to church. A man repairs what is broken in his house. A man comes home." He would not have explained why. The why was the doing. To ask why was already to have stepped outside the thing that made the answer unnecessary.
+
+He went to the church on Maple and sat in the fourth pew and sang badly and believed, she thought, not in God exactly but in the act of sitting in the fourth pew. In the repetition. In the fact that the wood was worn where his hands had rested and where his father's hands had rested before him and to stop resting them there would be to let the wood forget. The hand wore the wood. The worn wood called the hand back. Neither could exist without the other.
+
+· · ·
+
+Thomas is dead. The house on Meridian Street was torn down in 1987. A parking lot now. Margaret drives past it every evening on the route of her nightly ritual, heading to the store at Second and Clark where she buys two bottles of prosecco as faithfully as her father once sat in the fourth pew. She does not slow down. She buys what she buys and she goes home and the faucet drips and nobody answers it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
