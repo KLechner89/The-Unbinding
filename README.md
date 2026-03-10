@@ -107,3 +107,17 @@ git push -u origin main
 | IX — The Date | Bad Things — Cults |
 | X — The Floor Gives Way | Crosses — José González |
 | XI — Only in Dreams | Only in Dreams — Weezer |
+
+To edit a chapter:
+just click any .md file in the left sidebar — like 09-the-date.md — and edit it directly. The text is right there.
+
+After Edit
+git add .
+git commit -m "edit chapter IX"
+git push
+
+To rebuild the HTML after editing:
+python3 build.py
+git add .
+git commit -m "rebuild"
+git push
