@@ -72,7 +72,12 @@ document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 const CLIENT_ID = '2e37835d3aa448b18c48078687c0470d';
 const TRACK_IDS = ["55q3Ro66yXWi9rsEddeEN4","7pM9cLbrgRGX1hHElTX92m","0ypg59NyOVCpWVzd0SUsT5","0q6LuUqGLUiCPP1cbdwFs3","3Z0qLOS0cqWKPHXkbTXmNF","6dBUzqjtbnIa1TwYbyw5CM","0uMZbmAAgOhdMrv25iPEH6","7H0ya83CMmgFcOhw0UB6ow","1caFMoQlQyF5JHvfPNe49E","0ByKWq0hsuYriK5avSMJ5r","3DkHNCA4QRBQgTzF2T18hm"];
 const SONG_NAMES = ["Radiohead — Pyramid Song","Lorn — Acid Rain","Nine Inch Nails — Every Day Is Exactly the Same","Gorillaz — On Melancholy Hill","Cults — Gilded Lily","TV Girl — Lovers Rock","Goth — Skeletons and Sidewalks","Beach House — Space Song","Cults — Bad Things","José González — Crosses","Weezer — Only in Dreams"];
-const REDIRECT_URI = window.location.origin + window.location.pathname;
+// Match redirect URI to current host
+const REDIRECT_URIS = {
+  'kylelechner.io': 'https://kylelechner.io/',
+  'theunbinding.netlify.app': 'https://theunbinding.netlify.app/'
+};
+const REDIRECT_URI = REDIRECT_URIS[window.location.hostname] || window.location.origin + '/';
 
 let spotifyPlayer = null;
 let deviceId = null;
@@ -92,6 +97,8 @@ function getTokenFromUrl() {
 }
 
 function loginWithSpotify() {
+  console.log('Redirect URI:', REDIRECT_URI);
+  console.log('Client ID:', CLIENT_ID);
   const scopes = 'streaming user-read-email user-read-private user-modify-playback-state';
   const authUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(scopes)}`;
   window.location.href = authUrl;
