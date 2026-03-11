@@ -44,8 +44,11 @@ def md_to_html(md_text):
 
     html_paras = []
     for i, p in enumerate(paragraphs):
+        if p == '· · ·':
+            html_paras.append('<p class="brk">· · ·</p>')
+            continue
         p = escape_html(p)
-        if i == 0:
+        if i == 0 or (i > 0 and paragraphs[i-1] == '· · ·'):
             html_paras.append(f'<p class="first">{p}</p>')
         else:
             html_paras.append(f'<p>{p}</p>')
