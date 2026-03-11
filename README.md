@@ -1,112 +1,87 @@
-# Writing
 # The Unbinding
 ### By Kyle Lechner
 
-A story told in data and in the distance between people who have forgotten how to reach one another.
+*A story told in data and in the distance between people who have forgotten how to reach one another.*
 
 ---
 
-## Project Structure
+## Editing the Writing
 
-```
-the-unbinding/
-  index.html          — the complete web experience
-  build.py            — rebuilds index.html from chapter files
-  chapters/           — the prose, one markdown file per chapter
-    01-the-house-on-meridian-street.md
-    02-margaret-at-the-window.md
-    03-james-in-the-parking-lot.md
-    04-what-claire-knew.md
-    05-lily-does-not-answer.md
-    06-what-they-were-taught.md
-    07-the-apartment.md
-    08-sunday-morning.md
-    09-the-date.md
-    10-the-floor-gives-way.md
-    11-only-in-dreams.md
-  audio/              — mp3 files (tracked via Git LFS)
-    01-pyramid-song.mp3
-    02-acid-rain.mp3
-    03-every-day-is-exactly-the-same.mp3
-    04-on-melancholy-hill.mp3
-    05-gilded-lily.mp3
-    06-lovers-rock.mp3
-    07-the-apartment.mp3
-    08-space-song.mp3
-    09-bad-things.mp3
-    10-crosses.mp3
-    11-only-in-dreams.mp3
-```
+All prose lives in the `chapters/` folder as plain markdown files. One file per chapter. To edit, open the file, write, rebuild, push.
 
----
-
-## How to Edit the Story
-
-Open any file in `chapters/` in any text editor or terminal:
+### Open a chapter
 
 ```bash
-nano chapters/02-margaret-at-the-window.md
-# or
-vim chapters/09-the-date.md
+# In the Codespaces terminal
+nano chapters/09-the-date.md
 ```
 
-Each file is plain markdown. The heading at the top is the chapter title. Everything below is prose. Write freely — paragraph breaks become HTML paragraph breaks.
+Or just click the file in the left sidebar and edit directly.
 
-When you're done editing, run:
+### Paragraph rules
+
+- One blank line between paragraphs
+- No indentation — every paragraph starts at the left edge
+- Section breaks use `· · ·` on their own line with blank lines above and below
+- Don't touch the `# Chapter X:` heading at the top of each file
+
+### After editing, rebuild and push
 
 ```bash
 python3 build.py
-```
-
-This rebuilds `index.html` with your updated prose. Then commit and push.
-
----
-
-## Git Workflow
-
-```bash
-# After editing a chapter
-python3 build.py
-git add chapters/09-the-date.md index.html
-git commit -m "revise chapter IX"
+git add .
+git commit -m "edit chapter IX"
 git push
 ```
 
-Netlify will redeploy automatically when you push.
+Netlify redeploys automatically within ~30 seconds.
 
----
-
-## Setup (first time)
+### Edit multiple chapters at once
 
 ```bash
-# Install Git LFS (for audio files)
-git lfs install
-git lfs track "*.mp3"
-
-# Add your mp3s to the audio/ folder, then:
+# Edit as many files as you want, then rebuild once
+python3 build.py
 git add .
-git commit -m "initial commit"
-git remote add origin https://github.com/YOUR_USERNAME/the-unbinding.git
-git push -u origin main
+git commit -m "edits across chapters"
+git push
+```
+
+### Check what changed before committing
+
+```bash
+git diff chapters/09-the-date.md
+```
+
+### Undo your last edit (before pushing)
+
+```bash
+git checkout chapters/09-the-date.md
+```
+
+### Undo after pushing
+
+```bash
+git revert HEAD
+git push
 ```
 
 ---
 
-## Soundtrack
+## Chapter Files
 
-| Chapter | Track |
-|---------|-------|
-| I — The House on Meridian Street | Pyramid Song — Radiohead |
-| II — Margaret at the Window | Acid Rain — Lorn |
-| III — James in the Parking Lot | Every Day Is Exactly the Same — Nine Inch Nails |
-| IV — What Claire Knew | On Melancholy Hill — Gorillaz |
-| V — Lily Does Not Answer | Gilded Lily — Cults |
-| VI — What They Were Taught | Lovers Rock — TV Girl |
-| VII — The Apartment | The Apartment — Sidewalks and Skeletons |
-| VIII — Sunday Morning | Space Song — Beach House |
-| IX — The Date | Bad Things — Cults |
-| X — The Floor Gives Way | Crosses — José González |
-| XI — Only in Dreams | Only in Dreams — Weezer |
+| File | Chapter |
+|------|---------|
+| `01-the-house-on-meridian-street.md` | I — The House on Meridian Street |
+| `02-margaret-at-the-window.md` | II — Margaret at the Window |
+| `03-james-in-the-parking-lot.md` | III — James in the Parking Lot |
+| `04-what-claire-knew.md` | IV — What Claire Knew |
+| `05-lily-does-not-answer.md` | V — Lily Does Not Answer |
+| `06-what-they-were-taught.md` | VI — What They Were Taught |
+| `07-the-apartment.md` | VII — The Apartment |
+| `08-sunday-morning.md` | VIII — Sunday Morning |
+| `09-the-date.md` | IX — The Date |
+| `10-the-floor-gives-way.md` | X — The Floor Gives Way |
+| `11-only-in-dreams.md` | XI — Only in Dreams |
 
 To edit a chapter:
 just click any .md file in the left sidebar — like 09-the-date.md — and edit it directly. The text is right there.
@@ -121,3 +96,9 @@ python3 build.py
 git add .
 git commit -m "rebuild"
 git push
+
+## Deployment
+
+- **Repo:** github.com/KLechner89/The-Unbinding
+- **Live:** kylelechner.io
+- **Host:** Netlify — auto-deploys on every push to `main`
