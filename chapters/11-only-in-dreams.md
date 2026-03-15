@@ -26,7 +26,7 @@ James stood. He did not kneel. He did not cry. Not yet. Not here. Not with the c
 
 · · ·
 
-Upon returning to the house, the neighbor, who had a key, she had kept it, she had been the one to lock up after. In the house, on a wall by the front door, there was a hook. And on the wall next to the hook there was a mark. A darkened patch on the paint, the size and shape of the shadow a hat would leave. The hat was gone. The hook was empty. But the wall remembered. The wood had not forgotten even if no one was left to rest their hand on it.
+When they returned to the house, the neighbor had a key. She had kept it. She had been the one who locked the place after. In the house, on a wall by the front door, there was a hook. And on the wall next to the hook there was a mark. A darkened patch on the paint, the size and shape of the shadow a hat would leave. The hat was gone. The hook was empty. But the wall remembered. The wood had not forgotten even if no one was left to rest their hand on it.
 
 James touched the mark. His hand on the wall where his father's hat had hung and where, before that, his father's father's hat had hung. The hand resting where the hands had rested. The groove receiving a touch it had waited two years to feel.
 
