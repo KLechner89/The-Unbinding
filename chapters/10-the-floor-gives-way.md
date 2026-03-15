@@ -22,7 +22,7 @@ Eight years. Since Dad left.
 
 The knowledge moves from Lily's body into Margaret's mind and it cannot be unmoved. The long sleeves. The lights off. The locked door. Eight years of not answering the phone and Margaret thought it was anger. It was not anger. It was a girl holding a blade behind her back.
 
-Margaret has the keys in her hand. She puts them down. Not saved. Stopped. She is drunk and pilled and standing in a kitchen with a plan she won't name and her daughter has just told her something that requires her to be a mother and she is the least qualified person in the world to be a mother right now and she is the one who answered. Both things are true. The keys are on the counter.
+Margaret has the keys in her hand. She puts them down. Not saved. Stopped. She is drunk and pilled-up and standing in a kitchen with a plan she won't name and her daughter has just told her something that requires her to be a mother and she is the least qualified person in the world to be a mother right now and she is the one who answered. Both things are true. The keys are on the counter.
 
 · · ·
 
