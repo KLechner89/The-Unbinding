@@ -87,8 +87,8 @@ To edit a chapter:
 just click any .md file in the left sidebar — like 09-the-date.md — and edit it directly. The text is right there.
 
 After Edit
-git add .
-git commit -m "edit chapter IX"
+git add index.html chapters/08-sunday-morning.md
+git commit -m "edit chapter VIII"
 git push
 
 To rebuild the HTML after editing:

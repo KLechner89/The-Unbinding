@@ -4,6 +4,12 @@ James sat in his car for eleven minutes before going into work. He did this ever
 
 He was thirty-four. He was not, by any metric the world provided, failing. He had a job. He had an apartment. He had a body that functioned. He moved through each day the way the razor moved through the powder at night. Directed but not answerable. Arriving while producing nothing. Leaving nothing behind.
 
+James worked numbers. The spreadsheets arrived each morning in an email from a system that did not know him and did not need to. Columns. Rows. Cells that accepted entries and returned answers that could not be negotiated with. He found that he could breathe there. Within the grid a motion produced a result. A number entered one cell changed the numbers around it. The change propagated. The sheet responded. The work did not care who he was. It did not ask him what he meant. It asked only that he be correct.
+
+Sometimes he stayed late not because the work required it but because the sheet was the one environment in which action still answered itself. You entered a formula and the formula returned a number. The number constrained the next entry. The motion produced something that called it back.
+
+Outside the grid the same logic did not hold. You could want something and nothing moved. You could speak and the words dissolved before they reached anyone. In the spreadsheet the system held. The sheet did not disappear. The cells waited. The answer arrived exactly where the formula said it would.
+
 He had not spoken to his father in two years. This was not a dramatic estrangement. There had been no fight, no revelation, no door slammed in a hallway. His father had simply become a man who lived in another state, and James had become a man who did not call, and between them the telephone existed as a monument to an act that neither could perform.
 
 His father, James suspected, waited for him to call. James waited for a reason to call that was not merely that his father was alive and that he loved him, because that, somehow, was not enough. It should have been enough. He knew it should have been enough. He thought about this sometimes, sitting in the car for eleven minutes, and the thought had a quality of distance. Like watching a fire through a window. Warm but unreachable. He could not tell whether the window was between him and the fire or between him and himself.
