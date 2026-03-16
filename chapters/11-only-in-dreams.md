@@ -4,9 +4,9 @@ They drove. Claire said yes and they drove. Not flew. Drove, because the distanc
 
 The town was small. The kind of place that used to have a plant and then didn't and then had a Dollar General and a church and a bar and the slow, quiet contraction of a community losing its reason for existing. James had not been here since he was a child. He remembered a yard. He remembered a grill. He remembered the specific weight of his father's hand on his shoulder, a weight that communicated nothing in particular and everything at once.
 
-They found the house first. The address he had. The house where his father had lived. They knocked. No one answered. They knocked again. A neighbor came out. A woman, older, standing on the porch next door with a cup of coffee and the cautious hospitality of someone who has watched a house go dark. She asked who they were looking for. James said his father's name. The woman's face changed. Not dramatically. A settling. The way a face arranges itself around knowledge it has carried for a while and is about to transfer.
+They found the house first. The address he had. The house where his father had lived. They knocked. No one answered. They knocked again. A neighbor came out. A woman James did not know, older, standing on the porch next door with a cup of coffee and the cautious hospitality of someone who has watched a house go dark. She asked who they were looking for. James said his father's name. The woman's face changed. Not dramatically. A settling. The way a face arranges itself around knowledge it has carried for a while and is about to transfer.
 
-Honey, she said. He passed. It's been — it's been about two years now.
+"Honey, she said. He passed. It's been — it's been about two years now."
 
 James heard the words. He heard them the way you hear a sound underwater. Present but distorted, arriving through a medium that changes everything. He asked how. The neighbor looked at Claire. She looked at James. She said: He did it himself. I'm sorry. I'm so sorry.
 
