@@ -76,10 +76,10 @@ def build():
         new_html = re.sub(pattern, replacement, html, flags=re.DOTALL)
 
         if new_html == html:
-            print(f"WARNING: Chapter {i} ({chapter}) — pattern not matched, prose unchanged")
+            print(f"OK (unchanged): {chapter}")
         else:
             html = new_html
-            print(f"OK: {chapter}")
+            print(f"Updated: {chapter}")
 
     with open('index.html', 'w') as f:
         f.write(html)
