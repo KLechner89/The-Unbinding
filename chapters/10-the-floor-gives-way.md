@@ -50,4 +50,6 @@ He crosses the nine feet.
 
 He is not smooth. He is not procedural. He is the opposite of everything the world has taught him to be. He says, "I'm sorry I haven't said anything. I don't know how to do this. I don't know the rules and there are too many of them and there's no handbook. But I like you. I know this sounds extreme but I haven't talked to my dad in two years. I need to go see him. I don't want to go alone. Will you come with me?"
 
+There is no procedure for this. 
+
 "Yes."
