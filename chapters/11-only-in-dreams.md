@@ -44,6 +44,6 @@ The boys had gone home. Their mothers had called them in. The kitchen windows we
 
 And James's hand was on the wall where the hat had been. And Claire's hands were in the dirt, clearing grass from a gravestone. And Margaret's keys were on the counter. And Lily had spoken. And Darius had made it home by six.
 
-The distance is real. The reaching is also real. There is no procedure for this.
+The distance is real. The reaching is also real. There is no procedure for a groove that has never existed before.
 
 She is looking at him. He is looking at her. Between them is the world. But now there is a bridge. Two people who see each other.
