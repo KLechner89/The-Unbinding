@@ -22,7 +22,7 @@ James was in the back row. He had come on impulse. Walked past the building, saw
 
 He stood to leave and in the side aisle he passed a woman. Older. He nodded. The half-gesture. The minimum courtesy. She grumbled something back. Not words. The social minimum. The sound a body makes to acknowledge another body without actually acknowledging it.
 
-The smell hit him. Alcohol, unmistakable, warm on her exhale, cutting through the coffee and the carpet cleaner and the faint sweetness of the fog machine the worship band used. He saw her eyes. Glassy. Pinned pupils, far too tight for the dim room. That woman's clearly drunk. The thought arrived and passed the way all such thoughts pass in a city. Registered. Filed. Dismissed. Not my problem. Not my person. Not my binding. He kept walking.
+The smell hit him. Alcohol, unmistakable, warm on her exhale, cutting through the coffee and the carpet cleaner and the faint sweetness of the fog machine the worship band used. He saw her eyes. Glassy. Pinned. Far too tight for the dimmed room. She's clearly drunk. The thought arrived and passed the way all such thoughts pass in such a city. Registered. Filed. Dismissed. Not my problem. Not my person. Not my binding. He kept walking.
 
 He found his way to the door. He stepped outside. The pastor had said something. James couldn't remember exactly what. A word. Maybe father. Maybe home. Maybe don't wait. Whatever it was, it had lodged in him the way a splinter lodges, not painful enough to extract, not ignorable enough to forget. The church was the one environment still designed to make suppressed things surface, and the thing that surfaced was simple: I should probably call Dad.
 
