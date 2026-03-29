@@ -201,7 +201,7 @@ button[type="submit"]:hover{
   <h1>What did you <span>feel?</span></h1>
   <p class="sub">This is private. Your response goes only to the author. Nothing is displayed publicly.</p>
 
-  <form name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/feedback.html?success=true">
+  <form name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" aaction="/">
     <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
 
     <div class="field">
@@ -232,14 +232,6 @@ button[type="submit"]:hover{
     <p>Thank you for reading.</p>
   </div>
 </div>
-
-<script>
-// Show success view if redirected after submission
-if (window.location.search.includes('success=true')) {
-  document.getElementById('formView').classList.add('hidden');
-  document.getElementById('successView').classList.remove('hidden');
-}
-</script>
 
 </body>
 </html>
