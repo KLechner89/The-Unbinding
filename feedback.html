@@ -201,7 +201,7 @@ button[type="submit"]:hover{
   <h1>What did you <span>feel?</span></h1>
   <p class="sub">This is private. Your response goes only to the author. Nothing is displayed publicly.</p>
 
-  <form name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
+  <form name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="submitForm(event)">
     <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
 
     <div class="field">
@@ -232,6 +232,21 @@ button[type="submit"]:hover{
     <p>Thank you for reading.</p>
   </div>
 </div>
+
+<script>
+async function submitForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new URLSearchParams(new FormData(form));
+  try {
+    await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: data.toString() });
+    document.getElementById('formView').classList.add('hidden');
+    document.getElementById('successView').classList.remove('hidden');
+  } catch(err) {
+    alert('Something went wrong. Please try again.');
+  }
+}
+</script>
 
 </body>
 </html>
