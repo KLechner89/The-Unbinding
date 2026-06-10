@@ -191,8 +191,10 @@ button[type="submit"]:hover{
 }
 
 .hidden{display:none}
+.mailer-btn{position:fixed;top:24px;right:28px;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8680;background:none;border:none;cursor:pointer;padding:6px 0;border-bottom:1px solid #4a4744;transition:color 0.3s,border-color 0.3s;z-index:1000} .mailer-btn:hover{color:#e8e4df;border-color:#8a8680} .mailer-overlay{position:fixed;top:0;right:0;width:320px;max-width:90vw;background:#111114;border-left:1px solid #252529;border-bottom:1px solid #252529;padding:48px 32px 36px;z-index:999;transform:translateY(-100%);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;pointer-events:none} .mailer-overlay.open{transform:translateY(0);opacity:1;pointer-events:all} .mailer-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#4a4744;font-family:'JetBrains Mono',monospace;font-size:0.7rem;cursor:pointer;transition:color 0.3s;padding:4px} .mailer-close:hover{color:#8a8680} .mailer-heading{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:1.3rem;color:#e8e4df;margin-bottom:6px;text-align:left} .mailer-sub{font-family:'JetBrains Mono',monospace;font-size:0.45rem;letter-spacing:0.1em;color:#4a4744;margin-bottom:24px;text-align:left;line-height:1.8} .mailer-input{width:100%;background:transparent;border:1px solid #252529;color:#e8e4df;font-family:'EB Garamond',Georgia,serif;font-size:1rem;padding:12px 14px;border-radius:2px;outline:none;transition:border-color 0.3s;-webkit-appearance:none} .mailer-input:focus{border-color:#8a8680} .mailer-input::placeholder{color:#4a4744;font-style:italic} .mailer-submit{width:100%;margin-top:12px;background:transparent;border:1px solid #252529;color:#8a8680;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;padding:12px;border-radius:2px;cursor:pointer;transition:border-color 0.3s,color 0.3s} .mailer-submit:hover{border-color:#8a8680;color:#e8e4df} .mailer-success{display:none;text-align:center;padding:20px 0} .mailer-success h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:1.5rem;color:#c4453a}
 </style>
 </head>
+<button class="mailer-btn" onclick="toggleMailer()">Stay notified</button> <div class="mailer-overlay" id="mailerOverlay"> <button class="mailer-close" onclick="toggleMailer()">✕</button> <div id="mailerForm"> <div class="mailer-heading">New work is coming.</div> <div class="mailer-sub">Get notified when it's published. Nothing else.</div> <form name="mailing-list" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="submitMailer(event)"> <input type="hidden" name="bot-field"> <input type="text" name="name" class="mailer-input" placeholder="Your name" style="margin-bottom:12px"> <input type="email" name="email" class="mailer-input" placeholder="Your email" required> <button type="submit" class="mailer-submit">Notify me</button> </form> </div> <div class="mailer-success" id="mailerSuccess"> <h3>Noted.</h3> </div> </div>
 <body>
 
 <div class="container" id="formView">
@@ -247,6 +249,11 @@ async function submitForm(e) {
   }
 }
 </script>
-
+<script>
+function toggleMailer(){document.getElementById('mailerOverlay').classList.toggle('open')}
+document.addEventListener('click',function(e){var o=document.getElementById('mailerOverlay'),b=document.querySelector('.mailer-btn');if(o.classList.contains('open')&&!o.contains(e.target)&&e.target!==b)o.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('mailerOverlay').classList.remove('open')});
+async function submitMailer(e){e.preventDefault();var f=e.target,d=new URLSearchParams(new FormData(f));try{await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:d.toString()});document.getElementById('mailerForm').style.display='none';document.getElementById('mailerSuccess').style.display='block';setTimeout(function(){document.getElementById('mailerOverlay').classList.remove('open');setTimeout(function(){document.getElementById('mailerForm').style.display='block';document.getElementById('mailerSuccess').style.display='none'},400)},1500)}catch(err){alert('Something went wrong.')}}
+</script>
 </body>
 </html>
