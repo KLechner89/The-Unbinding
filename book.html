@@ -235,9 +235,16 @@ textarea{min-height:180px;resize:vertical}
   .enter{animation:none;opacity:1;transform:none}
   *{transition:none !important}
 }
+
+/* Home link: same place on every page except the home page itself */
+.home-link{position:absolute;top:26px;left:28px;z-index:1000;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:#8a8680;text-decoration:none;padding:6px 0;transition:color 0.3s}
+.home-link:hover,.home-link:focus-visible{color:#e8e4df;outline:none}
+.home-link:focus-visible{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:768px){.home-link{top:18px;left:18px}}
 </style>
 </head>
 <body>
+<a class="home-link" href="/" >Home</a>
 
 <!-- Declares the "meeting-booking" Netlify form so its fields are recorded.
      Submissions are sent by the server after each booking; visitors never see this form. -->
