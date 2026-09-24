@@ -42,8 +42,20 @@
   .cw{height:180px!important}
   .act-div h2{font-size:1.6rem}
 } .parallax-inner{will-change:transform} body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,0.03),rgba(0,0,0,0) 40%);opacity:var(--overlay-opacity,0.35);transition:opacity 1.2s ease} [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity 1.2s ease,transform 1.2s ease} [data-reveal].visible{opacity:1;transform:translateY(0)}
-.mailer-btn{position:fixed;top:24px;right:28px;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8680;background:none;border:none;cursor:pointer;padding:6px 0;border-bottom:1px solid #4a4744;transition:color 0.3s,border-color 0.3s;z-index:1000}
-.mailer-btn:hover{color:#e8e4df;border-color:#8a8680}
+.site-menu{position:fixed;top:20px;right:22px;z-index:1001;transition:opacity 0.3s ease}
+.site-menu.behind{opacity:0;pointer-events:none}
+.menu-btn{width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:1px solid transparent;border-radius:50%;cursor:pointer;transition:border-color 0.3s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.menu-btn span{display:block;width:3px;height:3px;border-radius:50%;background:#8a8680;transition:background 0.3s}
+.menu-btn:hover,.menu-btn[aria-expanded="true"]{border-color:#252529}
+.menu-btn:hover span,.menu-btn[aria-expanded="true"] span{background:#e8e4df}
+.menu-btn:focus-visible{outline:1px solid #8a8680;outline-offset:2px}
+.menu-panel{position:absolute;top:44px;right:0;min-width:180px;background:#111114;border:1px solid #252529;border-radius:2px;padding:8px 0;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease}
+.menu-panel.open{opacity:1;transform:translateY(0);pointer-events:all}
+.menu-item{display:block;width:100%;text-align:left;background:none;border:none;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8680;text-decoration:none;padding:12px 20px;cursor:pointer;transition:color 0.3s,background 0.3s}
+.menu-item:hover,.menu-item:focus-visible{color:#e8e4df;background:rgba(255,255,255,0.03);outline:none}
+.menu-item[aria-current="page"]{color:#c4453a}
+@media(max-width:768px){.site-menu{top:12px;right:12px}}
+@media(prefers-reduced-motion:reduce){.menu-panel,.site-menu{transition:none}}
 .mailer-overlay{position:fixed;top:0;right:0;width:320px;max-width:90vw;background:#111114;border-left:1px solid #252529;border-bottom:1px solid #252529;padding:48px 32px 36px;z-index:999;transform:translateY(-100%);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;pointer-events:none}
 .mailer-overlay.open{transform:translateY(0);opacity:1;pointer-events:all}
 .mailer-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#4a4744;font-family:'JetBrains Mono',monospace;font-size:0.7rem;cursor:pointer;transition:color 0.3s;padding:4px}
@@ -67,7 +79,13 @@
 <meta name="twitter:title" content="The Unbinding">
 <meta name="twitter:image" content="/og-image.png">
 </head> <body>
-<button class="mailer-btn" onclick="toggleMailer()">Stay notified</button>
+<nav class="site-menu" id="siteMenu" aria-label="Site menu">
+  <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="menuPanel"><span></span><span></span><span></span></button>
+  <div class="menu-panel" id="menuPanel">
+    <button type="button" class="menu-item" onclick="openMailer()">Stay notified</button>
+    <a class="menu-item" href="/book.html">Schedule a meeting</a>
+  </div>
+</nav>
 <div class="mailer-overlay" id="mailerOverlay">
   <button class="mailer-close" onclick="toggleMailer()">✕</button>
   <div id="mailerForm">
@@ -581,10 +599,25 @@ rT=[null,null,25,28,40,22,18,20,22],rH=[null,null,null,43,40,39,35,38,36],rC=[nu
 
 
 const chartObs=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(!entry.isIntersecting)return; const canvases=entry.target.querySelectorAll('canvas'); canvases.forEach(canvas=>{ const found=chartRegistry.find(c=>c.canvasId===canvas.id); if(found)createChart(found.canvasId,found.config); }); }); },{threshold:0.2}); document.querySelectorAll('.chart-gate,.chart-pair').forEach(el=>chartObs.observe(el));
-function toggleMailer(){document.getElementById('mailerOverlay').classList.toggle('open')}
-document.addEventListener('click',function(e){var o=document.getElementById('mailerOverlay'),b=document.querySelector('.mailer-btn');if(o.classList.contains('open')&&!o.contains(e.target)&&e.target!==b)o.classList.remove('open')});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('mailerOverlay').classList.remove('open')});
-async function submitMailer(e){e.preventDefault();var f=e.target,d=new URLSearchParams(new FormData(f));try{await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:d.toString()});document.getElementById('mailerForm').style.display='none';document.getElementById('mailerSuccess').style.display='block';setTimeout(function(){document.getElementById('mailerOverlay').classList.remove('open');setTimeout(function(){document.getElementById('mailerForm').style.display='block';document.getElementById('mailerSuccess').style.display='none'},400)},1500)}catch(err){alert('Something went wrong.')}}
+(function(){
+  var menu=document.getElementById('siteMenu'),btn=document.getElementById('menuBtn'),panel=document.getElementById('menuPanel'),overlay=document.getElementById('mailerOverlay');
+  function setMenu(open){panel.classList.toggle('open',open);btn.setAttribute('aria-expanded',open);btn.setAttribute('aria-label',open?'Close menu':'Open menu');}
+  window.openMailer=function(){setMenu(false);overlay.classList.add('open');menu.classList.add('behind');setTimeout(function(){var i=overlay.querySelector('input:not([type=hidden])');if(i)i.focus();},350);};
+  window.closeMailer=function(){overlay.classList.remove('open');menu.classList.remove('behind');};
+  window.toggleMailer=function(){overlay.classList.contains('open')?closeMailer():openMailer();};
+  btn.addEventListener('click',function(){setMenu(!panel.classList.contains('open'));});
+  document.addEventListener('click',function(e){
+    if(menu.contains(e.target))return;
+    if(panel.classList.contains('open'))setMenu(false);
+    if(overlay.classList.contains('open')&&!overlay.contains(e.target))closeMailer();
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape')return;
+    if(panel.classList.contains('open')){setMenu(false);btn.focus();}
+    if(overlay.classList.contains('open')){closeMailer();btn.focus();}
+  });
+})();
+async function submitMailer(e){e.preventDefault();var f=e.target,d=new URLSearchParams(new FormData(f));try{var r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:d.toString()});if(!r.ok)throw new Error(r.status);document.getElementById('mailerForm').style.display='none';document.getElementById('mailerSuccess').style.display='block';setTimeout(function(){closeMailer();setTimeout(function(){f.reset();document.getElementById('mailerForm').style.display='block';document.getElementById('mailerSuccess').style.display='none'},400)},1500)}catch(err){alert('That didn\u2019t go through. Check your connection and try again.')}}
 </script> 
 </div><!-- end storyContent -->
 </body>
