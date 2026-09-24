@@ -1,0 +1,6 @@
+# TEMPORARY: until the custom scheduling page (book.html) is uploaded at launch,
+# send the "Schedule a meeting" link to the current Google booking page.
+# These rules are not forced (no "!"), so Netlify ignores them once book.html exists.
+# Delete this file at launch.
+/book.html  https://calendar.google.com/calendar/appointments/schedules/AcZssZ1Jar69h9xa49frY9QvYVxx694F3uNf7El6L8IdyuWZsd7pw297p8UmQe1KN8NXOPNBe1-fMrQs  302
+/book       https://calendar.google.com/calendar/appointments/schedules/AcZssZ1Jar69h9xa49frY9QvYVxx694F3uNf7El6L8IdyuWZsd7pw297p8UmQe1KN8NXOPNBe1-fMrQs  302
