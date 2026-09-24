@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule a Meeting with Kyle</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="application-name" content="Kyle Lechner">
+<meta name="apple-mobile-web-app-title" content="Kyle Lechner">
+<meta property="og:site_name" content="Kyle Lechner">
+<meta name="robots" content="noindex">
+<meta name="description" content="Choose how you would prefer to meet, then select an available time.">
+<meta property="og:title" content="Schedule a Meeting with Kyle">
+<meta property="og:description" content="Choose how you would prefer to meet, then select an available time.">
+<meta property="og:type" content="website">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
+
+:root{
+  --bg:#0a0a0c;
+  --border:#252529;
+  --text:#e8e4df;
+  --text-dim:#c4bfb8;
+  --text-muted:#8a8680;
+  --text-ghost:#5c5854;
+  --red:#c4453a;
+  --serif:'EB Garamond','Cormorant Garamond',Georgia,serif;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--serif);
+  line-height:1.7;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:96px 24px 120px;
+}
+main{width:100%;max-width:600px}
+
+.enter{opacity:0;transform:translateY(16px);animation:enter 1.2s ease 0.2s forwards}
+@keyframes enter{to{opacity:1;transform:none}}
+
+h1{
+  font-family:var(--display);
+  font-weight:300;
+  font-size:2.6rem;
+  line-height:1.15;
+  letter-spacing:0.01em;
+  margin-bottom:20px;
+}
+.intro{
+  font-size:1.15rem;
+  color:var(--text-dim);
+  margin-bottom:72px;
+  max-width:34em;
+}
+
+section{margin-bottom:64px}
+.label{
+  display:block;
+  font-family:var(--mono);
+  font-size:0.6rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:16px;
+}
+h2{
+  font-family:var(--display);
+  font-weight:300;
+  font-size:1.6rem;
+  line-height:1.3;
+  margin-bottom:8px;
+}
+.section-copy{color:var(--text-muted);margin-bottom:24px;font-size:1.02rem}
+.hint{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.06em;line-height:1.9;color:var(--text-muted)}
+
+fieldset{border:0;min-width:0}
+legend{padding:0}
+
+/* Segmented selector */
+.segmented{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:2px}
+.segmented label{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  min-height:56px;
+  padding:0 8px;
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:color 0.3s,background-color 0.3s;
+  -webkit-tap-highlight-color:transparent;
+}
+.segmented label + label{border-left:1px solid var(--border)}
+.segmented input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.segmented label:has(input:checked){color:var(--text);background:rgba(232,228,223,0.035);box-shadow:inset 0 -1px 0 var(--red)}
+.segmented label:has(input:focus-visible){outline:1px solid var(--text-muted);outline-offset:-5px}
+.type-note{margin-top:16px;min-height:1.9em}
+.length{margin-top:28px}
+.segmented.two{grid-template-columns:repeat(2,1fr)}
+
+/* Text fields */
+.field{margin-bottom:28px}
+.field label{
+  display:block;
+  font-family:var(--mono);
+  font-size:0.58rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:10px;
+}
+input[type="text"],input[type="email"],input[type="tel"],textarea{
+  width:100%;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:2px;
+  color:var(--text);
+  font-family:var(--serif);
+  font-size:1.05rem;
+  line-height:1.7;
+  padding:14px 16px;
+  outline:none;
+  transition:border-color 0.3s;
+  -webkit-appearance:none;
+}
+input:focus,textarea:focus{border-color:var(--text-muted)}
+textarea{min-height:180px;resize:vertical}
+[aria-invalid="true"]{border-color:var(--red)}
+.field-error{display:block;margin-top:8px;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;color:var(--red)}
+.field-error:empty{display:none}
+
+/* Time selection */
+.times-status{font-style:italic;color:var(--text-muted);font-size:1.05rem}
+.dates{
+  display:flex;gap:8px;
+  overflow-x:auto;
+  padding-bottom:8px;
+  margin-bottom:24px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
+.date:first-child{margin-left:auto}
+.date:last-child{margin-right:auto}
+.date{
+  flex:0 0 auto;
+  width:76px;
+  padding:12px 0 10px;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:2px;
+  color:var(--text-muted);
+  cursor:pointer;
+  text-align:center;
+  transition:border-color 0.3s,color 0.3s;
+  -webkit-tap-highlight-color:transparent;
+}
+.date span{display:block;font-family:var(--mono);font-size:0.52rem;letter-spacing:0.16em;text-transform:uppercase}
+.date strong{display:block;font-family:var(--display);font-weight:300;font-size:1.7rem;line-height:1.2;color:var(--text-dim)}
+.date[aria-pressed="true"]{border-color:var(--text-muted);color:var(--text);box-shadow:inset 0 -1px 0 var(--red)}
+.date[aria-pressed="true"] strong{color:var(--text)}
+.date:focus-visible{outline:1px solid var(--text-muted);outline-offset:2px}
+
+.slots{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.slot{position:relative;display:block;flex:0 0 112px}
+.slot input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.slot span{
+  display:block;
+  padding:12px 0;
+  text-align:center;
+  border:1px solid var(--border);
+  border-radius:2px;
+  font-size:1.02rem;
+  color:var(--text-dim);
+  transition:border-color 0.3s,color 0.3s;
+  cursor:pointer;
+}
+.slot input:checked + span{border-color:var(--text-muted);color:var(--text);box-shadow:inset 0 -1px 0 var(--red)}
+.slot input:focus-visible + span{outline:1px solid var(--text-muted);outline-offset:2px}
+.tz{margin-top:20px;text-align:center}
+
+/* Submit */
+.submit{
+  display:inline-block;
+  background:transparent;
+  border:1px solid var(--text-muted);
+  border-radius:2px;
+  color:var(--text);
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  padding:18px 44px;
+  cursor:pointer;
+  transition:background-color 0.3s,color 0.3s,border-color 0.3s;
+  -webkit-tap-highlight-color:transparent;
+}
+.submit:focus-visible{outline:1px solid var(--text-muted);outline-offset:3px}
+.submit:disabled{opacity:0.45;cursor:default}
+.form-error{margin-top:20px;font-family:var(--mono);font-size:0.6rem;letter-spacing:0.06em;line-height:1.9;color:var(--red)}
+.form-error:empty{display:none}
+
+.turnstile{margin-bottom:28px;min-height:0}
+.trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+
+/* Confirmation */
+.done h1{margin-bottom:28px}
+.done p{font-size:1.15rem;color:var(--text-dim);margin-bottom:20px;max-width:34em}
+.done h1:focus{outline:none}
+
+@media (hover:hover){
+  .segmented label:hover{color:var(--text-dim)}
+  .date:hover{border-color:var(--text-ghost)}
+  .slot:hover span{border-color:var(--text-ghost)}
+  .submit:hover:not(:disabled){background:var(--text);color:var(--bg);border-color:var(--text)}
+}
+
+[hidden]{display:none !important}
+
+@media (max-width:560px){
+  body{padding:64px 20px 96px}
+  h1{font-size:2.1rem}
+  .intro{margin-bottom:56px}
+  section{margin-bottom:52px}
+  .segmented label{font-size:0.56rem;letter-spacing:0.12em}
+  .slot{flex-basis:calc(50% - 4px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .enter{animation:none;opacity:1;transform:none}
+  *{transition:none !important}
+}
+
+/* Home link: same place on every page except the home page itself */
+.home-link{position:absolute;top:26px;left:28px;z-index:1000;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:0.72rem;letter-spacing:0.04em;color:#8a8680;text-decoration:none;padding:6px 0;transition:color 0.3s}
+.home-link:hover,.home-link:focus-visible{color:#e8e4df;outline:none}
+.home-link:focus-visible{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:768px){.home-link{top:18px;left:18px}}
+</style>
+</head>
+<body>
+<a class="home-link" href="/" >Home</a>
+
+<!-- Declares the "meeting-booking" Netlify form so its fields are recorded.
+     Submissions are sent by the server after each booking; visitors never see this form. -->
+<form name="meeting-booking" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="bot-field"><input name="status"><input name="meeting_type"><input name="name">
+  <input name="email"><input name="phone"><textarea name="notes"></textarea><input name="start_time">
+  <input name="duration_minutes"><input name="start_iso"><input name="visitor_time_zone"><input name="calendar_event_id">
+  <input name="video_link"><input name="visitor_email_status"><input name="admin_email_status">
+</form>
+
+<main>
+  <div id="booking" class="enter">
+    <h1>Schedule a Meeting with Kyle</h1>
+    <p class="intro">Please select how you would prefer to meet, then choose an available time.</p>
+
+
+    <p class="times-status" id="pageLoading" aria-live="polite">Loading available times…</p>
+
+    <form id="bookingForm" novalidate hidden>
+      <section>
+        <fieldset>
+          <legend class="label">Meeting type</legend>
+          <div class="segmented">
+            <label><input type="radio" name="meetingType" value="video">Video</label>
+            <label><input type="radio" name="meetingType" value="phone">Phone</label>
+            <label><input type="radio" name="meetingType" value="in_person">In Person</label>
+          </div>
+        </fieldset>
+        <p class="type-note hint" id="typeNote" aria-live="polite"></p>
+        <span class="field-error" id="err-meetingType"></span>
+
+        <fieldset class="length">
+          <legend class="label">Meeting length</legend>
+          <div class="segmented two">
+            <label><input type="radio" name="durationMinutes" value="30">30 minutes</label>
+            <label><input type="radio" name="durationMinutes" value="60">60 minutes</label>
+          </div>
+        </fieldset>
+        <span class="field-error" id="err-durationMinutes"></span>
+      </section>
+
+      <section>
+        <h2 id="notesHeading">Anything we should know?</h2>
+        <p class="section-copy" id="notesCopy">If there is any context, question, concern, or other information that would be helpful before your meeting, please share it here.</p>
+        <textarea id="notes" name="notes" maxlength="5000" aria-labelledby="notesHeading" aria-describedby="notesCopy"></textarea>
+      </section>
+
+      <section aria-labelledby="timesLabel">
+        <span class="label" id="timesLabel">Available times</span>
+        <p class="times-status" id="timesStatus" aria-live="polite">Loading available times…</p>
+        <div id="timesPicker" hidden>
+          <div class="dates" id="dates" role="group" aria-label="Date"></div>
+          <div class="slots" id="slots" role="radiogroup" aria-label="Time"></div>
+          <p class="tz hint" id="tzNote"></p>
+        </div>
+        <span class="field-error" id="err-start"></span>
+      </section>
+
+      <section>
+        <span class="label">Your details</span>
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" maxlength="120" required>
+          <span class="field-error" id="err-name"></span>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" maxlength="254" required>
+          <span class="field-error" id="err-email"></span>
+        </div>
+        <div class="field" id="phoneField" hidden>
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="30">
+          <span class="field-error" id="err-phone"></span>
+        </div>
+        <div class="trap" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+      </section>
+
+      <div id="turnstile" class="turnstile" hidden></div>
+      <button type="submit" class="submit" id="submitBtn">Schedule Meeting</button>
+      <p class="form-error" id="formError" role="alert"></p>
+    </form>
+  </div>
+
+  <div id="confirmed" class="done" hidden>
+    <h1 tabindex="-1">You’re scheduled.</h1>
+    <p id="confirmedEmail">A confirmation has been sent to your email with the details of your meeting.</p>
+    <p id="confirmedClosing">If anything changes before we meet, or there is something you would like us to be aware of, simply reply to your confirmation email and someone will be in touch with you shortly.</p>
+  </div>
+
+  <div id="requested" class="done" hidden>
+    <h1 tabindex="-1">Request received.</h1>
+    <p>Your preferred meeting time has been submitted for review. You’ll receive a confirmation by email once the meeting has been approved.</p>
+    <p>Location details will be provided following confirmation.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  var OFFLINE = 'Online scheduling is not open at the moment. Please reply to the email that brought you here, and a time will be arranged with you directly.';
+  var visitorTz = (function () { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return ''; } })();
+
+  var form = document.getElementById('bookingForm');
+  var typeNote = document.getElementById('typeNote');
+  var phoneField = document.getElementById('phoneField');
+  var phoneInput = document.getElementById('phone');
+  var timesStatus = document.getElementById('timesStatus');
+  var picker = document.getElementById('timesPicker');
+  var datesEl = document.getElementById('dates');
+  var slotsEl = document.getElementById('slots');
+  var submitBtn = document.getElementById('submitBtn');
+  var formError = document.getElementById('formError');
+
+  var allSlots = [];   // [{ start, date, durations: [30, 60] }]
+  var byDay = {};
+  var dayOrder = [];
+  var activeDay = null;
+  var loaded = false;
+  var offline = false;
+  var sending = false;
+  var turnstileId = null;
+  var turnstileToken = '';
+
+  // In Person is a request, not a confirmed booking, so the button says so.
+  function buttonLabel(busy) {
+    var request = meetingType() === 'in_person';
+    return busy ? (request ? 'Requesting…' : 'Scheduling…') : (request ? 'Request Meeting' : 'Schedule Meeting');
+  }
+
+  // Optional Cloudflare Turnstile (only when the server provides a site key).
+  function setupTurnstile(siteKey) {
+    if (!siteKey || turnstileId !== null || document.getElementById('turnstileScript')) return;
+    var holder = document.getElementById('turnstile');
+    holder.hidden = false;
+    window.onTurnstileLoad = function () {
+      turnstileId = window.turnstile.render(holder, {
+        sitekey: siteKey,
+        theme: 'dark',
+        appearance: 'interaction-only',
+        callback: function (t) { turnstileToken = t; },
+        'expired-callback': function () { turnstileToken = ''; },
+        'error-callback': function () { turnstileToken = ''; }
+      });
+    };
+    var sc = document.createElement('script');
+    sc.id = 'turnstileScript';
+    sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad';
+    sc.async = true;
+    document.head.appendChild(sc);
+  }
+  function resetTurnstile() {
+    turnstileToken = '';
+    if (turnstileId !== null && window.turnstile) window.turnstile.reset(turnstileId);
+  }
+  var dayKeyFmt = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  var weekdayFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
+  var dayFmt = new Intl.DateTimeFormat('en-US', { day: 'numeric' });
+  var monthFmt = new Intl.DateTimeFormat('en-US', { month: 'short' });
+  var longDateFmt = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  var timeFmt = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
+
+  function tzName() {
+    try {
+      var part = new Intl.DateTimeFormat('en-US', { timeZoneName: 'long' }).formatToParts(new Date())
+        .filter(function (p) { return p.type === 'timeZoneName'; })[0];
+      return part ? part.value : visitorTz;
+    } catch (e) { return visitorTz; }
+  }
+
+  // Meeting type
+  function meetingType() {
+    var c = form.querySelector('input[name="meetingType"]:checked');
+    return c ? c.value : '';
+  }
+  Array.prototype.forEach.call(form.querySelectorAll('input[name="meetingType"]'), function (input) {
+    input.addEventListener('change', function () {
+      var t = meetingType();
+      typeNote.textContent = t === 'in_person' ? 'Location details will be provided following confirmation.' : '';
+      phoneField.hidden = t !== 'phone';
+      phoneInput.required = t === 'phone';
+      clearError('meetingType');
+      if (t !== 'phone') clearError('phone');
+      if (!sending) submitBtn.textContent = buttonLabel(false);
+    });
+  });
+
+  // Errors
+  function setError(field, message) {
+    var el = document.getElementById('err-' + field);
+    if (el) el.textContent = message;
+    var input = document.getElementById(field);
+    if (input) input.setAttribute('aria-invalid', 'true');
+  }
+  function clearError(field) {
+    var el = document.getElementById('err-' + field);
+    if (el) el.textContent = '';
+    var input = document.getElementById(field);
+    if (input) input.removeAttribute('aria-invalid');
+  }
+  ['name', 'email', 'phone'].forEach(function (f) {
+    document.getElementById(f).addEventListener('input', function () { clearError(f); });
+  });
+
+  // Clear the summary message once the visitor starts correcting things.
+  form.addEventListener('input', function () { if (!offline) formError.textContent = ''; });
+  form.addEventListener('change', function () { if (!offline) formError.textContent = ''; });
+
+  // Availability
+  function setOffline() {
+    offline = true;
+    document.getElementById('pageLoading').hidden = true;
+    form.hidden = false;
+    picker.hidden = true;
+    timesStatus.hidden = false;
+    timesStatus.textContent = OFFLINE;
+    submitBtn.disabled = true;
+  }
+
+  function duration() {
+    var c = form.querySelector('input[name="durationMinutes"]:checked');
+    return c ? Number(c.value) : 0;
+  }
+
+  // Groups the start times that allow the chosen duration by the visitor's local date.
+  function groupFor(minutes) {
+    byDay = {}; dayOrder = [];
+    allSlots.forEach(function (s) {
+      if (s.durations.indexOf(minutes) === -1) return;
+      var key = dayKeyFmt.format(s.date);
+      if (!byDay[key]) { byDay[key] = []; dayOrder.push(key); }
+      byDay[key].push(s);
+    });
+  }
+
+  function renderTimes() {
+    if (!loaded || offline) return;
+    var minutes = duration();
+    if (!allSlots.length) {
+      picker.hidden = true; timesStatus.hidden = false;
+      timesStatus.textContent = 'There are no available times at the moment. Please check back soon, or reply to the email that brought you here.';
+      submitBtn.disabled = true;
+      return;
+    }
+    submitBtn.disabled = false;
+    if (!minutes) {
+      picker.hidden = true; timesStatus.hidden = false;
+      timesStatus.textContent = 'Choose a meeting length to see available times.';
+      return;
+    }
+    var previous = selectedStart();
+    groupFor(minutes);
+    if (!dayOrder.length) {
+      picker.hidden = true; timesStatus.hidden = false;
+      timesStatus.textContent = 'There are no ' + minutes + '-minute times available at the moment.';
+      return;
+    }
+    timesStatus.hidden = true;
+    picker.hidden = false;
+    document.getElementById('tzNote').textContent = 'Times are shown in ' + tzName() + '.';
+    if (!activeDay || !byDay[activeDay]) activeDay = dayOrder[0];
+    renderDates();
+    selectDay(activeDay);
+    if (previous) {
+      var keep = slotsEl.querySelector('input[value="' + previous + '"]');
+      if (keep) keep.checked = true;
+      else setError('start', 'Your earlier time is not available for ' + minutes + ' minutes. Please choose another.');
+    }
+  }
+
+  function renderDates() {
+    datesEl.innerHTML = '';
+    dayOrder.forEach(function (key) {
+      var d = byDay[key][0].date;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'date';
+      b.setAttribute('aria-pressed', key === activeDay ? 'true' : 'false');
+      b.setAttribute('aria-label', longDateFmt.format(d));
+      b.innerHTML = '<span></span><strong></strong><span></span>';
+      b.children[0].textContent = weekdayFmt.format(d);
+      b.children[1].textContent = dayFmt.format(d);
+      b.children[2].textContent = monthFmt.format(d);
+      b.addEventListener('click', function () { selectDay(key); });
+      datesEl.appendChild(b);
+    });
+  }
+
+  function selectDay(key) {
+    activeDay = key;
+    Array.prototype.forEach.call(datesEl.children, function (b, i) {
+      b.setAttribute('aria-pressed', dayOrder[i] === key ? 'true' : 'false');
+    });
+    slotsEl.innerHTML = '';
+    byDay[key].forEach(function (s) {
+      var label = document.createElement('label');
+      label.className = 'slot';
+      var input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'start';
+      input.value = s.start;
+      input.setAttribute('aria-label', longDateFmt.format(s.date) + ', ' + timeFmt.format(s.date));
+      input.addEventListener('change', function () { clearError('start'); });
+      var span = document.createElement('span');
+      span.textContent = timeFmt.format(s.date);
+      label.appendChild(input);
+      label.appendChild(span);
+      slotsEl.appendChild(label);
+    });
+  }
+
+  function selectedStart() {
+    var c = slotsEl.querySelector('input[name="start"]:checked');
+    return c ? c.value : '';
+  }
+
+  Array.prototype.forEach.call(form.querySelectorAll('input[name="durationMinutes"]'), function (input) {
+    input.addEventListener('change', function () { clearError('durationMinutes'); clearError('start'); renderTimes(); });
+  });
+
+  function loadTimes() {
+    loaded = false;
+    slotsEl.innerHTML = '';
+    picker.hidden = true;
+    timesStatus.hidden = false;
+    timesStatus.textContent = 'Loading available times…';
+    return fetch('/api/availability', { headers: { Accept: 'application/json' }, cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : { available: false }; })
+      .catch(function () { return { available: false }; })
+      .then(function (data) {
+        if (!data || !data.available || !Array.isArray(data.slots)) return setOffline();
+        document.getElementById('pageLoading').hidden = true;
+        form.hidden = false;
+        setupTurnstile(data.turnstileSiteKey);
+        allSlots = data.slots
+          .filter(function (s) { return Array.isArray(s.durations) && s.durations.length; })
+          .map(function (s) { return { start: s.start, date: new Date(s.start), durations: s.durations.map(Number) }; });
+        loaded = true;
+        renderTimes();
+      });
+  }
+
+  // Submit
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (sending || offline) return;
+    formError.textContent = '';
+    ['meetingType', 'durationMinutes', 'start', 'name', 'email', 'phone'].forEach(clearError);
+
+    var t = meetingType();
+    var payload = {
+      meetingType: t,
+      durationMinutes: duration(),
+      start: selectedStart(),
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: t === 'phone' ? phoneInput.value.trim() : '',
+      notes: document.getElementById('notes').value.trim(),
+      visitorTimeZone: visitorTz,
+      website: document.getElementById('website').value,
+      turnstileToken: turnstileToken
+    };
+
+    var invalid = [];
+    if (!t) invalid.push(['meetingType', 'Please choose how you would prefer to meet.']);
+    if (!payload.durationMinutes) invalid.push(['durationMinutes', 'Please choose a meeting length.']);
+    if (!payload.start) invalid.push(['start', 'Please choose a time.']);
+    if (!payload.name) invalid.push(['name', 'Please enter your name.']);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) invalid.push(['email', 'Please enter a valid email address.']);
+    if (t === 'phone' && payload.phone.replace(/\D/g, '').length < 7) invalid.push(['phone', 'Please enter a valid phone number.']);
+    if (invalid.length) {
+      invalid.forEach(function (x) { setError(x[0], x[1]); });
+      formError.textContent = 'Please review the highlighted details above.';
+      var first = invalid[0][0];
+      var target = first === 'meetingType' ? form.querySelector('input[name="meetingType"]')
+        : first === 'durationMinutes' ? form.querySelector('input[name="durationMinutes"]')
+        : first === 'start' ? (slotsEl.querySelector('input') || datesEl.querySelector('button'))
+        : document.getElementById(first);
+      if (target) target.focus();
+      return;
+    }
+
+    sending = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = buttonLabel(true);
+
+    fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { status: r.status, data: d }; }); })
+      .catch(function () { return { status: 0, data: {} }; })
+      .then(function (res) {
+        sending = false;
+        submitBtn.textContent = buttonLabel(false);
+        submitBtn.disabled = false;
+        var d = res.data || {};
+        if (res.status === 200 && d.ok) return showDone(d);
+        resetTurnstile();
+        if (res.status === 403) {
+          formError.textContent = 'We could not verify this request. Please try again.';
+          return;
+        }
+        if (res.status === 429) {
+          formError.textContent = 'Too many attempts. Please wait a minute and try again.';
+          return;
+        }
+        if (res.status === 400 && d.fields) {
+          Object.keys(d.fields).forEach(function (f) { setError(f, d.fields[f]); });
+          formError.textContent = 'Please review the highlighted details above.';
+          return;
+        }
+        if (res.status === 409) {
+          formError.textContent = 'That time is no longer available. Please choose another.';
+          return loadTimes();
+        }
+        if (res.status === 503) {
+          setOffline();
+          formError.textContent = OFFLINE;
+          return;
+        }
+        formError.textContent = 'Your meeting could not be scheduled just now. Please try again in a moment.';
+      });
+  });
+
+  function showDone(d) {
+    document.getElementById('booking').hidden = true;
+    var view = document.getElementById(d.status === 'pending' ? 'requested' : 'confirmed');
+    if (d.status !== 'pending' && d.emailSent === false) {
+      document.getElementById('confirmedEmail').textContent =
+        'Your meeting is on the calendar. The confirmation email could not be sent just now; the details will follow by email shortly.';
+      document.getElementById('confirmedClosing').hidden = true;
+    }
+    view.hidden = false;
+    window.scrollTo(0, 0);
+    view.querySelector('h1').focus();
+  }
+
+  loadTimes();
+})();
+</script>
+</body>
+</html>
