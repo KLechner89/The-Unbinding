@@ -53,7 +53,7 @@ export const RULES = {
   // [] makes the date unavailable. Shape: { "2026-12-24": [] }
   dateOverrides: {},
 
-  // Leave empty. Other calendars to check for conflicts are set privately in the
-  // Netlify variable GOOGLE_CONFLICT_CALENDAR_IDS, so calendar addresses stay out of this public file.
-  additionalConflictCalendarIds: [],
+  // Other calendars to check for conflicts are set privately in the Netlify
+  // variable GOOGLE_CONFLICT_CALENDAR_IDS, so no calendar addresses live in this public file.
+
 };

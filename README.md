@@ -83,22 +83,34 @@ git push
 | `10-the-floor-gives-way.md` | X — The Floor Gives Way |
 | `11-only-in-dreams.md` | XI — Only in Dreams |
 
-To edit a chapter:
-just click any .md file in the left sidebar — like 09-the-date.md — and edit it directly. The text is right there.
-
-After Edit
-git add .
-git commit -m "edit chapter IX"
-git push
-
-To rebuild the HTML after editing:
-python3 build.py
-git add .
-git commit -m "rebuild"
-git push
-
 ## Deployment
 
 - **Repo:** github.com/KLechner89/The-Unbinding
 - **Live:** kylelechner.io
 - **Host:** Netlify — auto-deploys on every push to `main`
+
+---
+
+## Site Structure
+
+| Path | What it is |
+|------|------------|
+| `index.html` | The story. Prose is generated from `chapters/` by `build.py`. |
+| `chapters/` | One markdown file per chapter (see above). |
+| `build.py` | Copies chapter text into `index.html`. |
+| `feedback.html` | Reader feedback form (Netlify Forms). |
+| `book.html` | Scheduling page at `kylelechner.io/book`. |
+| `netlify/functions/` | Scheduling backend: availability, booking, and a readiness check. |
+| `netlify/functions/_shared/availability-rules.mjs` | Meeting hours, lengths, notice, and daily limits. |
+| `_headers` | Security headers for every page. |
+
+## Scheduling
+
+`book.html` talks to three Netlify Functions:
+
+- `GET /api/availability`: open times, read live from Google Calendar
+- `POST /api/book`: rechecks the time, creates the calendar event (and a Zoom meeting for video), emails the visitor and the office
+- `GET /api/scheduling-status`: returns `{"ready": true|false}`
+
+All credentials live in Netlify environment variables (scoped to Functions), never in this repository. Scheduling stays off until every required variable is set and `SCHEDULING_ENABLED` is `true`; the reasons are written to the function logs.
+

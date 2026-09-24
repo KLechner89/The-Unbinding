@@ -1,7 +1,5 @@
-// Sends email through Postmark's API directly.
-// The Netlify Email Extension's handler does not pass a Reply-To header, and
-// replies must go to SCHEDULING_REPLY_TO, so this calls Postmark with the same
-// server token instead.
+// Sends email through Postmark's API directly (POSTMARK_SERVER_TOKEN),
+// so replies can be routed to SCHEDULING_REPLY_TO.
 
 import { settings } from './config.mjs';
 import { isValidTimeZone } from './slots.mjs';

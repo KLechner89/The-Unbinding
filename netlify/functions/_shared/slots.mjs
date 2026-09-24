@@ -93,7 +93,6 @@ export function validateRules(r) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) problems.push(`dateOverrides key ${key} must be YYYY-MM-DD`);
     checkRanges(`dateOverrides.${key}`, ranges);
   }
-  if (!Array.isArray(r.additionalConflictCalendarIds)) problems.push('additionalConflictCalendarIds must be a list');
   return problems;
 }
 

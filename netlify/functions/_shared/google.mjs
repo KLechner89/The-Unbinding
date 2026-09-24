@@ -102,10 +102,6 @@ export function insertEvent(calendarId, event) {
   });
 }
 
-export function getEvent(calendarId, eventId) {
-  return call('get event', `${cal(calendarId)}/events/${encodeURIComponent(eventId)}`);
-}
-
 export function deleteEvent(calendarId, eventId) {
   return call('delete event', `${cal(calendarId)}/events/${encodeURIComponent(eventId)}`, {
     method: 'DELETE',
