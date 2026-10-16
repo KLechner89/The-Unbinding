@@ -32,7 +32,7 @@ function validate(body) {
     durationMinutes: (Array.isArray(RULES.allowedDurations) ? RULES.allowedDurations : []).find((d) => d === body.durationMinutes || String(d) === body.durationMinutes) ?? null,
     visitorTimeZone: isValidTimeZone(body.visitorTimeZone) ? body.visitorTimeZone : '',
   };
-  if (!TYPES[b.meetingType]) errors.meetingType = 'Please choose how you would prefer to meet.';
+  if (!Object.prototype.hasOwnProperty.call(TYPES, b.meetingType)) errors.meetingType = 'Please choose how you would prefer to meet.';
   if (!b.name) errors.name = 'Please enter your name.';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b.email)) errors.email = 'Please enter a valid email address.';
   if (b.meetingType === 'phone') {

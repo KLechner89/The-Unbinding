@@ -10,7 +10,10 @@ Netlify will redeploy automatically after you git push.
 """
 
 import re
-import os
+from pathlib import Path
+from html import escape
+
+ROOT = Path(__file__).resolve().parent
 
 CHAPTERS = [
     "01-the-house-on-meridian-street",
@@ -27,7 +30,7 @@ CHAPTERS = [
 ]
 
 def escape_html(text):
-    text = text.replace('&', '&amp;')
+    text = escape(text, quote=False)
     text = text.replace('\u201c', '&ldquo;').replace('\u201d', '&rdquo;')
     text = text.replace('\u2018', '&lsquo;').replace('\u2019', '&rsquo;')
     text = text.replace('\u2014', '&mdash;')
@@ -56,24 +59,26 @@ def md_to_html(md_text):
     return '\n'.join(html_paras)
 
 def build():
-    with open('index.html', 'r') as f:
+    with (ROOT / 'index.html').open('r', encoding='utf-8') as f:
         html = f.read()
 
     for i, chapter in enumerate(CHAPTERS):
-        md_path = f'chapters/{chapter}.md'
-        if not os.path.exists(md_path):
-            print(f"WARNING: {md_path} not found, skipping")
-            continue
+        md_path = ROOT / 'chapters' / f'{chapter}.md'
+        if not md_path.is_file():
+            raise ValueError(f'Missing chapter file: {md_path}')
 
-        with open(md_path, 'r') as f:
+        with md_path.open('r', encoding='utf-8') as f:
             md_text = f.read()
 
         new_prose = md_to_html(md_text)
 
         # Match the prose div by data-chapter index and replace its contents
         pattern = rf'(<div class="prose" data-chapter="{i}">)(.*?)(</div>)'
-        replacement = rf'\g<1>{new_prose}\g<3>'
-        new_html = re.sub(pattern, replacement, html, flags=re.DOTALL)
+        new_html, count = re.subn(
+            pattern, lambda match: match[1] + new_prose + match[3], html, flags=re.DOTALL
+        )
+        if count != 1:
+            raise ValueError(f'Expected one prose container for {chapter}; found {count}')
 
         if new_html == html:
             print(f"OK (unchanged): {chapter}")
@@ -81,8 +86,10 @@ def build():
             html = new_html
             print(f"Updated: {chapter}")
 
-    with open('index.html', 'w') as f:
-        f.write(html)
+    target = ROOT / 'index.html'
+    temporary = target.with_suffix('.html.tmp')
+    temporary.write_text(html, encoding='utf-8')
+    temporary.replace(target)
     print("\nindex.html updated. Run: git add . && git commit -m 'edit' && git push")
 
 if __name__ == '__main__':
