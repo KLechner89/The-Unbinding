@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <p>The boys had gone home. Their mothers had called them in. The kitchen windows were lit. They had made it by six. Nobody was in trouble. The binding held.</p>
 <p>And James's hand was on the wall where the hat had been. And Claire's hands were in the dirt, clearing grass from a gravestone. And Margaret's keys were on the counter. And Lily had spoken. And Darius had made it home by six.</p>
 <p>The distance is real. The reaching is also real. There is no procedure for a groove that has never existed before.</p>
-<p>She is looking at him. He is looking at her. Between them is the world. But now there is a bridge. Two people who see each other.</p> <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;color:#4a4744;text-align:center;padding:64px 0 48px;"><a href="/feedback.html" style="color:#4a4744;text-decoration:none;border-bottom:1px solid #252529;padding-bottom:2px;transition:color 0.3s,border-color 0.3s;" onmouseover="this.style.color='#8a8680';this.style.borderColor='#8a8680'" onmouseout="this.style.color='#4a4744';this.style.borderColor='#252529'">If this moved you, you can tell me.</a></p></div> </div>   <div class="sources-block"> Sources: CDC WONDER · CDC NCHS · JEC Social Capital Project · Case & Deaton, Brookings (2017) · World Bank / FRED · Violence Project · Gallup (1937–2024) · Pew Research Center · Surgeon General 2023 · APA · Harvard MCC/YouGov · CDC YRBS 2011–2023 · NCHS Data Briefs · NHANES · GSS 1972–2024 · NSFG · IFS · Survey Center on American Life · Schwartz & Mare, Demography 2024 · Census Bureau · BLS · CBO · NAHB · NAR · Putnam, Bowling Alone (2000). </div> <script> const mf={family:"'JetBrains Mono',monospace",size:10}; const sf={family:"'JetBrains Mono',monospace",size:8}; const xAx={grid:{color:'rgba(255,255,255,0.04)',drawBorder:false},ticks:{color:'#8a8680',font:mf},border:{display:false}}; const yAx={grid:{color:'rgba(255,255,255,0.04)',drawBorder:false},ticks:{color:'#8a8680',font:mf},border:{display:false}}; const tip=()=>({backgroundColor:'#18181c',titleColor:'#e8e4df',bodyColor:'#8a8680',borderColor:'#252529',borderWidth:1,titleFont:{family:"'Cormorant Garamond',serif",size:14},bodyFont:{family:"'JetBrains Mono',monospace",size:11},padding:12,cornerRadius:2}); const lgd={display:true,position:'top',align:'end',labels:{color:'#8a8680',font:{family:"'JetBrains Mono',monospace",size:8},boxWidth:16,boxHeight:1,padding:8}}; function idxPeak(a){const v=a.filter(x=>x!=null);const m=Math.max(...v);return a.map(x=>x==null?null:Math.round(1000*x/m)/10);} function idxInv(a){const v=a.filter(x=>x!=null);const m=Math.min(...v);return a.map(x=>x==null?null:Math.round(1000*m/x)/10);} const chartRegistry=[]; const chartInstances=new Map(); function registerChart(canvasId,config){ chartRegistry.push({canvasId,config}); } function createChart(canvasId,config){ if(chartInstances.has(canvasId))return; const el=document.getElementById(canvasId); if(!el)return; const ctx=el.getContext('2d'); const chart=new Chart(ctx,config); chartInstances.set(canvasId,chart); } registerChart('c_social',{type:'line',data:{labels:['1955','1960','1965','1970','1975','1980','1985','1990','1995','2000','2005','2010','2015','2020','2024'],datasets:[{label:'Marriage Rate',data:[97,100,98,95,88,83,80,77,72,69,67,63,60,58,55],borderColor:'#c4453a',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Church Membership',data:[100,99,97,95,93,92,92,91,89,93,84,81,73,63,60],borderColor:'#3ac4a8',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Civic Participation',data:[95,100,100,98,92,87,83,78,72,68,63,59,55,48,45],borderColor:'#8a5ec4',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Trust in Government',data:[90,100,95,65,50,48,52,45,38,52,42,32,28,25,28],borderColor:'#c49a3a',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Fertility (indexed)',data:[98,100,80,68,49,50,50,57,54,55,56,53,50,45,44],borderColor:'rgba(196,154,58,0.4)',borderDash:[4,3],borderWidth:1.3,tension:0.3,pointRadius:0,fill:false},{label:'Male Friendship (10+)',data:[null,null,null,null,null,null,null,100,null,null,null,null,null,42,38],borderColor:'rgba(138,94,196,0.5)',borderDash:[2,3],borderWidth:1.3,tension:0.3,pointRadius:3,pointBackgroundColor:'rgba(138,94,196,0.7)',fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{...lgd,labels:{...lgd.labels,padding:6}},tooltip:tip()},scales:{x:xAx,y:{...yAx,min:15,max:105,title:{display:true,text:'index (peak = 100)',color:'#8a8680',font:mf}}}}}); registerChart('c_despair',{type:'line',data:{labels:['1960','1965','1970','1975','1980','1985','1990','1995','1999','2002','2005','2008','2010','2012','2014','2016','2018','2020','2021','2022'],datasets:[{label:'Deaths of Despair (rate per 100k)',data:[22,24,27,29,28,26,25,27,29,31,34,36,38,40,42,45,47,52,55,54],borderColor:'#c4453a',backgroundColor:'rgba(196,69,58,0.08)',fill:true,tension:0.35,pointRadius:2.5,borderWidth:2},{label:'Drug Overdose Only (rate per 100k)',data:[null,null,null,null,null,null,null,null,6.1,6.8,8.5,10,12,13,15,19,21,29,32.4,33.2],borderColor:'rgba(196,69,58,0.45)',borderDash:[4,3],fill:false,tension:0.35,pointRadius:2,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,maxTicksLimit:8}},y:{...yAx,title:{display:true,text:'per 100,000',color:'#8a8680',font:mf}}}}}); registerChart('c_antidep',{type:'line',data:{labels:['1988–94','1999–02','2003–06','2005–08','2009–10','2011–14','2015–18'],datasets:[{label:'% adults on antidepressants',data:[2.4,7.7,8.5,10.1,10.6,12.7,13.2],borderColor:'#c49a3a',backgroundColor:'rgba(196,154,58,0.1)',fill:true,tension:0.3,pointRadius:3.5,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,font:{...mf,size:9}}},y:{...yAx,beginAtZero:true,max:16,title:{display:true,text:'%',color:'#8a8680',font:mf}}}}}); registerChart('c_sex',{type:'line',data:{labels:['1989','1992','1996','2000','2004','2008','2010','2012','2014','2016','2018','2021','2024'],datasets:[{label:'Men 18–29 no sex past year (%)',data:[10,9,10,8,9,10,12,14,15,18,28,24,24],borderColor:'#3a7ec4',backgroundColor:'rgba(58,126,196,0.1)',fill:true,tension:0.3,pointRadius:3.5,borderWidth:2.5},{label:'Women 18–29 no sex (%)',data:[8,8,9,7,8,8,9,10,10,12,18,18,18],borderColor:'#c45a8a',backgroundColor:'rgba(196,90,138,0.08)',fill:true,tension:0.3,pointRadius:3,borderWidth:2},{label:'All adults weekly sex (%)',data:[55,54,53,52,50,49,48,46,44,42,40,38,37],borderColor:'rgba(196,154,58,0.5)',borderDash:[4,3],tension:0.3,pointRadius:0,borderWidth:1.5,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:xAx,y:{...yAx,beginAtZero:true,max:60,title:{display:true,text:'%',color:'#8a8680',font:mf}}}}}); registerChart('c_loneliness',{type:'bar',data:{labels:['Men 10+\nfriends\n1990','Men 10+\nfriends\n2021','No close\nfriends\n1990','No close\nfriends\n2021','Weekly\nlonely\n2024'],datasets:[{data:[40,15,3,12,30],backgroundColor:['rgba(138,94,196,0.5)','rgba(138,94,196,0.8)','rgba(196,69,58,0.4)','rgba(196,69,58,0.75)','rgba(196,154,58,0.75)'],borderColor:['#8a5ec4','#8a5ec4','#c4453a','#c4453a','#c49a3a'],borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,maxRotation:0,font:sf}},y:{...yAx,beginAtZero:true,max:50,title:{display:true,text:'%',color:'#8a8680',font:mf}}}}}); registerChart('c_political',{type:'line',data:{labels:['2003','2005','2007','2009','2011','2013','2015','2017','2019','2021','2023'],datasets:[{label:'Young women — liberal (%)',data:[28,29,30,30,30,32,35,38,40,44,44],borderColor:'#c45a8a',backgroundColor:'rgba(196,90,138,0.1)',fill:true,tension:0.35,pointRadius:3.5,borderWidth:2.5},{label:'Young men — liberal (%)',data:[27,26,26,25,27,26,26,26,25,25,25],borderColor:'#3a7ec4',backgroundColor:'rgba(58,126,196,0.08)',fill:true,tension:0.35,pointRadius:3,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:xAx,y:{...yAx,min:15,max:50,title:{display:true,text:'% identifying as liberal',color:'#8a8680',font:mf}}}}}); registerChart('c_fear',{type:'bar',data:{labels:["Women:\nfear assault","Men: #MeToo\nchanged behavior","Women:\nharassed on dates","Dating harder\nfor men"],datasets:[ {label:'Women',data:[55,null,57,null],backgroundColor:'rgba(196,90,138,0.5)',borderColor:'#c45a8a',borderWidth:1,borderRadius:2}, {label:'Men / General',data:[null,51,null,65],backgroundColor:'rgba(58,126,196,0.5)',borderColor:'#3a7ec4',borderWidth:1,borderRadius:2} ]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:lgd,tooltip:tip()},scales:{x:{...xAx,beginAtZero:true,max:75,title:{display:true,text:'%',color:'#8a8680',font:mf}},y:{...yAx,ticks:{...yAx.ticks,font:sf}}}}});  
+<p>She is looking at him. He is looking at her. Between them is the world. But now there is a bridge. Two people who see each other.</p></div> <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;color:#4a4744;text-align:center;padding:64px 0 48px;"><a href="/feedback.html" style="color:#4a4744;text-decoration:none;border-bottom:1px solid #252529;padding-bottom:2px;transition:color 0.3s,border-color 0.3s;" onmouseover="this.style.color='#8a8680';this.style.borderColor='#8a8680'" onmouseout="this.style.color='#4a4744';this.style.borderColor='#252529'">If this moved you, you can tell me.</a></p> </div>   <div class="sources-block"> Sources: CDC WONDER · CDC NCHS · JEC Social Capital Project · Case & Deaton, Brookings (2017) · World Bank / FRED · Violence Project · Gallup (1937–2024) · Pew Research Center · Surgeon General 2023 · APA · Harvard MCC/YouGov · CDC YRBS 2011–2023 · NCHS Data Briefs · NHANES · GSS 1972–2024 · NSFG · IFS · Survey Center on American Life · Schwartz & Mare, Demography 2024 · Census Bureau · BLS · CBO · NAHB · NAR · Putnam, Bowling Alone (2000). </div> <script> const mf={family:"'JetBrains Mono',monospace",size:10}; const sf={family:"'JetBrains Mono',monospace",size:8}; const xAx={grid:{color:'rgba(255,255,255,0.04)',drawBorder:false},ticks:{color:'#8a8680',font:mf},border:{display:false}}; const yAx={grid:{color:'rgba(255,255,255,0.04)',drawBorder:false},ticks:{color:'#8a8680',font:mf},border:{display:false}}; const tip=()=>({backgroundColor:'#18181c',titleColor:'#e8e4df',bodyColor:'#8a8680',borderColor:'#252529',borderWidth:1,titleFont:{family:"'Cormorant Garamond',serif",size:14},bodyFont:{family:"'JetBrains Mono',monospace",size:11},padding:12,cornerRadius:2}); const lgd={display:true,position:'top',align:'end',labels:{color:'#8a8680',font:{family:"'JetBrains Mono',monospace",size:8},boxWidth:16,boxHeight:1,padding:8}}; function idxPeak(a){const v=a.filter(x=>x!=null);const m=Math.max(...v);return a.map(x=>x==null?null:Math.round(1000*x/m)/10);} function idxInv(a){const v=a.filter(x=>x!=null);const m=Math.min(...v);return a.map(x=>x==null?null:Math.round(1000*m/x)/10);} const chartRegistry=[]; const chartInstances=new Map(); function registerChart(canvasId,config){ chartRegistry.push({canvasId,config}); } function createChart(canvasId,config){ if(chartInstances.has(canvasId))return; const el=document.getElementById(canvasId); if(!el)return; const ctx=el.getContext('2d'); const chart=new Chart(ctx,config); chartInstances.set(canvasId,chart); } registerChart('c_social',{type:'line',data:{labels:['1955','1960','1965','1970','1975','1980','1985','1990','1995','2000','2005','2010','2015','2020','2024'],datasets:[{label:'Marriage Rate',data:[97,100,98,95,88,83,80,77,72,69,67,63,60,58,55],borderColor:'#c4453a',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Church Membership',data:[100,99,97,95,93,92,92,91,89,93,84,81,73,63,60],borderColor:'#3ac4a8',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Civic Participation',data:[95,100,100,98,92,87,83,78,72,68,63,59,55,48,45],borderColor:'#8a5ec4',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Trust in Government',data:[90,100,95,65,50,48,52,45,38,52,42,32,28,25,28],borderColor:'#c49a3a',borderWidth:1.8,tension:0.3,pointRadius:2,fill:false},{label:'Fertility (indexed)',data:[98,100,80,68,49,50,50,57,54,55,56,53,50,45,44],borderColor:'rgba(196,154,58,0.4)',borderDash:[4,3],borderWidth:1.3,tension:0.3,pointRadius:0,fill:false},{label:'Male Friendship (10+)',data:[null,null,null,null,null,null,null,100,null,null,null,null,null,42,38],borderColor:'rgba(138,94,196,0.5)',borderDash:[2,3],borderWidth:1.3,tension:0.3,pointRadius:3,pointBackgroundColor:'rgba(138,94,196,0.7)',fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{...lgd,labels:{...lgd.labels,padding:6}},tooltip:tip()},scales:{x:xAx,y:{...yAx,min:15,max:105,title:{display:true,text:'index (peak = 100)',color:'#8a8680',font:mf}}}}}); registerChart('c_despair',{type:'line',data:{labels:['1960','1965','1970','1975','1980','1985','1990','1995','1999','2002','2005','2008','2010','2012','2014','2016','2018','2020','2021','2022'],datasets:[{label:'Deaths of Despair (rate per 100k)',data:[22,24,27,29,28,26,25,27,29,31,34,36,38,40,42,45,47,52,55,54],borderColor:'#c4453a',backgroundColor:'rgba(196,69,58,0.08)',fill:true,tension:0.35,pointRadius:2.5,borderWidth:2},{label:'Drug Overdose Only (rate per 100k)',data:[null,null,null,null,null,null,null,null,6.1,6.8,8.5,10,12,13,15,19,21,29,32.4,33.2],borderColor:'rgba(196,69,58,0.45)',borderDash:[4,3],fill:false,tension:0.35,pointRadius:2,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,maxTicksLimit:8}},y:{...yAx,title:{display:true,text:'per 100,000',color:'#8a8680',font:mf}}}}}); registerChart('c_antidep',{type:'line',data:{labels:['1988–94','1999–02','2003–06','2005–08','2009–10','2011–14','2015–18'],datasets:[{label:'% adults on antidepressants',data:[2.4,7.7,8.5,10.1,10.6,12.7,13.2],borderColor:'#c49a3a',backgroundColor:'rgba(196,154,58,0.1)',fill:true,tension:0.3,pointRadius:3.5,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,font:{...mf,size:9}}},y:{...yAx,beginAtZero:true,max:16,title:{display:true,text:'%',color:'#8a8680',font:mf}}}}}); registerChart('c_sex',{type:'line',data:{labels:['1989','1992','1996','2000','2004','2008','2010','2012','2014','2016','2018','2021','2024'],datasets:[{label:'Men 18–29 no sex past year (%)',data:[10,9,10,8,9,10,12,14,15,18,28,24,24],borderColor:'#3a7ec4',backgroundColor:'rgba(58,126,196,0.1)',fill:true,tension:0.3,pointRadius:3.5,borderWidth:2.5},{label:'Women 18–29 no sex (%)',data:[8,8,9,7,8,8,9,10,10,12,18,18,18],borderColor:'#c45a8a',backgroundColor:'rgba(196,90,138,0.08)',fill:true,tension:0.3,pointRadius:3,borderWidth:2},{label:'All adults weekly sex (%)',data:[55,54,53,52,50,49,48,46,44,42,40,38,37],borderColor:'rgba(196,154,58,0.5)',borderDash:[4,3],tension:0.3,pointRadius:0,borderWidth:1.5,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:xAx,y:{...yAx,beginAtZero:true,max:60,title:{display:true,text:'%',color:'#8a8680',font:mf}}}}}); registerChart('c_loneliness',{type:'bar',data:{labels:['Men 10+\nfriends\n1990','Men 10+\nfriends\n2021','No close\nfriends\n1990','No close\nfriends\n2021','Weekly\nlonely\n2024'],datasets:[{data:[40,15,3,12,30],backgroundColor:['rgba(138,94,196,0.5)','rgba(138,94,196,0.8)','rgba(196,69,58,0.4)','rgba(196,69,58,0.75)','rgba(196,154,58,0.75)'],borderColor:['#8a5ec4','#8a5ec4','#c4453a','#c4453a','#c49a3a'],borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,maxRotation:0,font:sf}},y:{...yAx,beginAtZero:true,max:50,title:{display:true,text:'%',color:'#8a8680',font:mf}}}}}); registerChart('c_political',{type:'line',data:{labels:['2003','2005','2007','2009','2011','2013','2015','2017','2019','2021','2023'],datasets:[{label:'Young women — liberal (%)',data:[28,29,30,30,30,32,35,38,40,44,44],borderColor:'#c45a8a',backgroundColor:'rgba(196,90,138,0.1)',fill:true,tension:0.35,pointRadius:3.5,borderWidth:2.5},{label:'Young men — liberal (%)',data:[27,26,26,25,27,26,26,26,25,25,25],borderColor:'#3a7ec4',backgroundColor:'rgba(58,126,196,0.08)',fill:true,tension:0.35,pointRadius:3,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:xAx,y:{...yAx,min:15,max:50,title:{display:true,text:'% identifying as liberal',color:'#8a8680',font:mf}}}}}); registerChart('c_fear',{type:'bar',data:{labels:["Women:\nfear assault","Men: #MeToo\nchanged behavior","Women:\nharassed on dates","Dating harder\nfor men"],datasets:[ {label:'Women',data:[55,null,57,null],backgroundColor:'rgba(196,90,138,0.5)',borderColor:'#c45a8a',borderWidth:1,borderRadius:2}, {label:'Men / General',data:[null,51,null,65],backgroundColor:'rgba(58,126,196,0.5)',borderColor:'#3a7ec4',borderWidth:1,borderRadius:2} ]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:lgd,tooltip:tip()},scales:{x:{...xAx,beginAtZero:true,max:75,title:{display:true,text:'%',color:'#8a8680',font:mf}},y:{...yAx,ticks:{...yAx.ticks,font:sf}}}}});  
 const revealObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');
@@ -334,8 +334,58 @@ async function getTokenFromCode(code) {
       code_verifier: verifier
     })
   });
+  if (!response.ok) throw new Error('Spotify token request failed (' + response.status + ')');
   const data = await response.json();
+  if (!data.access_token) throw new Error('Spotify token missing');
+  return data;
+}
+
+// Save token + expiry + refresh token so later reloads know when it is stale
+function saveToken(data) {
+  accessToken = data.access_token;
+  sessionStorage.setItem('spotify_token', data.access_token);
+  sessionStorage.setItem('spotify_expires_at', String(Date.now() + (data.expires_in || 3600) * 1000));
+  if (data.refresh_token) sessionStorage.setItem('spotify_refresh', data.refresh_token);
+}
+
+function clearToken() {
+  accessToken = null;
+  sessionStorage.removeItem('spotify_token');
+  sessionStorage.removeItem('spotify_expires_at');
+  sessionStorage.removeItem('spotify_refresh');
+}
+
+async function refreshToken() {
+  const refresh = sessionStorage.getItem('spotify_refresh');
+  if (!refresh) throw new Error('No refresh token');
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ client_id: CLIENT_ID, grant_type: 'refresh_token', refresh_token: refresh })
+  });
+  if (!response.ok) throw new Error('Spotify refresh failed (' + response.status + ')');
+  const data = await response.json();
+  if (!data.access_token) throw new Error('Spotify token missing');
+  saveToken(data);
   return data.access_token;
+}
+
+// Valid token, refreshing if it expires within a minute; null if none usable
+async function getValidToken() {
+  const expiresAt = parseInt(sessionStorage.getItem('spotify_expires_at') || '0', 10);
+  if (accessToken && Date.now() < expiresAt - 60000) return accessToken;
+  try { return await refreshToken(); } catch (e) { clearToken(); return null; }
+}
+
+// Reset audio UI after an auth/account/SDK failure so the reader can reconnect
+function resetAudio(message) {
+  audioUnlocked = false;
+  deviceId = null;
+  if (spotifyPlayer) { spotifyPlayer.disconnect(); spotifyPlayer = null; }
+  beginGate.style.display = 'none';
+  updatePlayerUI(false);
+  audioCtl.classList.add('visible');
+  trackName.textContent = message;
 }
 
 // Check for auth code on page load
@@ -347,12 +397,14 @@ if (authCode) {
   // Returning from Spotify auth — exchange code for token
   history.replaceState({}, '', window.location.pathname);
   document.addEventListener('DOMContentLoaded', showStory);
-  getTokenFromCode(authCode).then(token => {
-    if (token) {
-      accessToken = token;
-      sessionStorage.setItem('spotify_token', token);
-      initSpotify();
-    }
+  getTokenFromCode(authCode).then(data => {
+    saveToken(data);
+    initSpotify();
+  }).catch(err => {
+    console.error(err);
+    clearToken();
+    const fail = () => resetAudio('♫ Spotify connection failed. Try again or read without audio');
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fail); else fail();
   });
 } else {
   // Restore previous session if token exists
@@ -361,7 +413,10 @@ if (authCode) {
     if (prevToken) {
       accessToken = prevToken;
       showStory();
-      initSpotify();
+      getValidToken().then(token => {
+        if (token) initSpotify();
+        else resetAudio('♫ Spotify session expired. Reconnect to enable audio');
+      });
     }
   });
 }
@@ -393,7 +448,7 @@ function initSpotify() {
   window.onSpotifyWebPlaybackSDKReady = () => {
     spotifyPlayer = new Spotify.Player({
       name: 'The Unbinding',
-      getOAuthToken: cb => cb(accessToken),
+      getOAuthToken: cb => { getValidToken().then(t => cb(t || '')); },
       volume: userVolume
     });
 
@@ -410,6 +465,20 @@ function initSpotify() {
     });
 
     spotifyPlayer.addListener('not_ready', () => { deviceId = null; });
+
+    spotifyPlayer.addListener('authentication_error', ({ message }) => {
+      console.error('Spotify authentication_error:', message);
+      clearToken();
+      resetAudio('♫ Spotify session expired. Reconnect to enable audio');
+    });
+    spotifyPlayer.addListener('account_error', ({ message }) => {
+      console.error('Spotify account_error:', message);
+      resetAudio('♫ Spotify Premium is required for audio. You can keep reading without it');
+    });
+    spotifyPlayer.addListener('initialization_error', ({ message }) => {
+      console.error('Spotify initialization_error:', message);
+      resetAudio('♫ Audio is not supported in this browser. You can keep reading without it');
+    });
 
     spotifyPlayer.addListener('player_state_changed', state => {
       if (!state) return;
@@ -448,11 +517,12 @@ async function switchTo(toIdx) {
   trackName.textContent = SONG_NAMES[toIdx];
   audioToggle.textContent = '❚❚';
 
-  // Start new track
+  // Start new track silent when crossfading, then ramp up
+  if (fromIdx >= 0 && spotifyPlayer) await spotifyPlayer.setVolume(0);
   const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
     method: 'PUT',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      'Authorization': `Bearer ${(await getValidToken()) || accessToken}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -461,14 +531,13 @@ async function switchTo(toIdx) {
   }).catch(() => null);
   // Token expired or network error — prompt re-auth
   if (res && res.status === 401) {
-    sessionStorage.removeItem('spotify_token');
-    updatePlayerUI(false);
+    clearToken();
+    resetAudio('♫ Spotify session expired. Reconnect to enable audio');
     return;
   }
 
   // Crossfade volume
   if (fromIdx >= 0) {
-    let vol = userVolume;
     const STEPS = 40;
     const interval = 2500 / STEPS;
     let step = 0;
@@ -523,12 +592,15 @@ let chapterTops = null;
 function getChapterTops() {
   if (chapterTops) return chapterTops;
   chapterTops = Array.from(musicCues).map(el => ({
-    top: el.offsetTop,
+    top: el.getBoundingClientRect().top + window.scrollY,
     idx: parseInt(el.dataset.music, 10)
   }));
   return chapterTops;
 }
 window.addEventListener('resize', () => { chapterTops = null; }, { passive: true });
+// Charts, fonts and reveals shift layout without a resize; re-measure on any size change
+if (window.ResizeObserver) new ResizeObserver(() => { chapterTops = null; }).observe(document.body);
+window.addEventListener('load', () => { chapterTops = null; });
 
 function getActiveChapterIdx() {
   const trigger = window.scrollY + window.innerHeight * 0.3;
@@ -595,7 +667,6 @@ registerChart('c_trust',{type:'line',data:{labels:['1972','1976','1980','1985','
 registerChart('c_parsep',{type:'bar',data:{labels:['Ever\nmarried','Had\nchildren','Depressed\nat 5 yrs','Persistent\nsadness\nat 10 yrs'],datasets:[{label:'Intact families',data:[80,61,15,20],backgroundColor:'rgba(138,94,196,0.4)',borderColor:'#8a5ec4',borderWidth:1,borderRadius:2},{label:'Children of divorce',data:[60,38,40,55],backgroundColor:'rgba(138,94,196,0.75)',borderColor:'#8a5ec4',borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,font:sf,maxRotation:0}},y:{...yAx,min:0,max:90,title:{display:true,text:'%',color:'#8a8680',font:sf}}}}});
 registerChart('c_cfr',{type:'bar',data:{labels:['1960','1970','1980','1990','2000','2010','2016','2020','2024'],datasets:[{label:'CFR pages (thousands)',data:[22.9,54.8,102.2,128.5,138.0,163.3,185.1,185.9,188],backgroundColor:['rgba(107,130,153,0.2)','rgba(107,130,153,0.26)','rgba(107,130,153,0.32)','rgba(107,130,153,0.38)','rgba(107,130,153,0.44)','rgba(107,130,153,0.5)','rgba(107,130,153,0.56)','rgba(107,130,153,0.62)','rgba(107,130,153,0.68)'],borderColor:'#6b8299',borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},scales:{x:xAx,y:{...yAx,beginAtZero:true,max:210,title:{display:true,text:'thousands of pages',color:'#8a8680',font:mf}}}}});
 registerChart('c_meaning',{type:'bar',data:{labels:['"Too\nindividualistic"','"Technology\ncauses\nloneliness"','"Overworked\nor too\nbusy"','"Mental health\nharms\nrelationships"','"Insufficient\ntime w/\nfamily"'],datasets:[{label:'% identifying as cause of loneliness (2024)',data:[58,73,62,60,66],backgroundColor:'rgba(58,196,168,0.4)',borderColor:'#3ac4a8',borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},indexAxis:'y',scales:{x:{...xAx,beginAtZero:true,max:80,title:{display:true,text:'% of respondents',color:'#8a8680',font:mf}},y:{...yAx,ticks:{...yAx.ticks,font:sf}}}}});
-rT=[null,null,25,28,40,22,18,20,22],rH=[null,null,null,43,40,39,35,38,36],rC=[null,null,null,null,42,34,30,32,26],rF=[null,null,null,null,null,12.8,9.5,6,6.5],rR=[22.9,54.8,102.2,128.5,138,163.3,185.1,185.9,188];
 
 
 const chartObs=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(!entry.isIntersecting)return; const canvases=entry.target.querySelectorAll('canvas'); canvases.forEach(canvas=>{ const found=chartRegistry.find(c=>c.canvasId===canvas.id); if(found)createChart(found.canvasId,found.config); }); }); },{threshold:0.2}); document.querySelectorAll('.chart-gate,.chart-pair').forEach(el=>chartObs.observe(el));

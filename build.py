@@ -36,7 +36,7 @@ def escape_html(text):
 def md_to_html(md_text):
     # Strip heading line
     lines = md_text.strip().split('\n')
-    body_lines = [l for l in lines if not l.startswith('#')]
+    body_lines = lines[1:] if lines and lines[0].startswith('#') else lines
     body = '\n'.join(body_lines).strip()
 
     # Split into paragraphs
@@ -72,8 +72,7 @@ def build():
 
         # Match the prose div by data-chapter index and replace its contents
         pattern = rf'(<div class="prose" data-chapter="{i}">)(.*?)(</div>)'
-        replacement = rf'\g<1>{new_prose}\g<3>'
-        new_html = re.sub(pattern, replacement, html, flags=re.DOTALL)
+        new_html = re.sub(pattern, lambda m: m.group(1) + new_prose + m.group(3), html, flags=re.DOTALL)
 
         if new_html == html:
             print(f"OK (unchanged): {chapter}")
