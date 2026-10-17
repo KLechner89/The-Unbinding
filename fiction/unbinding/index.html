@@ -40,7 +40,7 @@
   .cw{height:180px!important}
   .act-div h2{font-size:1.6rem}
 } .parallax-inner{will-change:transform} body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,0.03),rgba(0,0,0,0) 40%);opacity:var(--overlay-opacity,0.35);transition:opacity 1.2s ease} [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity 1.2s ease,transform 1.2s ease} [data-reveal].visible{opacity:1;transform:translateY(0)}
-.site-menu{position:fixed;top:20px;right:22px;z-index:1001;transition:opacity 0.3s ease}
+.site-menu{position:fixed;top:20px;right:clamp(20px,5vw,72px);z-index:1001;transition:opacity 0.3s ease}
 .site-menu.behind{opacity:0;pointer-events:none}
 .menu-btn{width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:1px solid transparent;border-radius:50%;cursor:pointer;transition:border-color 0.3s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .menu-btn span{display:block;width:3px;height:3px;border-radius:50%;background:#8a8680;transition:background 0.3s}
@@ -52,7 +52,7 @@
 .menu-item{display:block;width:100%;text-align:left;background:none;border:none;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8680;text-decoration:none;padding:12px 20px;cursor:pointer;transition:color 0.3s,background 0.3s}
 .menu-item:hover,.menu-item:focus-visible{color:#e8e4df;background:rgba(255,255,255,0.03);outline:none}
 .menu-item[aria-current="page"]{color:#c4453a}
-@media(max-width:768px){.site-menu{top:12px;right:12px}}
+@media(max-width:768px){.site-menu{top:12px}}
 @media(prefers-reduced-motion:reduce){.menu-panel,.site-menu{transition:none}}
 .mailer-overlay{position:fixed;top:0;right:0;width:320px;max-width:90vw;background:#111114;border-left:1px solid #252529;border-bottom:1px solid #252529;padding:48px 32px 36px;z-index:999;transform:translateY(-100%);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;pointer-events:none}
 .mailer-overlay.open{transform:translateY(0);opacity:1;pointer-events:all}
