@@ -84,7 +84,6 @@ a.wordmark:hover{color:var(--text)}
   .work p{font-size:16px}
   .work .cap{letter-spacing:0.16em}
 }
-@media(max-height:760px) and (min-width:601px){.catalog{padding:88px 0 32px}.catalog h1{margin-bottom:28px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* ---------- Three-dot menu and mailing-list panel (copied from The Unbinding) ---------- */
