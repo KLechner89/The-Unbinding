@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Connecting to Spotify — Kyle Lechner</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@300;400&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.callback{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:40px 24px;text-align:center}
+.callback h1{font-family:var(--serif);font-weight:300;font-size:clamp(28px,5vw,44px);line-height:1.2}
+.callback p{font-family:var(--body);font-size:17px;color:var(--text-dim);max-width:34ch;line-height:1.6}
+.callback a{color:var(--text-muted);border-bottom:1px solid var(--border);padding-bottom:4px;transition:color 0.3s,border-color 0.3s}
+.callback a:hover{color:var(--text);border-color:var(--text-muted)}
+.callback .status{color:var(--text-muted)}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<main class="callback" aria-live="polite">
+  <span class="status label" id="status">Spotify</span>
+  <h1 id="heading">Connecting to Spotify…</h1>
+  <p id="detail" hidden></p>
+  <a class="label" id="back" href="/" hidden>Back to the story</a>
+</main>
+<script src="/assets/spotify-auth.js"></script>
+<script>
+(function () {
+  var heading = document.getElementById('heading');
+  var detail = document.getElementById('detail');
+  var back = document.getElementById('back');
+  SpotifyAuth.handleCallback().then(function (returnTo) {
+    back.href = returnTo;
+    window.location.replace(returnTo);
+  }).catch(function (err) {
+    console.error(err);
+    heading.textContent = 'Spotify didn\u2019t connect.';
+    detail.textContent = (err && err.message ? err.message + ' ' : '') + 'You can try again, or keep reading without audio.';
+    detail.hidden = false;
+    back.href = (err && err.returnTo) || '/';
+    back.hidden = false;
+  });
+})();
+</script>
+</body>
+</html>

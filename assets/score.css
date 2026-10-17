@@ -1,0 +1,12 @@
+/* Soundtrack player bar shared by scored works (used with /assets/score.js) */
+.audio-ctl{position:fixed;bottom:28px;right:28px;z-index:900;display:flex;align-items:center;gap:12px;background:rgba(17,17,20,0.92);border:1px solid var(--border);padding:10px 18px;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text-muted);letter-spacing:0.08em;backdrop-filter:blur(12px);opacity:0;transition:opacity 0.8s ease}
+.audio-ctl.visible{opacity:1}
+.audio-ctl .track-name{max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.audio-ctl button{background:none;border:1px solid var(--border);color:var(--text-muted);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.audio-ctl button:hover{border-color:var(--text-muted);color:var(--text)}
+.audio-ctl .vol{-webkit-appearance:none;width:50px;height:1px;background:var(--border);outline:none}
+.audio-ctl .vol::-webkit-slider-thumb{-webkit-appearance:none;width:8px;height:8px;border-radius:50%;background:var(--text-muted);cursor:pointer}
+@media(max-width:768px){
+  .audio-ctl{bottom:12px;right:12px;left:12px;justify-content:space-between;padding:8px 14px}
+  .audio-ctl .track-name{max-width:140px;font-size:0.55rem}
+}
