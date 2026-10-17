@@ -136,31 +136,9 @@
 </section>
 </div>
 </article>
-<!-- response form: written by build scripts from response_form.py; edit there -->
-<section class="response" aria-labelledby="response-h">
-<div class="response-form-view">
-<h2 class="response-h" id="response-h">How did this make you <span>feel?</span></h2>
-<p class="response-sub">This is private. Your response goes only to the author. Nothing is displayed publicly.</p>
-<form name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="response-form">
-<input type="hidden" name="form-name" value="feedback">
-<input type="hidden" name="piece" value="The Carriage and the Platform (/essays/carriage-and-platform/)">
-<p class="response-hp"><label>Don&rsquo;t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-<label class="response-label" for="response-message">Your response</label>
-<textarea id="response-message" name="message" rows="4" placeholder="Whatever you want to say." required></textarea>
-<div class="response-row">
-<input type="text" name="name" placeholder="Name (optional)" aria-label="Name (optional)" autocomplete="name">
-<input type="email" name="email" placeholder="Email (optional, if you&rsquo;d like a response)" aria-label="Email (optional, if you&rsquo;d like a response)" autocomplete="email">
-</div>
-<button type="submit">Send</button>
-<p class="response-error" role="alert" hidden>Something went wrong. Please try again.</p>
-</form>
-</div>
-<div class="response-done" role="status" hidden>
-<p class="response-h">Received.</p>
-<p class="response-sub">Thank you for reading.</p>
-</div>
-</section>
-<!-- end response form -->
+<!-- response link: written by build scripts from response_form.py; edit there -->
+<p class="respond"><a class="respond-link" href="/respond/?piece=/essays/carriage-and-platform/&amp;title=The%20Carriage%20and%20the%20Platform">How did this make you feel?</a></p>
+<!-- end response link -->
 <nav class="pager" aria-label="More essays">
 <span></span>
 <a class="next" href="/essays/mobius-censor/1/"><span class="label">Next &rarr;</span><span class="t">The Möbius Censor · Paper I: Before Thought Begins</span></a>
@@ -169,7 +147,6 @@
 <a href="/essays/">All essays</a></p>
 </main>
 <script src="/assets/footnotes.js" defer></script>
-<script src="/assets/response.js" defer></script>
 <button id="spotifyLoginBtn" class="score-login" onclick="loginWithSpotify()">&#9654; CONNECT SPOTIFY</button>
 <div class="audio-ctl" id="audioCtl"> <button id="audioToggle" aria-label="Play/Pause" aria-pressed="false">&#9654;</button> <span class="track-name" id="trackName">&mdash;</span> <input type="range" class="vol" id="volSlider" min="0" max="100" value="40" aria-label="Volume"> </div>
 <!-- Soundtrack: this essay's songs are in /essays/carriage-and-platform/score.config.js; the shared player is /assets/score.js -->

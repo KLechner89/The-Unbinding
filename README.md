@@ -81,7 +81,7 @@ A "scored work" is a story with a soundtrack that changes as the reader scrolls.
    `<script src="/fiction/unbinding/score.config.js"></script>` to your folder, e.g. `/fiction/new-story/score.config.js`. Leave the two lines after it (`/assets/spotify-auth.js` and `/assets/score.js`) as they are.
 5. **Add it to the catalog.** Add an entry for it in `fiction/index.html` (or the essays/media page).
 6. **If the new page has chapters in `chapters/`,** `build.py` currently only fills in The Unbinding. Ask for it to be extended to the new page.
-7. **The response box comes with the copy.** The "How did this make you feel?" box at the end of The Unbinding is copied too. In the new page, change its hidden `piece` value to the new title and address, e.g. `value="New Story (/fiction/new-story/)"`. (If you forget, the page fills in its own title and address when a reader sends a response.)
+7. **The response link comes with the copy.** The small "How did this make you feel?" link at the end of The Unbinding is copied too. In the new page, change its address to the new piece, e.g. `/respond/?piece=/fiction/new-story/&title=New%20Story`.
 
 Nothing has to change in Spotify. Every work uses the same Redirect URI, `https://kylelechner.io/spotify/`, which is already registered. After connecting, readers are sent back to the page they started on.
 
@@ -128,25 +128,27 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 | `_redirects` | Old addresses that forward to new ones (`/unbinding` → the story). |
 | `chapters/` | One markdown file per chapter (see above). |
 | `build.py` | Copies chapter text into `fiction/unbinding/index.html`. |
-| `feedback.html` | Reader feedback form (Netlify Forms). |
-| `response_form.py`, `assets/response.css`, `assets/response.js` | The "How did this make you feel?" box at the end of every piece (see "Response box"). |
+| `feedback.html` | Reader response form (Netlify Forms), also at `/respond/`. |
+| `response_form.py`, `assets/response.css`, `assets/response.js` | The "How did this make you feel?" link at the end of every piece, and the response form page (see "Response link"). |
 | `book.html` | Scheduling page at `kylelechner.io/book`. |
 | `netlify/functions/` | Scheduling backend: availability, booking, and a readiness check. |
 | `netlify/functions/_shared/availability-rules.mjs` | Meeting hours, lengths, notice, and daily limits. |
 | `media/works.json`, `build_media.py` | The list of video works and the script that builds the Media page and each video page from it (see "Adding a video essay"). |
 | `_headers` | Security headers for every page. |
 
-## Response box
+## Response link
 
-Every piece ends with a small "How did this make you feel?" box: The Unbinding (after the last chapter), every essay page, and every video page (before the Next / All links). It is the same Netlify form as `feedback.html` (form name `feedback`), so responses arrive the same way, in the Netlify dashboard under **Forms → feedback** (and by email if form notifications are on). Each response has a `piece` field saying which page it came from, e.g. `The Möbius Censor · Paper II: … (/essays/mobius-censor/2/)`. Responses from `feedback.html` itself say `Feedback page`.
+Every piece ends with a small "How did this make you feel?" link: The Unbinding (after the last chapter), every essay page, and every video page (before the Next / All links). It opens the response form page, `/respond/` (the same page as `feedback.html`; see `_redirects`), with the piece in the address, e.g. `/respond/?piece=/essays/mobius-censor/2/&title=The%20M%C3%B6bius%20Censor%20%C2%B7%20Paper%20II%3A%20Reflex%20Incarnate`. The form's **The piece** field is filled in with the title (the reader can change it), and a hidden `piece` field keeps the page address.
+
+Responses go to the Netlify form named `feedback`, in the Netlify dashboard under **Forms → feedback** (and by email if form notifications are on), with the fields `piece_title`, `piece`, `message`, `name`, `email`. Someone who opens `/feedback.html` or `/respond/` directly sees an empty "The piece" field.
 
 Nothing needs doing for new pieces:
 
-- **Essays:** `python3 build_essays.py` adds the box to every essay page.
+- **Essays:** `python3 build_essays.py` adds the link to every essay page.
 - **Video essays:** `python3 build_media.py` adds it to every video page (it is the `{{RESPONSE}}` line in `media/_template/index.html`).
-- **The Unbinding:** `python3 build.py` refreshes the box between the two `response form` marker comments after the last chapter. If those markers are removed it stops and changes nothing.
+- **The Unbinding:** `python3 build.py` refreshes the link between the two `response link` marker comments after the last chapter. If those markers are removed it stops and changes nothing.
 
-To change the wording or fields, edit `response_form.py` and run all three build scripts. Keep the field names (`name`, `email`, `message`, `piece`) the same as in `feedback.html`, because Netlify records the fields it finds in the site's HTML at deploy time. The look is in `assets/response.css`; the sending without a page reload (and the "Received." / error message) is `assets/response.js`.
+To change the link's wording, edit `response_form.py` and run all three build scripts. The form itself is in `feedback.html` (Netlify reads its fields from there when the site deploys); its look is in `assets/response.css` and the prefilling and sending without a page reload is `assets/response.js`.
 
 ---
 

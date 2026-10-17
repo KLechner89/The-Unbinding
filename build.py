@@ -14,7 +14,7 @@ import os
 import sys
 import tempfile
 
-from response_form import response_form, START as RESPONSE_START, END as RESPONSE_END
+from response_form import respond_link, START as RESPONSE_START, END as RESPONSE_END
 
 # The story page lives at kylelechner.io/fiction/unbinding/
 STORY_PAGE = 'fiction/unbinding/index.html'
@@ -132,16 +132,16 @@ def build():
             html = new_html
             print(f"Updated: {chapter}")
 
-    # The "How did this make you feel?" box at the end of the story (response_form.py).
+    # The "How did this make you feel?" link at the end of the story (response_form.py).
     # It sits between two marker comments after the last chapter; refresh it from the shared markup.
     if html.count(RESPONSE_START) != 1 or html.count(RESPONSE_END) != 1:
-        stop([f"The story page must have exactly one response form between these two lines:",
+        stop([f"The story page must have exactly one response link between these two lines:",
               f"  {RESPONSE_START}", f"  {RESPONSE_END}",
-              "Put them back after the last chapter (see README, 'Response box')."])
-    title = re.search(r'<title>(.*?)</title>', html, re.S).group(1).split(' — ')[0].strip()
-    block = response_form(f'{title} (/{os.path.dirname(STORY_PAGE)}/)')
+              "Put them back after the last chapter (see README, 'Response link')."])
+    title = re.search(r'<title>(.*?)</title>', html, re.S).group(1).split(' \u2014 ')[0].strip()
+    block = respond_link(title, f'/{os.path.dirname(STORY_PAGE)}/')
     new_html = re.sub(re.escape(RESPONSE_START) + r'.*?' + re.escape(RESPONSE_END), lambda m: block, html, flags=re.S)
-    print("OK (unchanged): response form" if new_html == html else "Updated: response form")
+    print("OK (unchanged): response link" if new_html == html else "Updated: response link")
     html = new_html
 
     write_atomically(path(STORY_PAGE), html)
