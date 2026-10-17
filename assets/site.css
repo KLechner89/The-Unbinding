@@ -71,15 +71,25 @@ a.wordmark:hover{color:var(--text)}
 .work>a,.work>div{display:block}
 .work .n{color:var(--text-muted);display:block;margin-bottom:14px}
 .work .n.n-fiction{color:var(--fiction)}
-.work h2{font-family:var(--serif);font-weight:300;font-size:40px;line-height:1.1;color:var(--text);margin-bottom:16px;transition:color 0.3s}
+.work h2{font-family:var(--serif);font-weight:300;font-size:40px;line-height:1.1;color:var(--text);margin-bottom:16px;transition:color 0.4s ease}
 .work h2 .accent{color:var(--fiction)}
 .work p{font-family:var(--body);font-size:17px;line-height:1.65;color:var(--text-dim);margin-bottom:14px;max-width:32ch}
 .work .cap{display:block;color:var(--text-muted);white-space:nowrap;transition:color 0.3s}
 .work.forthcoming h2,.work.forthcoming p{color:var(--text-muted)}
 .work.forthcoming h2{margin-bottom:12px}
 .work>a:hover .cap{color:var(--text-dim)}
-.work>a:hover h2{color:#fff}
-.work>a:hover h2 .accent{color:#d65446}
+/* Catalog hover, like the home page: the other entries dim and the title takes its section colour */
+.work>a,.work>div{transition:opacity 0.4s ease}
+.works:has(>.work>a:focus-visible)>.work:not(:has(>a:focus-visible))>:is(a,div){opacity:0.45}
+.work>a:focus-visible h2{color:#fff}
+[data-section="fiction"] .work>a:focus-visible h2,[data-section="fiction"] .work>a:focus-visible h2 .accent{color:var(--fiction)}
+[data-section="media"] .work>a:focus-visible h2{color:var(--media)}
+@media(hover:hover){
+  .works:has(>.work>a:hover)>.work:not(:has(>a:hover))>:is(a,div){opacity:0.45}
+  .work>a:hover h2{color:#fff}
+  [data-section="fiction"] .work>a:hover h2,[data-section="fiction"] .work>a:hover h2 .accent{color:var(--fiction)}
+  [data-section="media"] .work>a:hover h2{color:var(--media)}
+}
 .frame{position:relative;aspect-ratio:16/9;border:1px solid var(--border);margin-bottom:16px;display:flex;align-items:center;justify-content:center}
 .frame svg{width:14px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:1.2}
 .frame{overflow:hidden;background:var(--surface);transition:border-color 0.3s}

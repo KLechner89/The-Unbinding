@@ -196,7 +196,7 @@ def essay_page(e, by_url):
 def series_page(url, papers):
     s = SERIES[url]
     out = [head(f'{s["title"]} — Kyle Lechner', s['description'], url)]
-    out.append(f'<main class="catalog series">\n<p class="label kicker"><a href="/essays/">Essays</a> &middot; Essay series</p>\n<h1>{html.escape(s["title"])}</h1>\n<p class="lede">{html.escape(s["description"])}</p>')
+    out.append(f'<main class="catalog series" data-section="essays">\n<p class="label kicker"><a href="/essays/">Essays</a> &middot; Essay series</p>\n<h1>{html.escape(s["title"])}</h1>\n<p class="lede">{html.escape(s["description"])}</p>')
     if s.get('note'): out.append(f'<p class="lede note">{html.escape(s["note"])}</p>')
     out.append(f'<ol class="works" aria-label="Papers in {html.escape(s["title"])}">')
     for p in papers:
