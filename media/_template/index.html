@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow"><!-- template-only -->
+<!--
+  Template for one video work at /media/<slug>/. Not linked from anywhere and not indexed.
+  build_media.py fills in the {{...}} fields from media/works.json and writes /media/<slug>/index.html.
+  Edit the layout here; edit the words in media/works.json and media/transcripts/. template-only
+-->
+<meta name="generator" content="build_media.py">
+<title>{{TITLE}} — Kyle Lechner</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<link rel="canonical" href="https://kylelechner.io{{URL}}">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="{{TITLE}} — Kyle Lechner">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta property="og:url" content="https://kylelechner.io{{URL}}">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta property="og:type" content="video.other">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://iframe.mediadelivery.net">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@300;400&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/essay.css">
+<link rel="stylesheet" href="/assets/media.css">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="wordmark label" href="/">&larr; Kyle Lechner</a>
+  <nav class="switcher" aria-label="Sections">
+    <a class="label fiction" href="/fiction/">Fiction</a>
+    <a class="label essays" href="/essays/">Essays</a>
+    <a class="label media" href="/media/" aria-current="page">Media</a>
+  </nav>
+</header>
+<main class="video">
+<article>
+<header class="video-head col">
+  <p class="label kicker"><a href="/media/">{{FORM}}</a> &middot; <time datetime="{{DATE_ISO}}">{{DATE}}</time></p>
+  <h1>{{TITLE}}</h1>
+  <p class="lede">{{DESCRIPTION}}</p>
+</header>
+<figure class="player">
+  <div class="player-frame" data-embed="{{EMBED_URL}}" data-title="{{TITLE}}">
+    <button class="facade" type="button" aria-label="Play {{TITLE}} ({{DURATION}})">
+      {{POSTER_IMG}}
+      <span class="play" aria-hidden="true"><svg viewBox="0 0 14 16"><path d="M1.5 1.3l11 6.7-11 6.7z"/></svg></span>
+    </button>
+    <noscript><iframe src="{{EMBED_URL}}" title="{{TITLE}}" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></noscript>
+  </div>
+  <figcaption class="label">{{DURATION}}</figcaption>
+</figure>
+{{TRANSCRIPT}}
+<footer class="col">
+{{PAGER}}
+<p class="back-links label"><a href="/media/">All media</a></p>
+</footer>
+</article>
+</main>
+<script src="/assets/media.js" defer></script>
+{{FOOTNOTES_SCRIPT}}
+</body>
+</html>

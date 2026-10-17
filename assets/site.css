@@ -74,6 +74,11 @@ a.wordmark:hover{color:var(--text)}
 .work>a:hover h2 .accent{color:#d65446}
 .frame{position:relative;aspect-ratio:16/9;border:1px solid var(--border);margin-bottom:16px;display:flex;align-items:center;justify-content:center}
 .frame svg{width:14px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:1.2}
+.frame{overflow:hidden;background:var(--surface);transition:border-color 0.3s}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;transition:opacity 0.4s}
+.work>a:hover .frame{border-color:var(--text-muted)}
+.work>a:hover .frame img{opacity:1}
+.work>a:hover .frame svg{stroke:var(--media)}
 
 @media(max-width:600px){
   .topbar{padding:12px var(--pad) 0}
