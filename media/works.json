@@ -1,0 +1,15 @@
+[
+  {
+    "slug": "sample-video-essay",
+    "title": "Sample Video Essay",
+    "date": "2026-11-01",
+    "description": "A placeholder entry showing the fields a video work needs; it stays hidden while its status is forthcoming.",
+    "form": "Video essay",
+    "duration": "12 min",
+    "bunny_library_id": "",
+    "bunny_video_id": "",
+    "poster": "",
+    "transcript": "media/transcripts/sample-video-essay.md",
+    "status": "forthcoming"
+  }
+]
