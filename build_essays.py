@@ -16,7 +16,8 @@ ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 
 SERIES = {
     '/essays/mobius-censor/': dict(
         title='The Möbius Censor',
-        description='Written during Ada Palmer’s course on the history of censorship. Read in order. Then read again.'),
+        description='What if the urge to make sense of things is itself a form of censorship? Traced through Nietzsche, Sade, Kosiński, and Bataille.',
+        note='Written during Ada Palmer’s course on the history of censorship. Read in order. Then read again.'),
 }
 
 # Links that may be turned into live links when they appear as plain text in a note or bibliography.
@@ -171,6 +172,7 @@ def series_page(url, papers):
     s = SERIES[url]
     out = [head(f'{s["title"]} — Kyle Lechner', s['description'], url)]
     out.append(f'<main class="catalog series">\n<p class="label kicker"><a href="/essays/">Essays</a> &middot; Essay series</p>\n<h1>{html.escape(s["title"])}</h1>\n<p class="lede">{html.escape(s["description"])}</p>')
+    if s.get('note'): out.append(f'<p class="lede note">{html.escape(s["note"])}</p>')
     out.append(f'<ol class="works" aria-label="Papers in {html.escape(s["title"])}">')
     for p in papers:
         out.append(f'<li class="work"><a href="{p["url"]}"><span class="n label">{ROMAN[p["part"]]}</span><h2>{inline(p["title"])}</h2><span class="cap label"><time>{html.escape(p["date"])}</time></span></a></li>')

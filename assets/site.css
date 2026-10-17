@@ -30,7 +30,7 @@ a{color:inherit;text-decoration:none}
 .label{font-family:var(--mono);font-weight:300;font-size:11px;letter-spacing:0.24em;text-transform:uppercase}
 
 /* ---------- Top bar ---------- */
-.topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:16px 20px 0;z-index:10}
+.topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:16px var(--pad) 0;z-index:10}
 .wordmark{color:var(--text-muted);padding:6px 0;transition:color 0.3s}
 a.wordmark:hover{color:var(--text)}
 .switcher{display:flex;gap:clamp(16px,2.4vw,26px)}
@@ -66,7 +66,7 @@ a.wordmark:hover{color:var(--text)}
 .work h2{font-family:var(--serif);font-weight:300;font-size:40px;line-height:1.1;color:var(--text);margin-bottom:16px;transition:color 0.3s}
 .work h2 .accent{color:var(--fiction)}
 .work p{font-family:var(--body);font-size:17px;line-height:1.65;color:var(--text-dim);margin-bottom:14px;max-width:32ch}
-.work .cap{display:block;color:var(--text-muted);transition:color 0.3s}
+.work .cap{display:block;color:var(--text-muted);white-space:nowrap;transition:color 0.3s}
 .work.forthcoming h2,.work.forthcoming p{color:var(--text-muted)}
 .work.forthcoming h2{margin-bottom:12px}
 .work>a:hover .cap{color:var(--text-dim)}
@@ -76,7 +76,7 @@ a.wordmark:hover{color:var(--text)}
 .frame svg{width:14px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:1.2}
 
 @media(max-width:600px){
-  .topbar{padding:12px 18px 0}
+  .topbar{padding:12px var(--pad) 0}
   .catalog{padding-top:clamp(110px,20vh,180px)}
   .work{flex-basis:82%;padding:4px 22px 6px}
   .work:first-child{flex-basis:calc(82% - 22px)}
@@ -87,7 +87,7 @@ a.wordmark:hover{color:var(--text)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* ---------- Three-dot menu and mailing-list panel (copied from The Unbinding) ---------- */
-.site-menu{position:fixed;top:20px;right:22px;z-index:1001;transition:opacity 0.3s ease}
+.site-menu{position:fixed;top:20px;right:var(--pad);z-index:1001;transition:opacity 0.3s ease}
 .site-menu.behind{opacity:0;pointer-events:none}
 .menu-btn{width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:1px solid transparent;border-radius:50%;cursor:pointer;transition:border-color 0.3s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .menu-btn span{display:block;width:3px;height:3px;border-radius:50%;background:#8a8680;transition:background 0.3s}
@@ -98,7 +98,7 @@ a.wordmark:hover{color:var(--text)}
 .menu-panel.open{opacity:1;transform:translateY(0);pointer-events:all}
 .menu-item{display:block;width:100%;text-align:left;background:none;border:none;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8680;text-decoration:none;padding:12px 20px;cursor:pointer;transition:color 0.3s,background 0.3s}
 .menu-item:hover,.menu-item:focus-visible{color:#e8e4df;background:rgba(255,255,255,0.03);outline:none}
-@media(max-width:768px){.site-menu{top:12px;right:12px}}
+@media(max-width:768px){.site-menu{top:12px}}
 @media(prefers-reduced-motion:reduce){.menu-panel,.site-menu{transition:none}}
 .mailer-overlay{position:fixed;top:0;right:0;width:320px;max-width:90vw;background:#111114;border-left:1px solid #252529;border-bottom:1px solid #252529;padding:48px 32px 36px;z-index:999;transform:translateY(-100%);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;pointer-events:none}
 .mailer-overlay.open{transform:translateY(0);opacity:1;pointer-events:all}
