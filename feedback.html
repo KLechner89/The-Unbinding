@@ -275,5 +275,6 @@ button[type="submit"]:hover{
 })();
 async function submitMailer(e){e.preventDefault();var f=e.target,d=new URLSearchParams(new FormData(f));try{var r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:d.toString()});if(!r.ok)throw new Error(r.status);document.getElementById('mailerForm').style.display='none';document.getElementById('mailerSuccess').style.display='block';setTimeout(function(){closeMailer();setTimeout(function(){f.reset();document.getElementById('mailerForm').style.display='block';document.getElementById('mailerSuccess').style.display='none'},400)},1500)}catch(err){alert('That didn\u2019t go through. Check your connection and try again.')}}
 </script>
+<script data-goatcounter="https://kylelechner.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

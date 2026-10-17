@@ -21,6 +21,9 @@ SERIES = {
         note='Written during Ada Palmer’s course on the history of censorship. Read in order. Then read again.'),
 }
 
+# GoatCounter analytics: goes just before </body> on every page (see README, "Analytics").
+GOATCOUNTER = '<script data-goatcounter="https://kylelechner.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>'
+
 # Links that may be turned into live links when they appear as plain text in a note or bibliography.
 def read(path):
     raw = open(path, encoding='utf-8').read()
@@ -193,7 +196,7 @@ def essay_page(e, by_url):
     if e['part']: out.append(f'<a href="{e["series_url"]}">All papers in {html.escape(e["series"])}</a> <span aria-hidden="true">&middot;</span> ')
     out.append('<a href="/essays/">All essays</a></p>')
     out.append('</main>\n<script src="/assets/footnotes.js" defer></script>')
-    out.append(score_player(e) + '</body>\n</html>\n')
+    out.append(score_player(e) + GOATCOUNTER + '\n</body>\n</html>\n')
     return '\n'.join(out)
 
 def series_page(url, papers):
@@ -204,7 +207,7 @@ def series_page(url, papers):
     out.append(f'<ol class="works" aria-label="Papers in {html.escape(s["title"])}">')
     for p in papers:
         out.append(f'<li class="work"><a href="{p["url"]}"><span class="n label">{ROMAN[p["part"]]}</span><h2>{inline(p["title"])}</h2><span class="cap label"><time>{html.escape(p["date"])}</time></span></a></li>')
-    out.append('</ol>\n</main>\n</body>\n</html>\n')
+    out.append('</ol>\n</main>\n' + GOATCOUNTER + '\n</body>\n</html>\n')
     return '\n'.join(out)
 
 def write(url, text):

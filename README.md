@@ -205,3 +205,13 @@ Videos are stored on Bunny Stream, and the site shows them with a small player. 
 To take a video down, set its `status` back to `"forthcoming"` and run `python3 build_media.py --prune`.
 
 The layout of every video page lives in `media/_template/index.html` (not linked from anywhere, and hidden from search engines), with its styles in `assets/media.css` and the player in `assets/media.js`. Transcript notes reuse the essays' `assets/essay.css` and `assets/footnotes.js`.
+
+## Analytics
+
+Visits are counted with GoatCounter (kylelechner.goatcounter.com). Every page has this line just before `</body>`:
+
+```html
+<script data-goatcounter="https://kylelechner.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+```
+
+`build_essays.py` (the `GOATCOUNTER` line) and `media/_template/index.html` add it to essay and video pages automatically. When you add a new hand-written page, copy the line in. `_headers` allows `gc.zgo.at` and `kylelechner.goatcounter.com` in the Content-Security-Policy.
