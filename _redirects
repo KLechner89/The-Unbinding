@@ -1,2 +1,6 @@
 # Old address for the story
 /unbinding    /fiction/unbinding/    301
+
+# Old duplicate copy of the site (removed); send old links home
+/flavicon      /    301
+/flavicon/*    /    301
