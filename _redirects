@@ -4,3 +4,5 @@
 # Old duplicate copy of the site (removed); send old links home
 /flavicon      /    301
 /flavicon/*    /    301
+/Flavicon      /    301
+/Flavicon/*    /    301
