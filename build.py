@@ -12,9 +12,42 @@ Netlify will redeploy automatically after you git push.
 import re
 import os
 import sys
+import tempfile
 
 # The story page lives at kylelechner.io/fiction/unbinding/
 STORY_PAGE = 'fiction/unbinding/index.html'
+
+# Paths are relative to the folder this script is in, so it can be run from anywhere.
+ROOT = os.path.dirname(os.path.abspath(__file__))
+
+def path(relative):
+    return os.path.join(ROOT, relative)
+
+def slot_opening(i):
+    return f'<div class="prose" data-chapter="{i}">'
+
+def stop(lines):
+    print("ERROR: build stopped.", file=sys.stderr)
+    for line in lines:
+        print(f"  {line}", file=sys.stderr)
+    print(f"Nothing was changed in {STORY_PAGE}.", file=sys.stderr)
+    sys.exit(1)
+
+def write_atomically(target, text):
+    # Write to a temporary file next to the page, then swap it in, so the page
+    # is never left half-written if something goes wrong mid-write.
+    folder = os.path.dirname(target)
+    mode = os.stat(target).st_mode & 0o777
+    fd, tmp = tempfile.mkstemp(dir=folder, prefix='.build-', suffix='.tmp')
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write(text)
+        os.chmod(tmp, mode)
+        os.replace(tmp, target)
+    except BaseException:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        raise
 
 CHAPTERS = [
     "01-the-house-on-meridian-street",
@@ -62,27 +95,34 @@ def md_to_html(md_text):
 def build():
     # Every chapter must have its source file. If any is missing, stop before
     # touching the story page, so a chapter is never silently left stale.
-    missing = [f'chapters/{c}.md' for c in CHAPTERS if not os.path.exists(f'chapters/{c}.md')]
+    missing = [f'chapters/{c}.md' for c in CHAPTERS if not os.path.exists(path(f'chapters/{c}.md'))]
     if missing:
-        print("ERROR: build stopped. These chapter files are missing:", file=sys.stderr)
-        for path in missing:
-            print(f"  {path}", file=sys.stderr)
-        print(f"Nothing was changed in {STORY_PAGE}. Restore the file(s), or update CHAPTERS in build.py, then run again.", file=sys.stderr)
-        sys.exit(1)
+        stop(["These chapter files are missing:"] + [f"  {m}" for m in missing]
+             + ["Restore the file(s), or update CHAPTERS in build.py, then run again."])
 
-    with open(STORY_PAGE, 'r') as f:
+    with open(path(STORY_PAGE), 'r', encoding='utf-8') as f:
         html = f.read()
 
+    # Every chapter must have exactly one place on the story page to go into.
+    problems = []
     for i, chapter in enumerate(CHAPTERS):
-        md_path = f'chapters/{chapter}.md'
-        with open(md_path, 'r') as f:
+        found = html.count(slot_opening(i))
+        if found != 1:
+            problems.append(f'{chapter}: expected one {slot_opening(i)} on the page, found {found}')
+    if problems:
+        stop(["The story page does not have exactly one place for these chapters:"] + [f"  {p}" for p in problems])
+
+    for i, chapter in enumerate(CHAPTERS):
+        with open(path(f'chapters/{chapter}.md'), 'r', encoding='utf-8') as f:
             md_text = f.read()
 
         new_prose = md_to_html(md_text)
 
         # Match the prose div by data-chapter index and replace its contents
-        pattern = rf'(<div class="prose" data-chapter="{i}">)(.*?)(</div>)'
-        new_html = re.sub(pattern, lambda m: m.group(1) + new_prose + m.group(3), html, flags=re.DOTALL)
+        pattern = rf'({re.escape(slot_opening(i))})(.*?)(</div>)'
+        new_html, count = re.subn(pattern, lambda m: m.group(1) + new_prose + m.group(3), html, flags=re.DOTALL)
+        if count != 1:
+            stop([f'{chapter}: could not find the end of its place on the page (found {count} matches).'])
 
         if new_html == html:
             print(f"OK (unchanged): {chapter}")
@@ -90,8 +130,7 @@ def build():
             html = new_html
             print(f"Updated: {chapter}")
 
-    with open(STORY_PAGE, 'w') as f:
-        f.write(html)
+    write_atomically(path(STORY_PAGE), html)
     print(f"\n{STORY_PAGE} updated. Run: git add . && git commit -m 'edit' && git push")
 
 if __name__ == '__main__':
