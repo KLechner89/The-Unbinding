@@ -4,6 +4,7 @@ subtitle: Binding Rupture and Form
 url: /essays/carriage-and-platform/
 date: March 2, 2026
 next: /essays/mobius-censor/1/
+score: /essays/carriage-and-platform/score.config.js
 ---
 This paper begins in an odd way, as it has two beginnings. While its subject is *Mrs. Dalloway*, it must first acknowledge the concerns of the Edwardians in Virginia Woolf’s essay *Mr. Bennett and Mrs. Brown*.[^1] In her critique Woolf argues her predecessors, the Edwardians, mistook external description for ontology.[^2] They constructed a social façade with such precision that a tenant seemed sure to follow. In theory, because the Edwardian houses were rendered with extraordinary detail, it was not believed but guaranteed that the house had an inhabitant. Economic standing is catalogued. Institutional context stabilizes, yet the living consciousness the Georgians longed for disappeared behind the scaffolding that was meant to secure it. Her objection to the Edwardians was a methodological one. A structure may be accurate and still fail to disclose the life within it. The Georgians thus do not deny the house, but insist that without the interior, the house remains vacant. Their correction completes, rather than abolishes, the earlier, Edwardian project. However, completion is not exhaustion, and inward correction can risk fixing something to a crossed threshold.
 

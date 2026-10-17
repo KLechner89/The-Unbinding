@@ -62,7 +62,7 @@ def short_title(e):
     if e['part']: return f'{e["series"]} · Paper {ROMAN[e["part"]]}: {e["title"]}'
     return e['title']
 
-def head(title, desc, url, extra_css=True):
+def head(title, desc, url, extra_css=True, extra_head=''):
     t = html.escape(title); d = html.escape(desc)
     return f'''<!DOCTYPE html>
 <html lang="en">
@@ -85,7 +85,7 @@ def head(title, desc, url, extra_css=True):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@300;400&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/essay.css">
+<link rel="stylesheet" href="/assets/essay.css">{extra_head}
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
@@ -99,6 +99,23 @@ def head(title, desc, url, extra_css=True):
 </header>
 '''
 
+def score_player(e):
+    """Optional `score:` line in an essay's top block: the address of a song list such as
+    /essays/carriage-and-platform/score.config.js (loop: true). Adds the same soundtrack
+    player The Unbinding uses (bottom-right corner); the songs loop while the reader reads."""
+    cfg = e.get('score', '').strip()
+    if not cfg: return ''
+    if not os.path.isfile(os.path.join(ROOT, cfg.strip('/'))):
+        raise SystemExit(f'{e["file"]}: score: points to {cfg}, which does not exist')
+    c = html.escape(cfg)
+    return f'''<button id="spotifyLoginBtn" class="score-login" onclick="loginWithSpotify()">&#9654; CONNECT SPOTIFY</button>
+<div class="audio-ctl" id="audioCtl"> <button id="audioToggle" aria-label="Play/Pause" aria-pressed="false">&#9654;</button> <span class="track-name" id="trackName">&mdash;</span> <input type="range" class="vol" id="volSlider" min="0" max="100" value="40" aria-label="Volume"> </div>
+<!-- Soundtrack: this essay's songs are in {c}; the shared player is /assets/score.js -->
+<script src="{c}"></script>
+<script src="/assets/spotify-auth.js"></script>
+<script src="/assets/score.js"></script>
+'''
+
 def first_sentence(e):
     p = re.sub(r'\[\^\d+\]', '', e['paras'][0]).replace('*', '')
     m = re.match(r'(.+?[.?!])(\s|$)', p)
@@ -106,7 +123,8 @@ def first_sentence(e):
 
 def essay_page(e, by_url):
     links = {u for _, u in e['notes'].values() if u}
-    out = [head(page_title(e), first_sentence(e), e['url'])]
+    out = [head(page_title(e), first_sentence(e), e['url'],
+                extra_head='\n<link rel="stylesheet" href="/assets/score.css">' if e.get('score') else '')]
     out.append('<main class="essay">\n<article>\n<header class="essay-head">')
     if e['part']:
         out.append(f'<p class="label kicker"><a href="{e["series_url"]}">{html.escape(e["series"])}</a> &middot; Paper {ROMAN[e["part"]]}</p>')
@@ -145,7 +163,8 @@ def essay_page(e, by_url):
     out.append('<p class="back-links label">')
     if e['part']: out.append(f'<a href="{e["series_url"]}">All papers in {html.escape(e["series"])}</a> <span aria-hidden="true">&middot;</span> ')
     out.append('<a href="/essays/">All essays</a></p>')
-    out.append('</main>\n<script src="/assets/footnotes.js" defer></script>\n</body>\n</html>\n')
+    out.append('</main>\n<script src="/assets/footnotes.js" defer></script>')
+    out.append(score_player(e) + '</body>\n</html>\n')
     return '\n'.join(out)
 
 def series_page(url, papers):

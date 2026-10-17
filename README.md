@@ -123,6 +123,7 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 | `spotify/index.html` | The page Spotify sends readers back to after they connect (`kylelechner.io/spotify/`). Shared by every scored work. |
 | `assets/score.js`, `assets/score.css`, `assets/spotify-auth.js` | The shared soundtrack player and Spotify sign-in. No songs live here. |
 | `fiction/unbinding/score.config.js` | The Unbinding's song list. |
+| `essays/carriage-and-platform/score.config.js` | The Carriage and the Platform's song list (loops; not generated, edit by hand). |
 | `_redirects` | Old addresses that forward to new ones (`/unbinding` → the story). |
 | `chapters/` | One markdown file per chapter (see above). |
 | `build.py` | Copies chapter text into `fiction/unbinding/index.html`. |
@@ -154,6 +155,7 @@ Essays are written as plain text files in the `essays-src/` folder. A small scri
    - `url:` where the page will live, e.g. `/essays/my-new-essay/` (lowercase, hyphens, ending in `/`).
    - `date:` written the way it should appear, e.g. `March 2, 2026`.
    - `next:` optional; the `url:` of the piece the "Next" link at the bottom should point to.
+   - `score:` optional; gives the essay a soundtrack using the same player as The Unbinding (bottom-right corner, needs Spotify Premium). Its value is the address of a song list, e.g. `/essays/carriage-and-platform/score.config.js`. Copy that file next to the new essay's page, keep `loop: true`, and list the songs (see "Adding a new scored work" for how to find a track id). The songs play in order and start again after the last one; they don't change with scrolling. Delete the line if there isn't one.
    - For a paper in a series, also give `series:`, `series_url:` and `part:` (1, 2, 3…), as in the `mobius-censor-*.md` files. Previous/Next links inside a series are worked out from `part:`. A new series also needs a one-line entry in `SERIES` at the top of `build_essays.py`.
 3. **Paste the text** below the top block. Leave a blank line between paragraphs.
    - Italics: wrap words in single asterisks, `*Mrs. Dalloway*`.

@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@300;400&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/essay.css">
+<link rel="stylesheet" href="/assets/score.css">
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
@@ -128,5 +129,11 @@
 <a href="/essays/">All essays</a></p>
 </main>
 <script src="/assets/footnotes.js" defer></script>
+<button id="spotifyLoginBtn" class="score-login" onclick="loginWithSpotify()">&#9654; CONNECT SPOTIFY</button>
+<div class="audio-ctl" id="audioCtl"> <button id="audioToggle" aria-label="Play/Pause" aria-pressed="false">&#9654;</button> <span class="track-name" id="trackName">&mdash;</span> <input type="range" class="vol" id="volSlider" min="0" max="100" value="40" aria-label="Volume"> </div>
+<!-- Soundtrack: this essay's songs are in /essays/carriage-and-platform/score.config.js; the shared player is /assets/score.js -->
+<script src="/essays/carriage-and-platform/score.config.js"></script>
+<script src="/assets/spotify-auth.js"></script>
+<script src="/assets/score.js"></script>
 </body>
 </html>
