@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build.py — rebuilds index.html from chapter markdown files
+build.py — rebuilds fiction/unbinding/index.html (the story page) from chapter markdown files
 
 Usage:
   python3 build.py
@@ -11,6 +11,9 @@ Netlify will redeploy automatically after you git push.
 
 import re
 import os
+
+# The story page lives at kylelechner.io/fiction/unbinding/
+STORY_PAGE = 'fiction/unbinding/index.html'
 
 CHAPTERS = [
     "01-the-house-on-meridian-street",
@@ -56,7 +59,7 @@ def md_to_html(md_text):
     return '\n'.join(html_paras)
 
 def build():
-    with open('index.html', 'r') as f:
+    with open(STORY_PAGE, 'r') as f:
         html = f.read()
 
     for i, chapter in enumerate(CHAPTERS):
@@ -80,9 +83,9 @@ def build():
             html = new_html
             print(f"Updated: {chapter}")
 
-    with open('index.html', 'w') as f:
+    with open(STORY_PAGE, 'w') as f:
         f.write(html)
-    print("\nindex.html updated. Run: git add . && git commit -m 'edit' && git push")
+    print(f"\n{STORY_PAGE} updated. Run: git add . && git commit -m 'edit' && git push")
 
 if __name__ == '__main__':
     build()

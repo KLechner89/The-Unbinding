@@ -95,9 +95,13 @@ git push
 
 | Path | What it is |
 |------|------------|
-| `index.html` | The story. Prose is generated from `chapters/` by `build.py`. |
+| `index.html` | Home page: Fiction, Essays, Media. |
+| `fiction/`, `essays/`, `media/` | Catalog pages (`index.html` in each folder). |
+| `fiction/unbinding/index.html` | The story, at `kylelechner.io/fiction/unbinding/`. Prose is generated from `chapters/` by `build.py`. |
+| `assets/site.css`, `assets/menu.js` | Shared style and three-dot menu for the home and catalog pages. |
+| `_redirects` | Old addresses that forward to new ones (`/unbinding` → the story). |
 | `chapters/` | One markdown file per chapter (see above). |
-| `build.py` | Copies chapter text into `index.html`. |
+| `build.py` | Copies chapter text into `fiction/unbinding/index.html`. |
 | `feedback.html` | Reader feedback form (Netlify Forms). |
 | `book.html` | Scheduling page at `kylelechner.io/book`. |
 | `netlify/functions/` | Scheduling backend: availability, booking, and a readiness check. |
