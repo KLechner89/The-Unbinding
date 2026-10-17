@@ -17,6 +17,10 @@
  *   #spotifyLoginBtn, #audioCtl (with #audioToggle, #trackName, #volSlider),
  *   #landingGate, #beginGate, #storyContent.
  * Buttons on the page call loginWithSpotify(), readWithoutAudio() and beginReading().
+ *
+ * Looping mode (set  loop: true  in window.SCORE, used by essays): no scroll cues and
+ * no gates. The page only needs #spotifyLoginBtn and #audioCtl. After connecting, the
+ * reader presses play; the songs play in order and start again after the last one.
  */
 (function () {
   var config = window.SCORE;
@@ -29,6 +33,7 @@
   var TRACK_IDS = config.tracks.map(function (t) { return t.id; });
   var SONG_NAMES = config.tracks.map(function (t) { return t.name || ''; });
   var PLAYER_NAME = config.playerName || document.title;
+  var LOOP = config.loop === true;
 
   var spotifyPlayer = null;
   var deviceId = null;
@@ -39,6 +44,8 @@
   var audioUnlocked = false;
   var pendingCue = null;
   var sdkRequested = false;
+  var loopStarted = false;   // looping mode: has the reader pressed play yet?
+  var userPaused = false;    // looping mode: last pause came from the reader
 
   // === DOM REFS ===
   var audioToggle     = document.getElementById('audioToggle');
@@ -63,22 +70,24 @@
     audioUnlocked = false;
     deviceId = null;
     if (spotifyPlayer) { spotifyPlayer.disconnect(); spotifyPlayer = null; }
-    beginGate.style.display = 'none';
+    if (beginGate) beginGate.style.display = 'none';
+    loopStarted = false;
     updatePlayerUI(false);
     audioCtl.classList.add('visible');
     trackName.textContent = message;
   }
 
   function showStory() {
-    storyContent.style.display    = 'block';
-    landingGate.style.display     = 'none';
-    beginGate.style.display       = 'none';
+    if (storyContent) storyContent.style.display = 'block';
+    if (landingGate)  landingGate.style.display  = 'none';
+    if (beginGate)    beginGate.style.display    = 'none';
     spotifyLoginBtn.style.display = 'none';
     document.body.classList.add('unlocked');
   }
 
   function scrollToFirstChapter() {
     setTimeout(function () {
+      if (!storyContent) return;
       var ch1 = storyContent.querySelector('.ch-prose') || storyContent.querySelector('[data-music]');
       if (ch1) ch1.scrollIntoView({ behavior: 'smooth' });
     }, 100);
@@ -87,8 +96,8 @@
   function beginReading() { showStory(); scrollToFirstChapter(); }
 
   function showBeginButton() {
-    landingGate.style.display     = 'none';
-    beginGate.style.display       = 'flex';
+    if (landingGate) landingGate.style.display = 'none';
+    if (beginGate)   beginGate.style.display   = 'flex';
     spotifyLoginBtn.style.display = 'none';
   }
 
@@ -113,6 +122,7 @@
         deviceId = e.device_id;
         audioUnlocked = true;
         updatePlayerUI(true);
+        if (LOOP) { if (!loopStarted) { trackName.textContent = SONG_NAMES[0]; audioToggle.textContent = '▶'; } return; }
         showBeginButton();
         if (pendingCue !== null) {
           var cue = pendingCue;
@@ -142,6 +152,7 @@
         isPaused = state.paused;
         audioToggle.textContent = isPaused ? '▶' : '❚❚';
         audioToggle.setAttribute('aria-pressed', !isPaused);
+        if (LOOP && loopStarted) loopStateChanged(state);
       });
 
       spotifyPlayer.connect();
@@ -207,8 +218,51 @@
     }
   }
 
+  // === Looping mode ===
+  // All songs are sent to Spotify as one list with repeat on, so Spotify itself goes
+  // from song to song and back to the first after the last. As a safety net, if the
+  // list ever stops by itself at the end, it is started again from the first song.
+  async function api(method, path, body) {
+    var token = (await Auth.getValidToken()) || Auth.getStoredToken();
+    var res = await fetch('https://api.spotify.com/v1/me/player/' + path + (path.indexOf('?') === -1 ? '?' : '&') + 'device_id=' + deviceId, {
+      method: method,
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined
+    }).catch(function () { return null; });
+    if (res && res.status === 401) { Auth.clearToken(); resetAudio(MSG_EXPIRED); return null; }
+    return res;
+  }
+  async function startLoop() {
+    if (!audioUnlocked || !deviceId) return;
+    loopStarted = true; userPaused = false; currentIdx = 0;
+    trackName.textContent = SONG_NAMES[0];
+    audioToggle.textContent = '❚❚';
+    if (spotifyPlayer && spotifyPlayer.activateElement) { try { await spotifyPlayer.activateElement(); } catch (e) {} }
+    var res = await api('PUT', 'play', { uris: TRACK_IDS.map(function (id) { return 'spotify:track:' + id; }), offset: { position: 0 } });
+    if (!res) return;
+    await api('PUT', 'shuffle?state=false');
+    await api('PUT', 'repeat?state=context');
+    if (spotifyPlayer) await spotifyPlayer.setVolume(userVolume);
+  }
+  function loopStateChanged(state) {
+    var t = state.track_window && state.track_window.current_track;
+    if (t) {
+      var ids = [t.id, t.linked_from && t.linked_from.id];
+      for (var i = 0; i < TRACK_IDS.length; i++) {
+        if (ids.indexOf(TRACK_IDS[i]) !== -1) { currentIdx = i; trackName.textContent = SONG_NAMES[i]; break; }
+      }
+    }
+    // Stopped on its own at the end of the list (not paused by the reader): go round again
+    var ended = state.paused && state.position === 0 && !userPaused &&
+      state.track_window && !state.track_window.next_tracks.length &&
+      state.track_window.previous_tracks.length > 0;
+    if (ended) startLoop();
+  }
+
   audioToggle.addEventListener('click', async function () {
     if (!spotifyPlayer) return;
+    if (LOOP && !loopStarted) { await startLoop(); return; }
+    if (LOOP) userPaused = !isPaused;
     await spotifyPlayer.togglePlay();
   });
 
@@ -217,7 +271,7 @@
     if (spotifyPlayer) await spotifyPlayer.setVolume(userVolume);
   });
 
-  // === Scroll-based track switching ===
+  // === Scroll-based track switching (not used in looping mode) ===
   var musicCues = document.querySelectorAll('[data-music]');
   var scrollTimer = null;
 
@@ -248,7 +302,7 @@
     return bestIdx;
   }
 
-  window.addEventListener('scroll', function () {
+  if (!LOOP) window.addEventListener('scroll', function () {
     // Chapter detection (debounced)
     if (scrollTimer) return;
     scrollTimer = setTimeout(function () {
@@ -280,6 +334,7 @@
     }
     if (Auth.getStoredToken()) {
       showStory();
+      if (LOOP) { audioCtl.classList.add('visible'); trackName.textContent = '♫ Connecting to Spotify…'; }
       Auth.getValidToken().then(function (token) {
         if (token) initSpotify();
         else resetAudio(MSG_EXPIRED);
