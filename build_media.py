@@ -179,7 +179,7 @@ def work_page(w, nxt, template):
     url = f'/media/{w["slug"]}/'
     embed = EMBED.format(library=w['bunny_library_id'], video=w['bunny_video_id'])
     poster = w['poster']
-    og = poster if poster.startswith('https://') else (SITE + poster if poster else SITE + '/og-image.png')
+    og = poster if poster.startswith('https://') else (SITE + poster if poster else SITE + '/assets/og-home.png')
     poster_img = f'<img src="{esc(poster)}" alt="" decoding="async" fetchpriority="high">' if poster else ''
     transcript, has_notes = ('', False)
     if w.get('_transcript_path'):
