@@ -99,6 +99,19 @@ def head(title, desc, url, extra_css=True):
 </header>
 '''
 
+def playlist_embed(e):
+    """Optional `playlist:` line in an essay's top block: a Spotify playlist link
+    (https://open.spotify.com/playlist/...) or just its ID. Shown between the header and the text."""
+    v = e.get('playlist', '').strip()
+    if not v: return ''
+    m = re.search(r'(?:playlist[/:])?([A-Za-z0-9]{22})(?:[?#/].*)?$', v)
+    if not m: raise SystemExit(f'{e["file"]}: playlist: should be a Spotify playlist link or ID, got {v!r}')
+    src = f'https://open.spotify.com/embed/playlist/{m.group(1)}?utm_source=generator&amp;theme=0'
+    title = html.escape(f'Spotify playlist for {e["title"]}')
+    return (f'<figure class="playlist">\n<iframe src="{src}" title="{title}" width="100%" height="352" '
+            'frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" '
+            'loading="lazy"></iframe>\n</figure>')
+
 def first_sentence(e):
     p = re.sub(r'\[\^\d+\]', '', e['paras'][0]).replace('*', '')
     m = re.match(r'(.+?[.?!])(\s|$)', p)
@@ -114,7 +127,10 @@ def essay_page(e, by_url):
         out.append('<p class="label kicker"><a href="/essays/">Essay</a></p>')
     out.append(f'<h1>{inline(e["title"])}</h1>')
     if e.get('subtitle'): out.append(f'<p class="subtitle">{inline(e["subtitle"])}</p>')
-    out.append(f'<p class="label date"><time>{html.escape(e["date"])}</time></p>\n</header>\n<div class="prose">')
+    out.append(f'<p class="label date"><time>{html.escape(e["date"])}</time></p>\n</header>')
+    pl = playlist_embed(e)
+    if pl: out.append(pl)
+    out.append('<div class="prose">')
     for p in e['paras']:
         h = inline(p)
         h = re.sub(r'\[\^(\d+)\]', lambda m: f'<sup class="fnref"><a href="#fn-{m.group(1)}" id="fnref-{m.group(1)}" aria-describedby="fn-{m.group(1)}" aria-label="Note {m.group(1)}">{m.group(1)}</a></sup>', h)

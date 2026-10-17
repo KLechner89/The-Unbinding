@@ -154,6 +154,7 @@ Essays are written as plain text files in the `essays-src/` folder. A small scri
    - `url:` where the page will live, e.g. `/essays/my-new-essay/` (lowercase, hyphens, ending in `/`).
    - `date:` written the way it should appear, e.g. `March 2, 2026`.
    - `next:` optional; the `url:` of the piece the "Next" link at the bottom should point to.
+   - `playlist:` optional; a Spotify playlist link (Share → Copy link to playlist), e.g. `https://open.spotify.com/playlist/3QnofKcptpqCeJz4X5zUGm`. It appears as a dark Spotify player between the title and the text. Delete the line if there isn't one.
    - For a paper in a series, also give `series:`, `series_url:` and `part:` (1, 2, 3…), as in the `mobius-censor-*.md` files. Previous/Next links inside a series are worked out from `part:`. A new series also needs a one-line entry in `SERIES` at the top of `build_essays.py`.
 3. **Paste the text** below the top block. Leave a blank line between paragraphs.
    - Italics: wrap words in single asterisks, `*Mrs. Dalloway*`.
