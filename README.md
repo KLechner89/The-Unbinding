@@ -118,6 +118,7 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 | Path | What it is |
 |------|------------|
 | `index.html` | Home page: Fiction, Essays, Media. |
+| `about/index.html` | About page, at `kylelechner.io/about/` (linked from the three-dot menu). |
 | `fiction/`, `essays/`, `media/` | Catalog pages (`index.html` in each folder). |
 | `fiction/unbinding/index.html` | The story, at `kylelechner.io/fiction/unbinding/`. Prose is generated from `chapters/` by `build.py`. |
 | `assets/site.css`, `assets/menu.js` | Shared style and three-dot menu for the home and catalog pages. |

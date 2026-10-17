@@ -68,3 +68,6 @@ ol.works{list-style:none}
   .parts a{grid-template-columns:1fr;gap:6px;padding:20px 0}
   .notes li{padding-left:2.2em}
 }
+
+/* About page (about/index.html): the closing line sits slightly apart from the paragraphs above */
+.about .prose .closing{margin-top:2.3em}
