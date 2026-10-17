@@ -38,4 +38,7 @@ class BuildTests(unittest.TestCase):
   next((self.root / 'chapters').glob('01-*.md')).write_text('# Chapter\n\n<em>Literal</em> & \\1')
   self.build()
   self.assertIn('&lt;em&gt;Literal&lt;/em&gt; &amp; \\1', (self.root / 'index.html').read_text())
+ def test_only_first_heading_line_is_removed(self):
+  self.assertEqual(builder.md_to_html('# Chapter\n\n# Keep this text'), '<p class="first"># Keep this text</p>')
+  self.assertEqual(builder.md_to_html('Opening\n\n# Keep this too'), '<p class="first">Opening</p>\n<p># Keep this too</p>')
 if __name__ == '__main__': unittest.main()

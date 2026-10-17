@@ -39,7 +39,7 @@ def escape_html(text):
 def md_to_html(md_text):
     # Strip heading line
     lines = md_text.strip().split('\n')
-    body_lines = [l for l in lines if not l.startswith('#')]
+    body_lines = lines[1:] if lines and lines[0].startswith('#') else lines
     body = '\n'.join(body_lines).strip()
 
     # Split into paragraphs

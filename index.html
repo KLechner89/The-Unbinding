@@ -328,8 +328,59 @@ async function getTokenFromCode(code) {
       code_verifier: verifier
     })
   });
+  if (!response.ok) throw new Error('Spotify token request failed (' + response.status + ')');
   const data = await response.json();
+  if (!data.access_token) throw new Error('Spotify token missing');
+  return data;
+}
+
+// Save token + expiry + refresh token so later reloads know when it is stale
+function saveToken(data) {
+  accessToken = data.access_token;
+  sessionStorage.setItem('spotify_token', data.access_token);
+  sessionStorage.setItem('spotify_expires_at', String(Date.now() + (data.expires_in || 3600) * 1000));
+  if (data.refresh_token) sessionStorage.setItem('spotify_refresh', data.refresh_token);
+}
+
+function clearToken() {
+  accessToken = null;
+  sessionStorage.removeItem('spotify_token');
+  sessionStorage.removeItem('spotify_expires_at');
+  sessionStorage.removeItem('spotify_refresh');
+}
+
+async function refreshToken() {
+  const refresh = sessionStorage.getItem('spotify_refresh');
+  if (!refresh) throw new Error('No refresh token');
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ client_id: CLIENT_ID, grant_type: 'refresh_token', refresh_token: refresh })
+  });
+  if (!response.ok) throw new Error('Spotify refresh failed (' + response.status + ')');
+  const data = await response.json();
+  if (!data.access_token) throw new Error('Spotify token missing');
+  saveToken(data);
   return data.access_token;
+}
+
+// Valid token, refreshing if it expires within a minute; null if none usable
+async function getValidToken() {
+  const expiresAt = parseInt(sessionStorage.getItem('spotify_expires_at') || '0', 10);
+  if (accessToken && Date.now() < expiresAt - 60000) return accessToken;
+  try { return await refreshToken(); } catch (e) { clearToken(); return null; }
+}
+
+// Reset audio UI after an auth/account/SDK failure so the reader can reconnect
+function resetAudio(message) {
+  spotifyInitializing = false;
+  audioUnlocked = false;
+  deviceId = null;
+  if (spotifyPlayer) { spotifyPlayer.disconnect(); spotifyPlayer = null; }
+  beginGate.style.display = 'none';
+  updatePlayerUI(false);
+  audioCtl.classList.add('visible');
+  trackName.textContent = message;
 }
 
 // Check for auth code on page load
@@ -341,12 +392,14 @@ if (authCode) {
   // Returning from Spotify auth — exchange code for token
   history.replaceState({}, '', window.location.pathname);
   document.addEventListener('DOMContentLoaded', showStory);
-  getTokenFromCode(authCode).then(token => {
-    if (token) {
-      accessToken = token;
-      sessionStorage.setItem('spotify_token', token);
-      initSpotify();
-    }
+  getTokenFromCode(authCode).then(data => {
+    saveToken(data);
+    initSpotify();
+  }).catch(err => {
+    console.error(err);
+    clearToken();
+    const fail = () => resetAudio('♫ Spotify connection failed. Try again or read without audio');
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fail); else fail();
   });
 } else {
   // Restore previous session if token exists
@@ -355,7 +408,10 @@ if (authCode) {
     if (prevToken) {
       accessToken = prevToken;
       showStory();
-      initSpotify();
+      getValidToken().then(token => {
+        if (token) initSpotify();
+        else resetAudio('♫ Spotify session expired. Reconnect to enable audio');
+      });
     }
   });
 }
@@ -389,7 +445,7 @@ function initSpotify() {
   window.onSpotifyWebPlaybackSDKReady = () => {
     spotifyPlayer = new Spotify.Player({
       name: 'The Unbinding',
-      getOAuthToken: cb => cb(accessToken),
+      getOAuthToken: cb => { getValidToken().then(t => cb(t || '')); },
       volume: userVolume
     });
 
@@ -406,6 +462,20 @@ function initSpotify() {
     });
 
     spotifyPlayer.addListener('not_ready', () => { deviceId = null; });
+
+    spotifyPlayer.addListener('authentication_error', ({ message }) => {
+      console.error('Spotify authentication_error:', message);
+      clearToken();
+      resetAudio('♫ Spotify session expired. Reconnect to enable audio');
+    });
+    spotifyPlayer.addListener('account_error', ({ message }) => {
+      console.error('Spotify account_error:', message);
+      resetAudio('♫ Spotify Premium is required for audio. You can keep reading without it');
+    });
+    spotifyPlayer.addListener('initialization_error', ({ message }) => {
+      console.error('Spotify initialization_error:', message);
+      resetAudio('♫ Audio is not supported in this browser. You can keep reading without it');
+    });
 
     spotifyPlayer.addListener('player_state_changed', state => {
       if (!state) return;
@@ -444,11 +514,12 @@ async function switchTo(toIdx) {
   trackName.textContent = SONG_NAMES[toIdx];
   audioToggle.textContent = '❚❚';
 
-  // Start new track
+  // Start new track silent when crossfading, then ramp up
+  if (fromIdx >= 0 && spotifyPlayer) await spotifyPlayer.setVolume(0);
   const res = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
     method: 'PUT',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      'Authorization': `Bearer ${(await getValidToken()) || accessToken}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -457,14 +528,13 @@ async function switchTo(toIdx) {
   }).catch(() => null);
   // Token expired or network error — prompt re-auth
   if (res && res.status === 401) {
-    sessionStorage.removeItem('spotify_token');
-    updatePlayerUI(false);
+    clearToken();
+    resetAudio('♫ Spotify session expired. Reconnect to enable audio');
     return;
   }
 
   // Crossfade volume
   if (fromIdx >= 0) {
-    let vol = userVolume;
     const STEPS = 40;
     const interval = 2500 / STEPS;
     let step = 0;
@@ -519,12 +589,15 @@ let chapterTops = null;
 function getChapterTops() {
   if (chapterTops) return chapterTops;
   chapterTops = Array.from(musicCues).map(el => ({
-    top: el.offsetTop,
+    top: el.getBoundingClientRect().top + window.scrollY,
     idx: parseInt(el.dataset.music, 10)
   }));
   return chapterTops;
 }
 window.addEventListener('resize', () => { chapterTops = null; }, { passive: true });
+// Charts, fonts and reveals shift layout without a resize; re-measure on any size change
+if (window.ResizeObserver) new ResizeObserver(() => { chapterTops = null; }).observe(document.body);
+window.addEventListener('load', () => { chapterTops = null; });
 
 function getActiveChapterIdx() {
   const trigger = window.scrollY + window.innerHeight * 0.3;
@@ -591,7 +664,6 @@ registerChart('c_trust',{type:'line',data:{labels:['1972','1976','1980','1985','
 registerChart('c_parsep',{type:'bar',data:{labels:['Ever\nmarried','Had\nchildren','Depressed\nat 5 yrs','Persistent\nsadness\nat 10 yrs'],datasets:[{label:'Intact families',data:[80,61,15,20],backgroundColor:'rgba(138,94,196,0.4)',borderColor:'#8a5ec4',borderWidth:1,borderRadius:2},{label:'Children of divorce',data:[60,38,40,55],backgroundColor:'rgba(138,94,196,0.75)',borderColor:'#8a5ec4',borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lgd,tooltip:tip()},scales:{x:{...xAx,ticks:{...xAx.ticks,font:sf,maxRotation:0}},y:{...yAx,min:0,max:90,title:{display:true,text:'%',color:'#8a8680',font:sf}}}}});
 registerChart('c_cfr',{type:'bar',data:{labels:['1960','1970','1980','1990','2000','2010','2016','2020','2024'],datasets:[{label:'CFR pages (thousands)',data:[22.9,54.8,102.2,128.5,138.0,163.3,185.1,185.9,188],backgroundColor:['rgba(107,130,153,0.2)','rgba(107,130,153,0.26)','rgba(107,130,153,0.32)','rgba(107,130,153,0.38)','rgba(107,130,153,0.44)','rgba(107,130,153,0.5)','rgba(107,130,153,0.56)','rgba(107,130,153,0.62)','rgba(107,130,153,0.68)'],borderColor:'#6b8299',borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},scales:{x:xAx,y:{...yAx,beginAtZero:true,max:210,title:{display:true,text:'thousands of pages',color:'#8a8680',font:mf}}}}});
 registerChart('c_meaning',{type:'bar',data:{labels:['"Too\nindividualistic"','"Technology\ncauses\nloneliness"','"Overworked\nor too\nbusy"','"Mental health\nharms\nrelationships"','"Insufficient\ntime w/\nfamily"'],datasets:[{label:'% identifying as cause of loneliness (2024)',data:[58,73,62,60,66],backgroundColor:'rgba(58,196,168,0.4)',borderColor:'#3ac4a8',borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:tip()},indexAxis:'y',scales:{x:{...xAx,beginAtZero:true,max:80,title:{display:true,text:'% of respondents',color:'#8a8680',font:mf}},y:{...yAx,ticks:{...yAx.ticks,font:sf}}}}});
-rT=[null,null,25,28,40,22,18,20,22],rH=[null,null,null,43,40,39,35,38,36],rC=[null,null,null,null,42,34,30,32,26],rF=[null,null,null,null,null,12.8,9.5,6,6.5],rR=[22.9,54.8,102.2,128.5,138,163.3,185.1,185.9,188];
 
 
 const chartObs=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(!entry.isIntersecting)return; const canvases=entry.target.querySelectorAll('canvas'); canvases.forEach(canvas=>{ const found=chartRegistry.find(c=>c.canvasId===canvas.id); if(found)createChart(found.canvasId,found.config); }); }); },{threshold:0.2}); document.querySelectorAll('.chart-gate,.chart-pair').forEach(el=>chartObs.observe(el));
