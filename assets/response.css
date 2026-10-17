@@ -1,25 +1,22 @@
-/* "How did this make you feel?" box at the end of each piece (markup: response_form.py).
-   Same wording and look as /feedback.html, quieter. Uses site colours, with fallbacks for The Unbinding. */
-.response{margin-top:clamp(56px,9vh,88px);text-align:left;font-family:'EB Garamond',Georgia,serif}
-.response-h{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:clamp(24px,3vw,30px);line-height:1.2;letter-spacing:0.01em;color:var(--text,#e8e4df);margin:0 0 10px}
-.response-h span{font-style:italic;color:var(--fiction,#c4453a)}
-.response-done .response-h{color:var(--fiction,#c4453a)}
-.response-sub{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:300;font-size:10.5px;letter-spacing:0.1em;line-height:1.8;color:var(--text-muted,#8a8680);margin:0 0 26px}
-.response-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+/* "How did this make you feel?": the small link at the end of each piece (markup: response_form.py)
+   and the form on the response page (/respond/ = feedback.html). Site colours, with fallbacks. */
+.respond{margin:clamp(56px,9vh,88px) 0 0;text-align:center}
+.respond-link{display:inline-block;border:1px solid var(--border,#252529);border-radius:2px;color:var(--text-muted,#8a8680);font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:300;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;padding:12px 22px;transition:border-color 0.3s,color 0.3s;-webkit-tap-highlight-color:transparent}
+.respond-link:hover,.respond-link:focus-visible{border-color:var(--text-muted,#8a8680);color:var(--text,#e8e4df)}
+.video .respond.col{margin-top:clamp(56px,9vh,88px)}
+.epilogue .respond{margin-top:80px}
+
+/* Form page */
 .response-label{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:300;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted,#8a8680);margin-bottom:10px}
 .response textarea,.response input[type="text"],.response input[type="email"]{display:block;width:100%;background:transparent;border:1px solid var(--border,#252529);border-radius:2px;color:var(--text,#e8e4df);font-family:'EB Garamond',Georgia,serif;font-size:17px;line-height:1.6;padding:12px 14px;outline:none;transition:border-color 0.3s;-webkit-appearance:none;appearance:none}
-.response textarea{min-height:120px;resize:vertical}
+.response textarea{min-height:140px;resize:vertical}
 .response textarea:focus,.response input:focus{border-color:var(--text-muted,#8a8680)}
 .response ::placeholder{color:var(--text-ghost,#4a4744);font-style:italic;opacity:1}
+.response .response-piece{margin-bottom:24px}
 .response-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .response button[type="submit"]{margin-top:16px;background:transparent;border:1px solid var(--border,#252529);border-radius:2px;color:var(--text-dim,#c4bfb8);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:12px 30px;cursor:pointer;transition:border-color 0.3s,color 0.3s;-webkit-tap-highlight-color:transparent}
 .response button[type="submit"]:hover,.response button[type="submit"]:focus-visible{border-color:var(--text-muted,#8a8680);color:var(--text,#e8e4df)}
 .response button[disabled]{opacity:0.5;cursor:default}
 .response-error{margin-top:14px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:0.1em;color:var(--fiction,#c4453a)}
-.response-done{padding:8px 0}
 .response [hidden]{display:none!important}
 @media(max-width:600px){.response-row{grid-template-columns:1fr}}
-/* Video pages: the box sits in the reading column */
-.video .response.col{margin-top:clamp(56px,9vh,88px)}
-/* The Unbinding: sits at the end of the last chapter, centred in its column */
-.epilogue .response{max-width:560px;margin:80px auto 0}

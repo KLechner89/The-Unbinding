@@ -7,7 +7,7 @@ series landing page for each series (e.g. essays/mobius-censor/index.html).
 See README.md, "Adding a new essay".
 """
 import glob, html, os, re
-from response_form import response_form, CSS as RESPONSE_CSS, JS as RESPONSE_JS
+from response_form import respond_link, CSS as RESPONSE_CSS
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://kylelechner.io'
@@ -173,8 +173,8 @@ def essay_page(e, by_url):
         out.append('</section>')
     if scored: out.append('</div>')
     out.append('</article>')
-    # "How did this make you feel?" box (response_form.py), before the Next / All essays links
-    out.append(response_form(f'{short_title(e).replace("*", "")} ({e["url"]})'))
+    # "How did this make you feel?" link to the response form (response_form.py), before the Next / All essays links
+    out.append(respond_link(short_title(e).replace('*', ''), e['url']))
     # previous (within the series) / next (series order, or the "next:" line)
     prev = nxt = None
     if e['part']:
@@ -189,14 +189,14 @@ def essay_page(e, by_url):
     out.append('<p class="back-links label">')
     if e['part']: out.append(f'<a href="{e["series_url"]}">All papers in {html.escape(e["series"])}</a> <span aria-hidden="true">&middot;</span> ')
     out.append('<a href="/essays/">All essays</a></p>')
-    out.append('</main>\n<script src="/assets/footnotes.js" defer></script>\n' + RESPONSE_JS)
+    out.append('</main>\n<script src="/assets/footnotes.js" defer></script>')
     out.append(score_player(e) + '</body>\n</html>\n')
     return '\n'.join(out)
 
 def series_page(url, papers):
     s = SERIES[url]
     out = [head(f'{s["title"]} — Kyle Lechner', s['description'], url)]
-    out.append(f'<main class="catalog series">\n<p class="label kicker"><a href="/essays/">Essays</a> &middot; Essay series</p>\n<h1>{html.escape(s["title"])}</h1>\n<p class="lede">{html.escape(s["description"])}</p>')
+    out.append(f'<main class="catalog series" data-section="essays">\n<p class="label kicker"><a href="/essays/">Essays</a> &middot; Essay series</p>\n<h1>{html.escape(s["title"])}</h1>\n<p class="lede">{html.escape(s["description"])}</p>')
     if s.get('note'): out.append(f'<p class="lede note">{html.escape(s["note"])}</p>')
     out.append(f'<ol class="works" aria-label="Papers in {html.escape(s["title"])}">')
     for p in papers:

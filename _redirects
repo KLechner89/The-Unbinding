@@ -6,3 +6,7 @@
 /flavicon/*    /    301
 /Flavicon      /    301
 /Flavicon/*    /    301
+
+# Response form page (same page as /feedback.html; the link at the end of each piece points here)
+/respond    /feedback.html    200
+/respond/   /feedback.html    200
