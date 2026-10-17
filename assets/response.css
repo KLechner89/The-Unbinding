@@ -1,10 +1,10 @@
 /* "How did this make you feel?": the small link at the end of each piece (markup: response_form.py)
    and the form on the response page (/respond/ = feedback.html). Site colours, with fallbacks. */
-.respond{margin:clamp(56px,9vh,88px) 0 0;text-align:left}
+.respond{margin:clamp(56px,9vh,88px) 0 0;text-align:center}
 .respond-link{display:inline-block;border:1px solid var(--border,#252529);border-radius:2px;color:var(--text-muted,#8a8680);font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:300;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;padding:12px 22px;transition:border-color 0.3s,color 0.3s;-webkit-tap-highlight-color:transparent}
 .respond-link:hover,.respond-link:focus-visible{border-color:var(--text-muted,#8a8680);color:var(--text,#e8e4df)}
 .video .respond.col{margin-top:clamp(56px,9vh,88px)}
-.epilogue .respond{text-align:center;margin-top:80px}
+.epilogue .respond{margin-top:80px}
 
 /* Form page */
 .response-label{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:300;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted,#8a8680);margin-bottom:10px}
