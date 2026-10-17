@@ -124,8 +124,14 @@ test('all six pages use the KL favicon assets and the root assets match the orig
   for (const prefix of ['', 'Flavicon/']) {
     for (const page of ['index.html', 'feedback.html', 'book.html']) {
       const html = read(prefix + page);
+      const icons = [...html.matchAll(/<link\b[^>]*rel="(?:icon|apple-touch-icon)"[^>]*>/g)];
+      assert.equal(icons.length, 3, prefix + page + ': one declaration per icon format');
       for (const asset of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) {
-        assert.ok(html.includes('/' + asset + '?v=kl-20261016'), prefix + page + ': ' + asset);
+        const matching = icons.filter(([tag]) => {
+          const href = tag.match(/href="([^"]+)"/)?.[1];
+          return href && new URL(href, 'https://example.test').pathname === '/' + asset;
+        });
+        assert.equal(matching.length, 1, prefix + page + ': ' + asset);
       }
     }
   }

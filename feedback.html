@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Unbinding — Feedback</title>
-<link rel="icon" href="/favicon.ico?v=kl-20261016" sizes="48x48">
-<link rel="icon" href="/favicon.svg?v=kl-20261016" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=kl-20261016">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
 
@@ -259,8 +259,8 @@ async function submitForm(e) {
   const form = e.target;
   const data = new URLSearchParams(new FormData(form));
   try {
-    const response = await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: data.toString() });
-    if (!response.ok) throw new Error(`Submission failed (${response.status})`);
+    const res = await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: data.toString() });
+    if (!res.ok) throw new Error(res.status);
     document.getElementById('formView').classList.add('hidden');
     document.getElementById('successView').classList.remove('hidden');
   } catch(err) {
