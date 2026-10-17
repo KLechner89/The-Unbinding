@@ -117,6 +117,21 @@ def score_player(e):
 <script src="/assets/score.js"></script>
 '''
 
+# The same connect / begin gates as fiction/unbinding/ (same buttons and wording), left-aligned
+# under the essay's date. The essay text stays hidden until the reader picks one, as on The Unbinding.
+SCORE_GATES = '''<!-- Landing gate -->
+<div id="landingGate" style="margin-top:40px;display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+  <button id="connectBtn" onclick="loginWithSpotify()" style="background:#1DB954;border:none;color:#000;font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;padding:14px 32px;border-radius:2px;cursor:pointer;display:flex;align-items:center;gap:10px;-webkit-tap-highlight-color:transparent;">&#9654; CONNECT SPOTIFY TO BEGIN</button>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--text-muted);max-width:320px;">This piece is scored. Spotify Premium required for full audio experience.</p>
+  <button onclick="readWithoutAudio()" style="background:none;border:none;color:var(--text-ghost);font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px;">read without audio</button>
+</div>
+<!-- Begin reading button — shown after auth -->
+<div id="beginGate" style="margin-top:40px;display:none;flex-direction:column;align-items:flex-start;gap:16px;">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#1DB954;">&#10003; Spotify connected</p>
+  <button onclick="beginReading()" style="background:transparent;border:1px solid var(--border);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;padding:14px 32px;border-radius:2px;cursor:pointer;-webkit-tap-highlight-color:transparent;">BEGIN READING &darr;</button>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--text-muted);max-width:320px;">Music will begin with the essay.</p>
+</div>'''
+
 def first_sentence(e):
     p = re.sub(r'\[\^\d+\]', '', e['paras'][0]).replace('*', '')
     m = re.match(r'(.+?[.?!])(\s|$)', p)
@@ -133,7 +148,12 @@ def essay_page(e, by_url):
         out.append('<p class="label kicker"><a href="/essays/">Essay</a></p>')
     out.append(f'<h1>{inline(e["title"])}</h1>')
     if e.get('subtitle'): out.append(f'<p class="subtitle">{inline(e["subtitle"])}</p>')
-    out.append(f'<p class="label date"><time>{html.escape(e["date"])}</time></p>\n</header>\n<div class="prose">')
+    scored = bool(e.get('score'))
+    out.append(f'<p class="label date"><time>{html.escape(e["date"])}</time></p>')
+    if scored: out.append(SCORE_GATES)
+    out.append('</header>')
+    if scored: out.append('<div id="storyContent" style="display:none;">')
+    out.append('<div class="prose" data-music="0">' if scored else '<div class="prose">')
     for p in e['paras']:
         h = inline(p)
         h = re.sub(r'\[\^(\d+)\]', lambda m: f'<sup class="fnref"><a href="#fn-{m.group(1)}" id="fnref-{m.group(1)}" aria-describedby="fn-{m.group(1)}" aria-label="Note {m.group(1)}">{m.group(1)}</a></sup>', h)
@@ -149,6 +169,7 @@ def essay_page(e, by_url):
         out.append(f'<section class="bib" aria-labelledby="bib-h">\n<h2 class="label" id="bib-h">{html.escape(e["bib_heading"])}</h2>')
         for b in e['bib']: out.append(f'<p>{inline(b, links)}</p>')
         out.append('</section>')
+    if scored: out.append('</div>')
     out.append('</article>')
     # previous (within the series) / next (series order, or the "next:" line)
     prev = nxt = None

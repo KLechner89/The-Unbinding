@@ -18,9 +18,10 @@
  *   #landingGate, #beginGate, #storyContent.
  * Buttons on the page call loginWithSpotify(), readWithoutAudio() and beginReading().
  *
- * Looping mode (set  loop: true  in window.SCORE, used by essays): no scroll cues and
- * no gates. The page only needs #spotifyLoginBtn and #audioCtl. After connecting, the
- * reader presses play; the songs play in order and start again after the last one.
+ * Looping mode (set  loop: true  in window.SCORE, used by essays): the page works exactly
+ * like The Unbinding (same gates, same connect flow, same controls), but has a single
+ * data-music="0" cue. When the reader reaches it, the whole song list starts and then
+ * loops: the songs play in order and start again after the last one.
  */
 (function () {
   var config = window.SCORE;
@@ -122,7 +123,6 @@
         deviceId = e.device_id;
         audioUnlocked = true;
         updatePlayerUI(true);
-        if (LOOP) { if (!loopStarted) { trackName.textContent = SONG_NAMES[0]; audioToggle.textContent = '▶'; } return; }
         showBeginButton();
         if (pendingCue !== null) {
           var cue = pendingCue;
@@ -169,6 +169,7 @@
 
   async function switchTo(toIdx) {
     if (!audioUnlocked || !deviceId) { pendingCue = toIdx; return; }
+    if (LOOP) { if (!loopStarted) startLoop(); return; }   // one cue starts the loop; never restarted by scrolling
     if (toIdx === currentIdx && !isPaused) return;
     if (!TRACK_IDS[toIdx]) { console.warn('score.js: no song listed for data-music="' + toIdx + '"'); return; }
     if (fadeTimer) { clearInterval(fadeTimer); fadeTimer = null; }
@@ -237,7 +238,6 @@
     loopStarted = true; userPaused = false; currentIdx = 0;
     trackName.textContent = SONG_NAMES[0];
     audioToggle.textContent = '❚❚';
-    if (spotifyPlayer && spotifyPlayer.activateElement) { try { await spotifyPlayer.activateElement(); } catch (e) {} }
     var res = await api('PUT', 'play', { uris: TRACK_IDS.map(function (id) { return 'spotify:track:' + id; }), offset: { position: 0 } });
     if (!res) return;
     await api('PUT', 'shuffle?state=false');
@@ -261,7 +261,6 @@
 
   audioToggle.addEventListener('click', async function () {
     if (!spotifyPlayer) return;
-    if (LOOP && !loopStarted) { await startLoop(); return; }
     if (LOOP) userPaused = !isPaused;
     await spotifyPlayer.togglePlay();
   });
@@ -271,7 +270,7 @@
     if (spotifyPlayer) await spotifyPlayer.setVolume(userVolume);
   });
 
-  // === Scroll-based track switching (not used in looping mode) ===
+  // === Scroll-based track switching (in looping mode the cue only starts the loop) ===
   var musicCues = document.querySelectorAll('[data-music]');
   var scrollTimer = null;
 
@@ -302,7 +301,7 @@
     return bestIdx;
   }
 
-  if (!LOOP) window.addEventListener('scroll', function () {
+  window.addEventListener('scroll', function () {
     // Chapter detection (debounced)
     if (scrollTimer) return;
     scrollTimer = setTimeout(function () {
@@ -334,7 +333,6 @@
     }
     if (Auth.getStoredToken()) {
       showStory();
-      if (LOOP) { audioCtl.classList.add('visible'); trackName.textContent = '♫ Connecting to Spotify…'; }
       Auth.getValidToken().then(function (token) {
         if (token) initSpotify();
         else resetAudio(MSG_EXPIRED);
