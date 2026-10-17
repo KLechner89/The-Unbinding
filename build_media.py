@@ -12,6 +12,8 @@ See README.md, "Adding a video essay", and docs/video-essays.md. Standard librar
 """
 import datetime, html, json, os, re, shutil, sys
 
+from response_form import response_form
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://kylelechner.io'
 WORKS = os.path.join(ROOT, 'media', 'works.json')
@@ -194,6 +196,8 @@ def work_page(w, nxt, template):
         'OG_IMAGE': esc(og), 'FORM': esc(w['form']), 'DATE_ISO': w['_date'].isoformat(),
         'DATE': long_date(w['_date']), 'DURATION': esc(w['duration']), 'EMBED_URL': esc(embed),
         'POSTER_IMG': poster_img, 'TRANSCRIPT': transcript, 'PAGER': pager, 'FOOTNOTES_SCRIPT': fn_script,
+        # "How did this make you feel?" box (response_form.py), before the Next / All media links
+        'RESPONSE': response_form(f'{w["title"]} ({url})', 'col'),
     }
     page = re.sub(r'^.*<!-- template-only -->\n', '', template, flags=re.M)
     page = re.sub(r'<!--(?:(?!-->).)*?template-only\s*-->\n', '', page, flags=re.S)
