@@ -4,6 +4,7 @@
 
 import { settings } from './config.mjs';
 import { formatWhen } from './email.mjs';
+import { meetingTypeLabel } from './meeting-types.mjs';
 
 export async function recordSubmission(b) {
   const { siteUrl, rules } = settings();
@@ -11,7 +12,7 @@ export async function recordSubmission(b) {
   const fields = {
     'form-name': 'meeting-booking',
     status: b.status,
-    meeting_type: { video: 'Video', phone: 'Phone', in_person: 'In person' }[b.meetingType],
+    meeting_type: meetingTypeLabel(b.meetingType),
     name: b.name,
     email: b.email,
     phone: b.phone || '',

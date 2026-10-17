@@ -14,9 +14,9 @@ import { isValidTimeZone, dayBounds } from './_shared/slots.mjs';
 import { RULES } from './_shared/availability-rules.mjs';
 import { turnstileEnabled, verifyTurnstile } from './_shared/turnstile.mjs';
 import { createZoomMeeting, deleteZoomMeeting } from './_shared/zoom.mjs';
+import { isMeetingType, meetingTypeLabel } from './_shared/meeting-types.mjs';
 
 const MINUTE = 60_000;
-const TYPES = { video: 'Video', phone: 'Phone', in_person: 'In person' };
 const clean = (v, max) => String(v ?? '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').trim().slice(0, max);
 
 function validate(body) {
@@ -32,7 +32,7 @@ function validate(body) {
     durationMinutes: (Array.isArray(RULES.allowedDurations) ? RULES.allowedDurations : []).find((d) => d === body.durationMinutes || String(d) === body.durationMinutes) ?? null,
     visitorTimeZone: isValidTimeZone(body.visitorTimeZone) ? body.visitorTimeZone : '',
   };
-  if (!TYPES[b.meetingType]) errors.meetingType = 'Please choose how you would prefer to meet.';
+  if (!isMeetingType(b.meetingType)) errors.meetingType = 'Please choose how you would prefer to meet.';
   if (!b.name) errors.name = 'Please enter your name.';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b.email)) errors.email = 'Please enter a valid email address.';
   if (b.meetingType === 'phone') {
@@ -48,16 +48,17 @@ function validate(body) {
 
 function buildEvent(b, slot, status, zoom) {
   const { rules } = settings();
-  const summary = {
+  const summaries = {
     video: `Video meeting (${b.durationMinutes} min) — ${b.name}`,
     phone: `Phone call (${b.durationMinutes} min) — ${b.name}`,
     in_person: `[Pending approval] In person (${b.durationMinutes} min) — ${b.name}`,
-  }[b.meetingType];
+  };
+  const summary = isMeetingType(b.meetingType) ? summaries[b.meetingType] : undefined;
   const description = [
     `Booked via ${BOOKING_SOURCE}`,
     status === 'pending' ? 'STATUS: PENDING APPROVAL. Confirm and send location details, or delete this hold to decline.' : null,
     '',
-    `Meeting type: ${TYPES[b.meetingType]}`,
+    `Meeting type: ${meetingTypeLabel(b.meetingType)}`,
     `Length: ${b.durationMinutes} minutes`,
     `Name: ${b.name}`,
     `Email: ${b.email}`,

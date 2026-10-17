@@ -11,6 +11,7 @@ Netlify will redeploy automatically after you git push.
 
 import re
 import os
+import sys
 
 # The story page lives at kylelechner.io/fiction/unbinding/
 STORY_PAGE = 'fiction/unbinding/index.html'
@@ -59,15 +60,21 @@ def md_to_html(md_text):
     return '\n'.join(html_paras)
 
 def build():
+    # Every chapter must have its source file. If any is missing, stop before
+    # touching the story page, so a chapter is never silently left stale.
+    missing = [f'chapters/{c}.md' for c in CHAPTERS if not os.path.exists(f'chapters/{c}.md')]
+    if missing:
+        print("ERROR: build stopped. These chapter files are missing:", file=sys.stderr)
+        for path in missing:
+            print(f"  {path}", file=sys.stderr)
+        print(f"Nothing was changed in {STORY_PAGE}. Restore the file(s), or update CHAPTERS in build.py, then run again.", file=sys.stderr)
+        sys.exit(1)
+
     with open(STORY_PAGE, 'r') as f:
         html = f.read()
 
     for i, chapter in enumerate(CHAPTERS):
         md_path = f'chapters/{chapter}.md'
-        if not os.path.exists(md_path):
-            print(f"WARNING: {md_path} not found, skipping")
-            continue
-
         with open(md_path, 'r') as f:
             md_text = f.read()
 
