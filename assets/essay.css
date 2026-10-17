@@ -1,0 +1,69 @@
+/* Essay pages (essays/...): reading column, notes, bibliography, pager, footnote tooltips.
+   Uses the colours and fonts defined in site.css. */
+.essay{position:relative;max-width:calc(65ch + 2 * var(--pad));margin:0 auto;padding:clamp(104px,16vh,170px) var(--pad) 72px;font-size:clamp(18px,0.5vw + 14px,20px)}
+.essay a{transition:color 0.3s,border-color 0.3s}
+.essay-head{margin-bottom:clamp(36px,6vh,56px)}
+.kicker{color:var(--text-muted);margin-bottom:22px}
+.kicker a{color:var(--text-muted);border-bottom:1px solid transparent}
+.kicker a:hover{color:var(--text);border-color:var(--text-muted)}
+.essay h1{font-family:var(--serif);font-weight:300;font-size:clamp(42px,6.4vw,72px);line-height:1.04;letter-spacing:-0.01em;color:var(--text)}
+.subtitle{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--text-dim);margin-top:12px}
+.date{color:var(--text-muted);margin-top:24px}
+.lede{font-family:var(--body);font-size:1em;line-height:1.7;color:var(--text-dim);margin-top:22px;max-width:52ch}
+
+.prose{font-family:var(--body);line-height:1.72;color:var(--text);hyphens:manual}
+.prose p{margin:0 0 1.15em}
+.prose em{font-style:italic}
+.prose blockquote{margin:1.4em 0 1.4em 1.4em;padding-left:1.1em;border-left:1px solid var(--border);color:var(--text-dim)}
+.fnref{font-family:var(--mono);font-size:0.55em;line-height:0;vertical-align:super;margin-left:0.08em;position:relative}
+.fnref a{color:var(--text-muted);padding:0 0.18em;border-bottom:1px solid transparent}
+.fnref a:hover,.fnref a[aria-expanded="true"]{color:var(--text);border-color:var(--text-muted)}
+:target{scroll-margin-top:30vh}
+
+.notes,.bib{margin-top:clamp(48px,8vh,72px);padding-top:30px;border-top:1px solid var(--border)}
+.notes h2,.bib h2{color:var(--text-muted);font-size:11px;margin-bottom:20px}
+.notes ol{list-style:none;counter-reset:fn}
+.notes li{counter-increment:fn;position:relative;padding-left:2.6em;font-size:15.5px;line-height:1.6;color:var(--text-dim);margin-bottom:0.7em;overflow-wrap:anywhere}
+.notes li::before{content:counter(fn);position:absolute;left:0;top:0.25em;font-family:var(--mono);font-size:11px;color:var(--text-muted)}
+.notes li:target{color:var(--text)}
+.notes a.back{color:var(--text-muted);margin-left:0.2em}
+.notes a.back:hover,.notes a.src:hover,.bib a:hover{color:var(--text)}
+.src,.fn-tip .src{font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;margin-left:0.35em;border-bottom:1px solid var(--border)}
+.bib p{font-size:15.5px;line-height:1.6;color:var(--text-dim);padding-left:2em;text-indent:-2em;margin-bottom:0.7em;overflow-wrap:anywhere}
+.bib a,.notes .fn-text a{border-bottom:1px solid var(--border)}
+
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:clamp(56px,9vh,88px);padding-top:28px;border-top:1px solid var(--border)}
+.pager a{display:block}
+.pager .label{display:block;color:var(--text-muted);margin-bottom:10px}
+.pager .t{display:block;font-family:var(--serif);font-weight:300;font-size:24px;line-height:1.2;color:var(--text-dim)}
+.pager a:hover .t{color:#fff}
+.pager a:hover .label{color:var(--text-dim)}
+.pager .next{text-align:right;grid-column:2}
+.back-links{margin-top:40px;color:var(--text-muted);line-height:2}
+.back-links a{color:var(--text-muted)}
+.back-links a:hover{color:var(--text)}
+
+/* Series landing: uses the catalog layout from site.css (.catalog, .works, .work) */
+.catalog.series .kicker{padding:0 var(--pad)}
+.catalog.series h1{margin-bottom:22px}
+.catalog.series .lede{padding:0 var(--pad);margin:0 0 clamp(40px,7vh,64px);max-width:calc(56ch + var(--pad));font-size:clamp(17px,0.4vw + 14px,19px)}
+.catalog.series .work h2{font-size:34px}
+ol.works{list-style:none}
+.catalog.series .work{flex-basis:300px}
+.catalog.series .work:first-child{flex-basis:270px}
+
+/* Footnote tooltip (assets/footnotes.js) */
+.fn-tip{display:block;position:fixed;z-index:50;max-width:min(360px,calc(100vw - 24px));padding:14px 16px 13px;background:#141417;border:1px solid var(--border);box-shadow:0 10px 30px rgba(0,0,0,0.45);font-family:var(--body);font-size:15px;line-height:1.55;color:var(--text-dim);text-align:left;text-indent:0;letter-spacing:0;text-transform:none;vertical-align:baseline;white-space:normal;overflow-wrap:anywhere}
+.fn-tip[hidden]{display:none}
+.fn-tip .num{font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;color:var(--text-muted);margin-right:0.6em}
+.fn-tip .src{display:inline-block;margin:8px 0 0;margin-left:0}
+.fn-tip a{color:var(--text)}
+.fn-tip a:hover{color:#fff}
+
+@media(max-width:600px){
+  .essay{padding-top:clamp(96px,15vh,140px)}
+  .pager{grid-template-columns:1fr;gap:28px}
+  .pager .next{grid-column:1;text-align:left}
+  .parts a{grid-template-columns:1fr;gap:6px;padding:20px 0}
+  .notes li{padding-left:2.2em}
+}

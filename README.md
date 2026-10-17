@@ -142,3 +142,27 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 
 All credentials live in Netlify environment variables (scoped to Functions), never in this repository. Scheduling stays off until every required variable is set and `SCHEDULING_ENABLED` is `true`; the reasons are written to the function logs.
 
+
+## Adding a new essay
+
+Essays are written as plain text files in the `essays-src/` folder. A small script turns each file into a finished web page, so you never edit the essay pages in `essays/` by hand.
+
+1. **Make a copy** of an existing file in `essays-src/` (for example `carriage-and-platform.md`) and rename it, e.g. `my-new-essay.md`.
+2. **Edit the top block** (between the two `---` lines):
+   - `title:` the essay's title.
+   - `subtitle:` optional; delete the line if there isn't one.
+   - `url:` where the page will live, e.g. `/essays/my-new-essay/` (lowercase, hyphens, ending in `/`).
+   - `date:` written the way it should appear, e.g. `March 2, 2026`.
+   - `next:` optional; the `url:` of the piece the "Next" link at the bottom should point to.
+   - For a paper in a series, also give `series:`, `series_url:` and `part:` (1, 2, 3…), as in the `mobius-censor-*.md` files. Previous/Next links inside a series are worked out from `part:`. A new series also needs a one-line entry in `SERIES` at the top of `build_essays.py`.
+3. **Paste the text** below the top block. Leave a blank line between paragraphs.
+   - Italics: wrap words in single asterisks, `*Mrs. Dalloway*`.
+   - A footnote marker in the text: `[^1]`, `[^2]`, …
+4. **Notes and bibliography** go at the end, under the headings `## Notes` and `## Bibliography` (or `## Works Cited`). One note per line:
+   `[^1]: Virginia Woolf, *Mrs. Dalloway* (New York: Vintage Books, 2021), P. 7. <https://link-to-the-source>`
+   The link in `< >` is optional. Only add one you've opened and checked is the right book or article. It shows up as "Source ↗" in the note's pop-up and in the Notes list.
+5. **Build the pages.** In a terminal in this folder, run `python3 build_essays.py`. It rewrites every essay page and the series pages.
+6. **Add it to the Essays page.** Open `essays/index.html` and copy one of the `<li class="work">…</li>` entries. Change the link, number, title, one-sentence description and caption. Newest goes first, and the numbers count up from 01.
+7. Commit and push. Netlify builds a preview for the pull request, and the site updates when it's merged into `main`.
+
+Footnote pop-ups come from `assets/footnotes.js` and the page styles from `assets/essay.css`. Both are shared by every essay.
