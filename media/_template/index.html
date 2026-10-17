@@ -7,7 +7,10 @@
 <!--
   Template for one video work at /media/<slug>/. Not linked from anywhere and not indexed.
   build_media.py fills in the {{...}} fields from media/works.json and writes /media/<slug>/index.html.
-  Edit the layout here; edit the words in media/works.json and media/transcripts/. template-only
+  Edit the layout here; edit the words in media/works.json and media/transcripts/.
+  Parts marked "if public" ... "end if" appear only on pages of public films;
+  parts marked "if members" ... "end if" only on pages of members films.
+  The members invitation wording below is placeholder copy for the owner to approve. template-only
 -->
 <meta name="generator" content="build_media.py">
 <title>{{TITLE}} — Kyle Lechner</title>
@@ -24,7 +27,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- if public -->
 <link rel="preconnect" href="https://iframe.mediadelivery.net">
+<!-- end if -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@300;400&display=swap">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/essay.css">
@@ -47,6 +52,7 @@
   <h1>{{TITLE}}</h1>
   <p class="lede">{{DESCRIPTION}}</p>
 </header>
+<!-- if public -->
 <figure class="player">
   <div class="player-frame" data-embed="{{EMBED_URL}}" data-title="{{TITLE}}">
     <button class="facade" type="button" aria-label="Play {{TITLE}} ({{DURATION}})">
@@ -57,6 +63,19 @@
   </div>
   <figcaption class="label">{{DURATION}}</figcaption>
 </figure>
+<!-- end if -->
+<!-- if members -->
+<figure class="player">
+  <div class="player-frame invitation" data-work="{{SLUG}}" data-title="{{TITLE}}" data-duration="{{DURATION}}" data-poster="{{POSTER}}">
+    <div class="invite">
+      <p>This film is in the members&rsquo; collection.</p>
+      <p class="label"><a href="/membership/">Become a member</a></p>
+      <p class="label signin" hidden><a href="/membership/" data-member-signin>Already a member? Sign in</a></p>
+    </div>
+  </div>
+  <figcaption class="label">{{DURATION}} &middot; Members</figcaption>
+</figure>
+<!-- end if -->
 {{TRANSCRIPT}}
 <footer class="col">
 {{PAGER}}
@@ -64,6 +83,9 @@
 </footer>
 </article>
 </main>
+<!-- if members -->
+<script src="/assets/membership.js" defer></script>
+<!-- end if -->
 <script src="/assets/media.js" defer></script>
 {{FOOTNOTES_SCRIPT}}
 </body>

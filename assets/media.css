@@ -20,6 +20,15 @@
 .facade:focus-visible{outline:1px solid var(--text-muted);outline-offset:-6px}
 .player figcaption{color:var(--text-muted);margin-top:14px}
 
+/* Members films: in place of the player, the same quiet 16:9 frame holding a short invitation. */
+.player-frame.invitation{display:flex;align-items:center;justify-content:center;text-align:center}
+.invite{padding:0 var(--pad)}
+.invite p:not(.label){font-family:var(--body);font-style:italic;color:var(--text-dim);font-size:1em;line-height:1.6}
+.invite p.label{margin-top:24px}
+.invite p.signin{margin-top:12px}
+.invite a{color:var(--text-muted);padding-bottom:3px;border-bottom:1px solid var(--border);transition:color 0.3s,border-color 0.3s}
+.invite a:hover,.invite a:focus-visible{color:var(--text);border-color:var(--media)}
+
 /* Transcript */
 .transcript{margin-top:clamp(64px,11vh,112px)}
 .transcript>h2{color:var(--text-muted);font-size:11px;margin-bottom:28px;padding-top:30px;border-top:1px solid var(--border)}
@@ -31,4 +40,6 @@
   .player-frame{border-left:0;border-right:0}
   .player figcaption{padding:0 var(--pad)}
   .facade .play{width:54px;height:54px}
+  .invite p:not(.label){font-size:16px}
+  .invite p.label{margin-top:18px}
 }

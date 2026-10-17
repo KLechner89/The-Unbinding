@@ -8,6 +8,10 @@ layout in media/_template/index.html. It also rewrites the list of works on medi
 (only the part between the <!-- media-entries --> markers). With no published works,
 the Media page shows a single muted "Forthcoming", exactly as before.
 Works marked "forthcoming" are ignored: nothing about them appears on the site.
+Each work is open to everyone ("access": "public", the default) or for members ("access": "members").
+A members work is listed in the catalog like any other, with a small "Members" beside its number;
+its page has the title and description but, in place of the player, a short invitation to membership.
+Its Bunny video ID is never written into the page (see docs/video-essays.md, "Access").
 See README.md, "Adding a video essay", and docs/video-essays.md. Standard library only.
 """
 import datetime, html, json, os, re, shutil, sys
@@ -32,6 +36,8 @@ FORTHCOMING = '''    <li class="work forthcoming">
 MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December']
 REQUIRED = ['slug', 'title', 'date', 'description', 'form', 'duration', 'status']
+ACCESS = ('public', 'members')
+IF_BLOCK = re.compile(r'^[ \t]*<!-- if (public|members) -->\n(.*?)^[ \t]*<!-- end if -->\n', re.S | re.M)
 
 
 class WorkError(Exception):
@@ -71,17 +77,29 @@ def load_works():
             w['_date'] = datetime.date.fromisoformat(w['date'])
         except ValueError:
             raise WorkError(f'{where}: date must be written YYYY-MM-DD, e.g. "2026-10-12"')
+        access = str(w.get('access') or 'public').strip().lower()
+        if access not in ACCESS:
+            raise WorkError(f'{where}: access must be "public" or "members", not "{w.get("access")}"')
+        w['access'] = access
         if w['status'] != 'published':
             continue
         lib, vid = str(w.get('bunny_library_id', '')).strip(), str(w.get('bunny_video_id', '')).strip()
-        if not re.fullmatch(r'\d+', lib):
-            raise WorkError(f'{where}: bunny_library_id must be the number shown in Bunny Stream (e.g. "123456")')
-        if not re.fullmatch(r'[A-Za-z0-9-]+', vid):
-            raise WorkError(f'{where}: bunny_video_id must be the video ID from Bunny Stream (letters, numbers, hyphens)')
+        if access == 'public':
+            if not re.fullmatch(r'\d+', lib):
+                raise WorkError(f'{where}: bunny_library_id must be the number shown in Bunny Stream (e.g. "123456")')
+            if not re.fullmatch(r'[A-Za-z0-9-]+', vid):
+                raise WorkError(f'{where}: bunny_video_id must be the video ID from Bunny Stream (letters, numbers, hyphens)')
+        elif lib or vid:
+            # Members pages never use these, and this repository is public: anyone could read them here.
+            print(f'note: {where} is for members; its Bunny IDs are not put on the page, but they are visible in '
+                  'media/works.json (a public repository). Leave them blank here; see docs/video-essays.md, "Access".')
         w['bunny_library_id'], w['bunny_video_id'] = lib, vid
         poster = (w.get('poster') or '').strip()
         if poster and not (poster.startswith('https://') or poster.startswith('/')):
             raise WorkError(f'{where}: poster must be an https:// address or a path on this site starting with "/"')
+        if access == 'members' and poster and ('b-cdn.net' in poster or (vid and vid in poster)):
+            raise WorkError(f'{where}: a members film cannot use Bunny\'s thumbnail address as its poster, because that '
+                            'address contains the video ID. Save the still on this site instead, e.g. "/media/posters/<slug>.jpg"')
         w['poster'] = poster
         t = (w.get('transcript') or '').strip()
         if t:
@@ -175,12 +193,14 @@ def caption(w):
 
 def work_page(w, nxt, template):
     url = f'/media/{w["slug"]}/'
-    embed = EMBED.format(library=w['bunny_library_id'], video=w['bunny_video_id'])
+    members = w['access'] == 'members'
+    # Members pages get no embed address at all: the player is fetched for signed-in members by assets/membership.js.
+    embed = '' if members else EMBED.format(library=w['bunny_library_id'], video=w['bunny_video_id'])
     poster = w['poster']
     og = poster if poster.startswith('https://') else (SITE + poster if poster else SITE + '/og-image.png')
     poster_img = f'<img src="{esc(poster)}" alt="" decoding="async" fetchpriority="high">' if poster else ''
     transcript, has_notes = ('', False)
-    if w.get('_transcript_path'):
+    if w.get('_transcript_path') and not members:   # a members film's monologue is part of the film
         transcript, has_notes = transcript_html(w['_transcript_path'], f'transcript for {w["slug"]}')
     # The footnote pop-ups are optional: only linked when the transcript has notes and the script exists.
     fn_script = '<script src="/assets/footnotes.js" defer></script>' if has_notes and os.path.isfile(FOOTNOTES_JS) else ''
@@ -194,8 +214,11 @@ def work_page(w, nxt, template):
         'OG_IMAGE': esc(og), 'FORM': esc(w['form']), 'DATE_ISO': w['_date'].isoformat(),
         'DATE': long_date(w['_date']), 'DURATION': esc(w['duration']), 'EMBED_URL': esc(embed),
         'POSTER_IMG': poster_img, 'TRANSCRIPT': transcript, 'PAGER': pager, 'FOOTNOTES_SCRIPT': fn_script,
+        'SLUG': w['slug'], 'POSTER': esc(poster),
     }
-    page = re.sub(r'^.*<!-- template-only -->\n', '', template, flags=re.M)
+    # Keep the <!-- if public --> or the <!-- if members --> parts of the template, whichever fits this work.
+    page = IF_BLOCK.sub(lambda m: m.group(2) if m.group(1) == w['access'] else '', template)
+    page = re.sub(r'^.*<!-- template-only -->\n', '', page, flags=re.M)
     page = re.sub(r'<!--(?:(?!-->).)*?template-only\s*-->\n', '', page, flags=re.S)
     page = re.sub(r'\{\{([A-Z_]+)\}\}', lambda m: fields[m.group(1)], page)
     page = re.sub(r'^[ \t]*\n', '', page, flags=re.M)    # drop lines left empty by optional parts
@@ -207,7 +230,11 @@ def entry(w, n):
         frame = f'<span class="frame"><img src="{esc(w["poster"])}" alt="" loading="lazy" decoding="async"></span>'
     else:
         frame = f'<span class="frame">{PLAY_SVG}</span>'
-    return (f'    <li class="work"><a href="/media/{w["slug"]}/">{frame}<span class="n label">{n:02d}</span>'
+    # Members works: the same entry, with a quiet "Members" after the number.
+    mark = ('<span class="access"><span aria-hidden="true"> &middot; </span>Members'
+            '<span class="sr-only"> only</span></span>') if w['access'] == 'members' else ''
+    cls = 'work members' if mark else 'work'
+    return (f'    <li class="{cls}"><a href="/media/{w["slug"]}/">{frame}<span class="n label">{n:02d}{mark}</span>'
             f'<h2>{esc(w["title"])}</h2><p>{esc(w["description"])}</p>'
             f'<span class="cap label">{caption(w)}</span></a></li>\n')
 
@@ -257,7 +284,8 @@ def main(argv):
                 print('removed', os.path.relpath(page, ROOT))
             else:
                 print(f'note: media/{name}/ is no longer published; run with --prune to delete it')
-    print(f'{len(pub)} published, {len(works) - len(pub)} forthcoming')
+    mem = sum(1 for w in pub if w['access'] == 'members')
+    print(f'{len(pub)} published ({len(pub) - mem} public, {mem} members), {len(works) - len(pub)} forthcoming')
     return 0
 
 
