@@ -130,6 +130,7 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 | `book.html` | Scheduling page at `kylelechner.io/book`. |
 | `netlify/functions/` | Scheduling backend: availability, booking, and a readiness check. |
 | `netlify/functions/_shared/availability-rules.mjs` | Meeting hours, lengths, notice, and daily limits. |
+| `media/works.json`, `build_media.py` | The list of video works and the script that builds the Media page and each video page from it (see "Adding a video essay"). |
 | `_headers` | Security headers for every page. |
 
 ## Scheduling
@@ -166,3 +167,20 @@ Essays are written as plain text files in the `essays-src/` folder. A small scri
 7. Commit and push. Netlify builds a preview for the pull request, and the site updates when it's merged into `main`.
 
 Footnote pop-ups come from `assets/footnotes.js` and the page styles from `assets/essay.css`. Both are shared by every essay.
+
+
+## Adding a video essay
+
+Videos are stored on Bunny Stream, and the site shows them with a small player. You never edit the video pages by hand; a script makes them from one list, `media/works.json`. The thinking behind the series is in `docs/video-essays.md`.
+
+1. **Upload the video to Bunny Stream.** In the bunny.net dashboard, open Stream, choose your video library, and upload the file. Wait until it says it has finished processing.
+2. **Copy the two IDs.** Open the video in Bunny. You need the **library ID** (a number, shown in the library's settings or in the video's embed link) and the **video ID** (a long code with hyphens). In the embed link `https://iframe.mediadelivery.net/embed/123456/1f2e3d4c-...`, `123456` is the library ID and the part after it is the video ID. If you want a poster image, copy the video's thumbnail address too (it starts with `https://vz-` and ends in `/thumbnail.jpg`), or pick a still in Bunny first. Use a still with no faces.
+3. **Add an entry to `media/works.json`.** Copy the example entry already in the file and change it: `slug` (the web address, e.g. `what-cannot-be-said`), `title`, `date` (written `2026-10-12`), a one-sentence `description`, `form` (e.g. `Video essay`), `duration` (e.g. `12 min`), `bunny_library_id`, `bunny_video_id`, and optionally `poster` and `transcript`. Set `status` to `"published"`. Anything left as `"forthcoming"` stays hidden.
+4. **Add the transcript (optional).** Save the monologue as `media/transcripts/<slug>.md`: paragraphs separated by a blank line, `*italics*`, `>` at the start of a line for a quotation, and footnotes written the same way as in the essays (`[^1]` in the text, `[^1]: the note <https://link>` at the end under `## Notes`). Put its path in the entry's `transcript` field.
+5. **Build.** In a terminal in this folder, run `python3 build_media.py`. It makes `media/<slug>/index.html` and updates the list on the Media page (newest first, numbered 01, 02, …). If something in `works.json` is wrong it says what and changes nothing.
+6. **Preview.** Commit and push to a branch and open a pull request. Netlify builds a preview link where you can watch the video and check the page. (Or run `python3 -m http.server` here and open `http://localhost:8000/media/`.)
+7. **Merge.** When it looks right, merge the pull request into `main`. The site updates within a minute.
+
+To take a video down, set its `status` back to `"forthcoming"` and run `python3 build_media.py --prune`.
+
+The layout of every video page lives in `media/_template/index.html` (not linked from anywhere, and hidden from search engines), with its styles in `assets/media.css` and the player in `assets/media.js`. Transcript notes reuse the essays' `assets/essay.css` and `assets/footnotes.js`.
