@@ -1,6 +1,6 @@
 # Chapter V: Lily Does Not Answer
 
-Maargaret's daughter was named Lily. She was nineteen. She was in her second year at a university that cost more per semester than her grandmother's house had cost in full. She did not answer her mother's calls, not because she was angry. Anger would have been a form of contact. But each call required her to perform a version of herself that she could no longer locate.
+Margaret's daughter was named Lily. She was nineteen. She was in her second year at a university that cost more per semester than her grandmother's house had cost in full. She did not answer her mother's calls, not because she was angry. Anger would have been a form of contact. But each call required her to perform a version of herself that she could no longer locate.
 
 There had been a Lily who was her mother's daughter, who picked up the phone and said, "hi Mom" in the right tone with the right warmth and asked the right questions and laughed at the right moments. That Lily had lived in a house with two parents. A screen door that worked. A father who came home. When the father stopped coming home the Lily who depended on those things stopped being findable. She did not disappear. She was not destroyed. She simply could not be located, the way a frequency cannot be located when the transmitter has been removed.
 

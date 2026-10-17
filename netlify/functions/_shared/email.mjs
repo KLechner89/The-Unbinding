@@ -3,6 +3,7 @@
 
 import { settings } from './config.mjs';
 import { isValidTimeZone } from './slots.mjs';
+import { meetingTypeLabel } from './meeting-types.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -77,7 +78,7 @@ export function visitorMessage(b) {
 
 export function adminMessage(b) {
   const { rules } = settings();
-  const typeLabel = { video: 'Video', phone: 'Phone', in_person: 'In person' }[b.meetingType];
+  const typeLabel = meetingTypeLabel(b.meetingType);
   const when = formatWhen(b.start, rules.timeZone);
   const pending = b.status === 'pending';
   const subject = `${pending ? 'Action needed: in-person request' : `New ${typeLabel.toLowerCase()} meeting`} — ${b.name} — ${when}`;
