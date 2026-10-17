@@ -78,17 +78,19 @@ a.wordmark:hover{color:var(--text)}
 .work.forthcoming h2,.work.forthcoming p{color:var(--text-muted)}
 .work.forthcoming h2{margin-bottom:12px}
 .work>a:hover .cap{color:var(--text-dim)}
-/* Catalog hover, like the home page: the other entries dim and the title takes its section colour */
+/* Catalog hover, a quieter version of the home page: the other entries dim gently, the title
+   brightens a little, and only the entry number takes the section colour (muted; Fiction's number is already red) */
 .work>a,.work>div{transition:opacity 0.4s ease}
-.works:has(>.work>a:focus-visible)>.work:not(:has(>a:focus-visible))>:is(a,div){opacity:0.45}
+.work .n{transition:color 0.4s ease}
+.works:has(>.work>a:focus-visible)>.work:not(:has(>a:focus-visible))>:is(a,div){opacity:0.6}
 .work>a:focus-visible h2{color:#fff}
-[data-section="fiction"] .work>a:focus-visible h2,[data-section="fiction"] .work>a:focus-visible h2 .accent{color:var(--fiction)}
-[data-section="media"] .work>a:focus-visible h2{color:var(--media)}
+.work>a:focus-visible .n:not(.n-fiction){color:var(--text)}
+[data-section="media"] .work>a:focus-visible .n{color:rgba(58,126,196,0.8)}
 @media(hover:hover){
-  .works:has(>.work>a:hover)>.work:not(:has(>a:hover))>:is(a,div){opacity:0.45}
+  .works:has(>.work>a:hover)>.work:not(:has(>a:hover))>:is(a,div){opacity:0.6}
   .work>a:hover h2{color:#fff}
-  [data-section="fiction"] .work>a:hover h2,[data-section="fiction"] .work>a:hover h2 .accent{color:var(--fiction)}
-  [data-section="media"] .work>a:hover h2{color:var(--media)}
+  .work>a:hover .n:not(.n-fiction){color:var(--text)}
+  [data-section="media"] .work>a:hover .n{color:rgba(58,126,196,0.8)}
 }
 .frame{position:relative;aspect-ratio:16/9;border:1px solid var(--border);margin-bottom:16px;display:flex;align-items:center;justify-content:center}
 .frame svg{width:14px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:1.2}
