@@ -40,8 +40,21 @@
 <h1>The Carriage and the Platform</h1>
 <p class="subtitle">Binding Rupture and Form</p>
 <p class="label date"><time>March 2, 2026</time></p>
+<!-- Landing gate -->
+<div id="landingGate" style="margin-top:40px;display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+  <button id="connectBtn" onclick="loginWithSpotify()" style="background:#1DB954;border:none;color:#000;font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;padding:14px 32px;border-radius:2px;cursor:pointer;display:flex;align-items:center;gap:10px;-webkit-tap-highlight-color:transparent;">&#9654; CONNECT SPOTIFY TO BEGIN</button>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--text-muted);max-width:320px;">This piece is scored. Spotify Premium required for full audio experience.</p>
+  <button onclick="readWithoutAudio()" style="background:none;border:none;color:var(--text-ghost);font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px;">read without audio</button>
+</div>
+<!-- Begin reading button — shown after auth -->
+<div id="beginGate" style="margin-top:40px;display:none;flex-direction:column;align-items:flex-start;gap:16px;">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#1DB954;">&#10003; Spotify connected</p>
+  <button onclick="beginReading()" style="background:transparent;border:1px solid var(--border);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;padding:14px 32px;border-radius:2px;cursor:pointer;-webkit-tap-highlight-color:transparent;">BEGIN READING &darr;</button>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--text-muted);max-width:320px;">Music will begin with the essay.</p>
+</div>
 </header>
-<div class="prose">
+<div id="storyContent" style="display:none;">
+<div class="prose" data-music="0">
 <p>This paper begins in an odd way, as it has two beginnings. While its subject is <em>Mrs. Dalloway</em>, it must first acknowledge the concerns of the Edwardians in Virginia Woolf’s essay <em>Mr. Bennett and Mrs. Brown</em>.<sup class="fnref"><a href="#fn-1" id="fnref-1" aria-describedby="fn-1" aria-label="Note 1">1</a></sup> In her critique Woolf argues her predecessors, the Edwardians, mistook external description for ontology.<sup class="fnref"><a href="#fn-2" id="fnref-2" aria-describedby="fn-2" aria-label="Note 2">2</a></sup> They constructed a social façade with such precision that a tenant seemed sure to follow. In theory, because the Edwardian houses were rendered with extraordinary detail, it was not believed but guaranteed that the house had an inhabitant. Economic standing is catalogued. Institutional context stabilizes, yet the living consciousness the Georgians longed for disappeared behind the scaffolding that was meant to secure it. Her objection to the Edwardians was a methodological one. A structure may be accurate and still fail to disclose the life within it. The Georgians thus do not deny the house, but insist that without the interior, the house remains vacant. Their correction completes, rather than abolishes, the earlier, Edwardian project. However, completion is not exhaustion, and inward correction can risk fixing something to a crossed threshold.</p>
 <p>The second is the distinguishing of two forms of rupture. The first, which I will call cosmic, is a rupture at the level of world-disclosure rather than what can be considered agentic. A cosmic rupture can arise from encountering death, contingency, or some finitude without positioning itself from a conceptual distance. It is orientation that breaks with cosmic rupture as the world loses its taken-for-granted coherence. Perception grows saturated. Death appears everywhere. Time thickens. Memory intrudes upon the present. Meaning becomes brittle rather than fixed or guaranteed. This rupture remains contemplative. It alters how the world appears, not what one has done within it. For that reason, it remains accessible to theōria<sup class="fnref"><a href="#fn-3" id="fnref-3" aria-describedby="fn-3" aria-label="Note 3">3</a></sup> and can be rendered through interior narration without distortion.</p>
 <p>Cosmic rupture, however, does not exhaust the forms of breakage to which a person may be subject. Its disclosure presupposes a subject whose relation to harm remains observational, even when perception itself destabilizes. Thus, the second mode of rupture is that which cannot be understood as an intensification of disorientation, as it arises not from what is encountered but from what is done. Where cosmic rupture fractures one’s orientation to the world, agentic rupture fractures one’s authorship within it. The self does not merely find the world altered but discovers itself as the origin of an irreversible act whose consequences now structure reality for others. This act does not assume an inhabitant but produces one who must now reside with what has been done and what has been cannot return as either image or saturation. It persists as consequence. It binds not through how the world appears, but through what has been inscribed within it.</p>
@@ -120,6 +133,7 @@
 <p>Woolf, Virginia. <em>Mr. Bennett and Mrs. Brown</em>. Project Gutenberg eBook no. 63022. Released August 23, 2020. <a href="https://www.gutenberg.org/ebooks/63022" rel="noopener" target="_blank">https://www.gutenberg.org/ebooks/63022</a>.</p>
 <p>Woolf, Virginia. <em>Mrs. Dalloway</em>. New York: Vintage Books, 2021.</p>
 </section>
+</div>
 </article>
 <nav class="pager" aria-label="More essays">
 <span></span>
