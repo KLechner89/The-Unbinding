@@ -67,6 +67,27 @@ git push
 
 ---
 
+## Adding a new scored work
+
+A "scored work" is a story with a soundtrack that changes as the reader scrolls. The player is shared, but every work has its own song list.
+
+1. **Make a folder for it**, for example `fiction/new-story/`, and copy `fiction/unbinding/index.html` into it as a starting point. Replace the story text with your own.
+2. **Mark where each song starts.** Put `data-music="0"` on the first chapter's container, `data-music="1"` on the second, and so on. Songs are counted from 0.
+3. **Write the song list.** Copy `fiction/unbinding/score.config.js` into the new folder and change `playerName` and the `tracks` list. Each track needs:
+   - `id`: the part of the song's Spotify link after `/track/`. For `https://open.spotify.com/track/55q3Ro66yXWi9rsEddeEN4` the id is `55q3Ro66yXWi9rsEddeEN4`.
+   - `name`: what the player shows, e.g. `'Radiohead — Pyramid Song'`.
+   The first track plays at `data-music="0"`, the second at `data-music="1"`, and so on.
+4. **Point the page at its own song list.** Near the bottom of the new `index.html`, change the line
+   `<script src="/fiction/unbinding/score.config.js"></script>` to your folder, e.g. `/fiction/new-story/score.config.js`. Leave the two lines after it (`/assets/spotify-auth.js` and `/assets/score.js`) as they are.
+5. **Add it to the catalog.** Add an entry for it in `fiction/index.html` (or the essays/media page).
+6. **If the new page has chapters in `chapters/`,** `build.py` currently only fills in The Unbinding. Ask for it to be extended to the new page.
+
+Nothing has to change in Spotify. Every work uses the same Redirect URI, `https://kylelechner.io/spotify/`, which is already registered. After connecting, readers are sent back to the page they started on.
+
+Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a different address that isn't registered with Spotify, so test the soundtrack on the live site, or use "read without audio" on a preview.
+
+---
+
 ## Chapter Files
 
 | File | Chapter |
@@ -95,9 +116,16 @@ git push
 
 | Path | What it is |
 |------|------------|
-| `index.html` | The story. Prose is generated from `chapters/` by `build.py`. |
+| `index.html` | Home page: Fiction, Essays, Media. |
+| `fiction/`, `essays/`, `media/` | Catalog pages (`index.html` in each folder). |
+| `fiction/unbinding/index.html` | The story, at `kylelechner.io/fiction/unbinding/`. Prose is generated from `chapters/` by `build.py`. |
+| `assets/site.css`, `assets/menu.js` | Shared style and three-dot menu for the home and catalog pages. |
+| `spotify/index.html` | The page Spotify sends readers back to after they connect (`kylelechner.io/spotify/`). Shared by every scored work. |
+| `assets/score.js`, `assets/score.css`, `assets/spotify-auth.js` | The shared soundtrack player and Spotify sign-in. No songs live here. |
+| `fiction/unbinding/score.config.js` | The Unbinding's song list. |
+| `_redirects` | Old addresses that forward to new ones (`/unbinding` → the story). |
 | `chapters/` | One markdown file per chapter (see above). |
-| `build.py` | Copies chapter text into `index.html`. |
+| `build.py` | Copies chapter text into `fiction/unbinding/index.html`. |
 | `feedback.html` | Reader feedback form (Netlify Forms). |
 | `book.html` | Scheduling page at `kylelechner.io/book`. |
 | `netlify/functions/` | Scheduling backend: availability, booking, and a readiness check. |
