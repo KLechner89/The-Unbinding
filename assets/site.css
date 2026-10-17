@@ -45,13 +45,21 @@ a.wordmark:hover{color:var(--text)}
 .home{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:80px var(--pad)}
 .words{list-style:none;display:flex;justify-content:space-between;align-items:flex-start;width:100%;gap:12px}
 .words a{display:block;transition:opacity 0.4s ease}
-.words .word{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(32px,8.6vw,120px);line-height:1;letter-spacing:-0.01em;color:var(--text)}
+.words .word{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(32px,8.6vw,120px);line-height:1;letter-spacing:-0.01em;color:var(--text);transition:color 0.4s ease}
 .words .num{display:block;margin-top:clamp(12px,1.6vw,22px);font-family:var(--mono);font-weight:300;font-size:11px;letter-spacing:0.2em}
 .words:hover a:not(:hover),.words:focus-within a:not(:focus-visible){opacity:0.45}
 .words:not(:hover) a{opacity:1}
 .num.fiction,.n-fiction{color:var(--fiction)}
 .num.essays{color:var(--essays)}
 .num.media{color:var(--media)}
+@media(hover:hover){
+  .words a[href="/fiction/"]:hover .word{color:var(--fiction)}
+  .words a[href="/essays/"]:hover .word{color:#fff}
+  .words a[href="/media/"]:hover .word{color:var(--media)}
+}
+.words a[href="/fiction/"]:focus-visible .word{color:var(--fiction)}
+.words a[href="/essays/"]:focus-visible .word{color:#fff}
+.words a[href="/media/"]:focus-visible .word{color:var(--media)}
 
 /* ---------- Catalog pages ---------- */
 .catalog{padding:clamp(96px,18vh,220px) 0 64px}
