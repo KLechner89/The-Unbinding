@@ -8,3 +8,7 @@
 # The video page template is not a real page; keep it out of search results.
 /media/_template/*
   X-Robots-Tag: noindex, nofollow
+
+# RSS feed
+/feed.xml
+  Content-Type: application/rss+xml; charset=utf-8

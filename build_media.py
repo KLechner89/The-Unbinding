@@ -261,6 +261,8 @@ def main(argv):
                 print('removed', os.path.relpath(page, ROOT))
             else:
                 print(f'note: media/{name}/ is no longer published; run with --prune to delete it')
+    from build_feed import write_feed
+    write_feed()
     print(f'{len(pub)} published, {len(works) - len(pub)} forthcoming')
     return 0
 

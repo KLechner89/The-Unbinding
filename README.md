@@ -118,7 +118,7 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 | Path | What it is |
 |------|------------|
 | `index.html` | Home page: Fiction, Essays, Media. |
-| `about/index.html` | About page, at `kylelechner.io/about/` (linked from the three-dot menu). |
+| `about/index.html` | About page, at `kylelechner.io/about/` (linked from the three-dot menu, which also has RSS). |
 | `fiction/`, `essays/`, `media/` | Catalog pages (`index.html` in each folder). |
 | `fiction/unbinding/index.html` | The story, at `kylelechner.io/fiction/unbinding/`. Prose is generated from `chapters/` by `build.py`. |
 | `assets/site.css`, `assets/menu.js` | Shared style and three-dot menu for the home and catalog pages. |
@@ -135,7 +135,8 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 | `netlify/functions/` | Scheduling backend: availability, booking, and a readiness check. |
 | `netlify/functions/_shared/availability-rules.mjs` | Meeting hours, lengths, notice, and daily limits. |
 | `media/works.json`, `build_media.py` | The list of video works and the script that builds the Media page and each video page from it (see "Adding a video essay"). |
-| `_headers` | Security headers for every page. |
+| `feed.xml` | RSS feed of published work, at `kylelechner.io/feed.xml`. Built by `build_feed.py`. |
+| `_headers` | Security headers for every page, and the content type for the RSS feed. |
 
 ## Response link
 
@@ -183,7 +184,7 @@ Essays are written as plain text files in the `essays-src/` folder. A small scri
 4. **Notes and bibliography** go at the end, under the headings `## Notes` and `## Bibliography` (or `## Works Cited`). One note per line:
    `[^1]: Virginia Woolf, *Mrs. Dalloway* (New York: Vintage Books, 2021), P. 7. <https://link-to-the-source>`
    The link in `< >` is optional. Only add one you've opened and checked is the right book or article. It shows up as "Source ↗" in the note's pop-up and in the Notes list.
-5. **Build the pages.** In a terminal in this folder, run `python3 build_essays.py`. It rewrites every essay page and the series pages.
+5. **Build the pages.** In a terminal in this folder, run `python3 build_essays.py`. It rewrites every essay page and the series pages, and updates the RSS feed (`feed.xml`).
 6. **Add it to the Essays page.** Open `essays/index.html` and copy one of the `<li class="work">…</li>` entries. Change the link, number, title, one-sentence description and caption. Newest goes first, and the numbers count up from 01.
 7. Commit and push. Netlify builds a preview for the pull request, and the site updates when it's merged into `main`.
 
@@ -198,7 +199,7 @@ Videos are stored on Bunny Stream, and the site shows them with a small player. 
 2. **Copy the two IDs.** Open the video in Bunny. You need the **library ID** (a number, shown in the library's settings or in the video's embed link) and the **video ID** (a long code with hyphens). In the embed link `https://iframe.mediadelivery.net/embed/123456/1f2e3d4c-...`, `123456` is the library ID and the part after it is the video ID. If you want a poster image, copy the video's thumbnail address too (it starts with `https://vz-` and ends in `/thumbnail.jpg`), or pick a still in Bunny first. Use a still with no faces.
 3. **Add an entry to `media/works.json`.** Copy the example entry already in the file and change it: `slug` (the web address, e.g. `what-cannot-be-said`), `title`, `date` (written `2026-10-12`), a one-sentence `description`, `form` (e.g. `Video essay`), `duration` (e.g. `12 min`), `bunny_library_id`, `bunny_video_id`, and optionally `poster` and `transcript`. Set `status` to `"published"`. Anything left as `"forthcoming"` stays hidden.
 4. **Add the transcript (optional).** Save the monologue as `media/transcripts/<slug>.md`: paragraphs separated by a blank line, `*italics*`, `>` at the start of a line for a quotation, and footnotes written the same way as in the essays (`[^1]` in the text, `[^1]: the note <https://link>` at the end under `## Notes`). Put its path in the entry's `transcript` field.
-5. **Build.** In a terminal in this folder, run `python3 build_media.py`. It makes `media/<slug>/index.html` and updates the list on the Media page (newest first, numbered 01, 02, …). If something in `works.json` is wrong it says what and changes nothing.
+5. **Build.** In a terminal in this folder, run `python3 build_media.py`. It makes `media/<slug>/index.html`, updates the list on the Media page (newest first, numbered 01, 02, …), and updates the RSS feed. If something in `works.json` is wrong it says what and changes nothing.
 6. **Preview.** Commit and push to a branch and open a pull request. Netlify builds a preview link where you can watch the video and check the page. (Or run `python3 -m http.server` here and open `http://localhost:8000/media/`.)
 7. **Merge.** When it looks right, merge the pull request into `main`. The site updates within a minute.
 
@@ -215,3 +216,7 @@ Visits are counted with GoatCounter (kylelechner.goatcounter.com). Every page ha
 ```
 
 `build_essays.py` (the `GOATCOUNTER` line) and `media/_template/index.html` add it to essay and video pages automatically. When you add a new hand-written page, copy the line in. `_headers` allows `gc.zgo.at` and `kylelechner.goatcounter.com` in the Content-Security-Policy.
+
+## RSS
+
+Readers can subscribe to new work at `https://kylelechner.io/feed.xml`. Every page includes an autodiscovery link, and the three-dot menu has a discreet RSS item after About. The feed is built by `python3 build_feed.py` (also run at the end of `build_essays.py` and `build_media.py`) and lists every published essay, The Unbinding, and any published video, newest first. Forthcoming media is left out. Commit the generated `feed.xml` with the rest of the site.

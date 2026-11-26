@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kyle Lechner</title>
+    <link>https://kylelechner.io</link>
+    <description>This is a collection of thoughts, observations, and attempts to make sense of the world in which I find myself.</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://kylelechner.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Democracy Without Ruling</title>
+      <link>https://kylelechner.io/essays/democracy-without-ruling/</link>
+      <guid isPermaLink="true">https://kylelechner.io/essays/democracy-without-ruling/</guid>
+      <pubDate>Tue, 10 Nov 2026 00:00:00 +0000</pubDate>
+      <description>Political Agency and Its Displacement at Scale</description>
+    </item>
+    <item>
+      <title>The Unbinding</title>
+      <link>https://kylelechner.io/fiction/unbinding/</link>
+      <guid isPermaLink="true">https://kylelechner.io/fiction/unbinding/</guid>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <description>A story told in data and in the distance between people who have forgotten how to reach one another.</description>
+    </item>
+    <item>
+      <title>The Carriage and the Platform</title>
+      <link>https://kylelechner.io/essays/carriage-and-platform/</link>
+      <guid isPermaLink="true">https://kylelechner.io/essays/carriage-and-platform/</guid>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
+      <description>Binding Rupture and Form</description>
+    </item>
+    <item>
+      <title>The Möbius Censor · Paper V: A Strange, Hegelian Loop</title>
+      <link>https://kylelechner.io/essays/mobius-censor/5/</link>
+      <guid isPermaLink="true">https://kylelechner.io/essays/mobius-censor/5/</guid>
+      <pubDate>Sat, 13 Dec 2025 00:00:00 +0000</pubDate>
+      <description>Paper V of The Möbius Censor.</description>
+    </item>
+    <item>
+      <title>The Möbius Censor · Paper IV: A Madman’s Descent</title>
+      <link>https://kylelechner.io/essays/mobius-censor/4/</link>
+      <guid isPermaLink="true">https://kylelechner.io/essays/mobius-censor/4/</guid>
+      <pubDate>Wed, 05 Nov 2025 00:00:00 +0000</pubDate>
+      <description>Paper IV of The Möbius Censor.</description>
+    </item>
+    <item>
+      <title>The Möbius Censor · Paper III: Exhausted Structure</title>
+      <link>https://kylelechner.io/essays/mobius-censor/3/</link>
+      <guid isPermaLink="true">https://kylelechner.io/essays/mobius-censor/3/</guid>
+      <pubDate>Wed, 29 Oct 2025 00:00:00 +0000</pubDate>
+      <description>Paper III of The Möbius Censor.</description>
+    </item>
+    <item>
+      <title>The Möbius Censor · Paper II: Reflex Incarnate</title>
+      <link>https://kylelechner.io/essays/mobius-censor/2/</link>
+      <guid isPermaLink="true">https://kylelechner.io/essays/mobius-censor/2/</guid>
+      <pubDate>Wed, 22 Oct 2025 00:00:00 +0000</pubDate>
+      <description>Paper II of The Möbius Censor.</description>
+    </item>
+    <item>
+      <title>The Möbius Censor · Paper I: Before Thought Begins</title>
+      <link>https://kylelechner.io/essays/mobius-censor/1/</link>
+      <guid isPermaLink="true">https://kylelechner.io/essays/mobius-censor/1/</guid>
+      <pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate>
+      <description>Paper I of The Möbius Censor.</description>
+    </item>
+  </channel>
+</rss>

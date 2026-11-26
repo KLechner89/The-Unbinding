@@ -80,6 +80,7 @@ def head(title, desc, url, extra_css=True, extra_head=''):
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Kyle Lechner" href="/feed.xml">
 <meta property="og:title" content="{t}">
 <meta property="og:description" content="{d}">
 <meta property="og:url" content="{SITE}{url}">
@@ -223,6 +224,8 @@ def main():
     for url in SERIES:
         papers = sorted((e for e in essays if e.get('series_url') == url), key=lambda e: e['part'])
         if papers: write(url, series_page(url, papers))
+    from build_feed import write_feed
+    write_feed()
 
 if __name__ == '__main__':
     main()
