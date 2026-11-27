@@ -184,22 +184,26 @@ button[type="submit"]:hover{
 }
 
 .hidden{display:none}
-.site-menu{position:fixed;top:20px;right:22px;z-index:1001;transition:opacity 0.3s ease}
+.site-menu{position:fixed;top:20px;right:22px;z-index:1001;display:flex;align-items:center;gap:4px;transition:opacity 0.3s ease}
 .site-menu.behind{opacity:0;pointer-events:none}
 .menu-btn{width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:1px solid transparent;border-radius:50%;cursor:pointer;transition:border-color 0.3s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .menu-btn span{display:block;width:3px;height:3px;border-radius:50%;background:#8a8680;transition:background 0.3s}
 .menu-btn:hover,.menu-btn[aria-expanded="true"]{border-color:#252529}
 .menu-btn:hover span,.menu-btn[aria-expanded="true"] span{background:#e8e4df}
 .menu-btn:focus-visible{outline:1px solid #8a8680;outline-offset:2px}
+.rss-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:none;border:1px solid transparent;border-radius:50%;color:#8a8680;text-decoration:none;cursor:pointer;transition:border-color 0.3s,color 0.3s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.rss-btn svg{display:block;width:16px;height:16px}
+.rss-btn:hover,.rss-btn:focus-visible{border-color:#252529;color:#e8e4df}
+.rss-btn:focus-visible{outline:1px solid #8a8680;outline-offset:2px}
+.rss-note{position:absolute;top:44px;left:0;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;color:#8a8680;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.3s ease,transform 0.3s ease}
+.rss-note.show{opacity:1;transform:translateY(0)}
 .menu-panel{position:absolute;top:44px;right:0;min-width:180px;background:#111114;border:1px solid #252529;border-radius:2px;padding:8px 0;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease}
 .menu-panel.open{opacity:1;transform:translateY(0);pointer-events:all}
-.menu-item{display:block;width:100%;text-align:left;background:none;border:none;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8680;text-decoration:none;padding:12px 20px;cursor:pointer;transition:color 0.3s,background 0.3s,opacity 0.3s}
+.menu-item{display:block;width:100%;text-align:left;background:none;border:none;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#8a8680;text-decoration:none;padding:12px 20px;cursor:pointer;transition:color 0.3s,background 0.3s}
 .menu-item:hover,.menu-item:focus-visible{color:#e8e4df;background:rgba(255,255,255,0.03);outline:none}
-.menu-item.rss-copied{color:#e8e4df}
-.menu-item.rss-fade{opacity:0}
 .menu-item[aria-current="page"]{color:#c4453a}
 @media(max-width:768px){.site-menu{top:12px;right:12px}}
-@media(prefers-reduced-motion:reduce){.menu-panel,.site-menu{transition:none}} .mailer-overlay{position:fixed;top:0;right:0;width:320px;max-width:90vw;background:#111114;border-left:1px solid #252529;border-bottom:1px solid #252529;padding:48px 32px 36px;z-index:999;transform:translateY(-100%);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;pointer-events:none} .mailer-overlay.open{transform:translateY(0);opacity:1;pointer-events:all} .mailer-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#4a4744;font-family:'JetBrains Mono',monospace;font-size:0.7rem;cursor:pointer;transition:color 0.3s;padding:4px} .mailer-close:hover{color:#8a8680} .mailer-heading{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:1.3rem;color:#e8e4df;margin-bottom:6px;text-align:left} .mailer-sub{font-family:'JetBrains Mono',monospace;font-size:0.45rem;letter-spacing:0.1em;color:#4a4744;margin-bottom:24px;text-align:left;line-height:1.8} .mailer-input{width:100%;background:transparent;border:1px solid #252529;color:#e8e4df;font-family:'EB Garamond',Georgia,serif;font-size:1rem;padding:12px 14px;border-radius:2px;outline:none;transition:border-color 0.3s;-webkit-appearance:none} .mailer-input:focus{border-color:#8a8680} .mailer-input::placeholder{color:#4a4744;font-style:italic} .mailer-submit{width:100%;margin-top:12px;background:transparent;border:1px solid #252529;color:#8a8680;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;padding:12px;border-radius:2px;cursor:pointer;transition:border-color 0.3s,color 0.3s} .mailer-submit:hover{border-color:#8a8680;color:#e8e4df} .mailer-success{display:none;text-align:center;padding:20px 0} .mailer-success h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:1.5rem;color:#c4453a}
+@media(prefers-reduced-motion:reduce){.menu-panel,.site-menu,.rss-note{transition:none}.rss-note{transform:none}} .mailer-overlay{position:fixed;top:0;right:0;width:320px;max-width:90vw;background:#111114;border-left:1px solid #252529;border-bottom:1px solid #252529;padding:48px 32px 36px;z-index:999;transform:translateY(-100%);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;pointer-events:none} .mailer-overlay.open{transform:translateY(0);opacity:1;pointer-events:all} .mailer-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#4a4744;font-family:'JetBrains Mono',monospace;font-size:0.7rem;cursor:pointer;transition:color 0.3s;padding:4px} .mailer-close:hover{color:#8a8680} .mailer-heading{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:1.3rem;color:#e8e4df;margin-bottom:6px;text-align:left} .mailer-sub{font-family:'JetBrains Mono',monospace;font-size:0.45rem;letter-spacing:0.1em;color:#4a4744;margin-bottom:24px;text-align:left;line-height:1.8} .mailer-input{width:100%;background:transparent;border:1px solid #252529;color:#e8e4df;font-family:'EB Garamond',Georgia,serif;font-size:1rem;padding:12px 14px;border-radius:2px;outline:none;transition:border-color 0.3s;-webkit-appearance:none} .mailer-input:focus{border-color:#8a8680} .mailer-input::placeholder{color:#4a4744;font-style:italic} .mailer-submit{width:100%;margin-top:12px;background:transparent;border:1px solid #252529;color:#8a8680;font-family:'JetBrains Mono',monospace;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;padding:12px;border-radius:2px;cursor:pointer;transition:border-color 0.3s,color 0.3s} .mailer-submit:hover{border-color:#8a8680;color:#e8e4df} .mailer-success{display:none;text-align:center;padding:20px 0} .mailer-success h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:1.5rem;color:#c4453a}
 
 /* Home link: same place on every page except the home page itself */
 .home-link{position:absolute;top:26px;left:28px;z-index:1000;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:#8a8680;text-decoration:none;padding:6px 0;transition:color 0.3s}
@@ -213,10 +217,11 @@ button[type="submit"]:hover{
 <body>
 <a class="home-link" href="/" >Home</a>
 <nav class="site-menu" id="siteMenu" aria-label="Site menu">
+  <a class="rss-btn" id="rssBtn" href="/feed.xml" aria-label="Copy RSS feed link" title="Copy RSS feed link"><svg viewBox="1.8 6.1 16.2 16.2" aria-hidden="true" focusable="false"><circle cx="5" cy="19" r="2.2" fill="currentColor"/><path d="M5 13.15a5.85 5.85 0 0 1 5.85 5.85" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M5 8.1A10.9 10.9 0 0 1 15.9 19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a>
+  <span class="rss-note" id="rssNote" role="status" aria-live="polite"></span>
   <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="menuPanel"><span></span><span></span><span></span></button>
   <div class="menu-panel" id="menuPanel">
     <a class="menu-item" href="/about/">About</a>
-    <a class="menu-item" href="/feed.xml">RSS</a>
     <button type="button" class="menu-item" onclick="openMailer()">Stay notified</button>
     <a class="menu-item" href="/book.html">Schedule a meeting</a>
   </div>

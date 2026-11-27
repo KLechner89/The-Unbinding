@@ -118,7 +118,7 @@ Spotify sign-in only works on `kylelechner.io`. Netlify deploy previews have a d
 | Path | What it is |
 |------|------------|
 | `index.html` | Home page: Fiction, Essays, Media. |
-| `about/index.html` | About page, at `kylelechner.io/about/` (linked from the three-dot menu, which also has RSS). |
+| `about/index.html` | About page, at `kylelechner.io/about/` (linked from the three-dot menu). An RSS icon sits next to the menu on pages that have it. |
 | `fiction/`, `essays/`, `media/` | Catalog pages (`index.html` in each folder). |
 | `fiction/unbinding/index.html` | The story, at `kylelechner.io/fiction/unbinding/`. Prose is generated from `chapters/` by `build.py`. |
 | `assets/site.css`, `assets/menu.js` | Shared style and three-dot menu for the home and catalog pages. |
@@ -219,4 +219,4 @@ Visits are counted with GoatCounter (kylelechner.goatcounter.com). Every page ha
 
 ## RSS
 
-Readers can subscribe to new work at `https://kylelechner.io/feed.xml`. Every page includes an autodiscovery link, and the three-dot menu has a discreet RSS item after About. Tapping RSS copies the feed link and briefly shows "Feed link copied"; the link itself stays there so it still works without JavaScript, and for right-click → copy link. The feed is built by `python3 build_feed.py` (also run at the end of `build_essays.py` and `build_media.py`) and lists every published essay, The Unbinding, and any published video, newest first. Forthcoming media is left out. Commit the generated `feed.xml` with the rest of the site.
+Readers can subscribe to new work at `https://kylelechner.io/feed.xml`. Every page includes an autodiscovery link. On pages with the three-dot menu, a small RSS icon sits just to the left of the dots. Tapping the icon copies the feed link and briefly shows "RSS link copied" under the icon; the icon stays a link so it still works without JavaScript, and for right-click → copy link. There is no RSS item in the menu itself. The feed is built by `python3 build_feed.py` (also run at the end of `build_essays.py` and `build_media.py`) and lists every published essay, The Unbinding, and any published video, newest first. Forthcoming media is left out. Commit the generated `feed.xml` with the rest of the site.

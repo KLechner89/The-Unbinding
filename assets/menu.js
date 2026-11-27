@@ -17,12 +17,14 @@
     if(overlay.classList.contains('open')){closeMailer();btn.focus();}
   });
 
-  /* RSS in the menu: a plain click copies https://kylelechner.io/feed.xml and
-     shows "Feed link copied" for about two seconds. The href stays on the
-     link so it still works without JavaScript and for right-click → copy link.
-     If copying fails, the browser opens the feed instead. */
+  /* RSS icon next to the three-dot button: a plain click copies
+     https://kylelechner.io/feed.xml and shows "RSS link copied" just below
+     the icon for about two seconds. The href stays on the link so it still
+     works without JavaScript and for right-click → copy link. If copying
+     fails, the browser opens the feed instead. */
   var FEED_URL='https://kylelechner.io/feed.xml';
-  var rss=menu.querySelector('a.menu-item[href="/feed.xml"], a.menu-item[href="https://kylelechner.io/feed.xml"]');
+  var rss=document.getElementById('rssBtn');
+  var note=document.getElementById('rssNote');
   function reduceMotion(){return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;}
   function fallbackCopy(text){
     return new Promise(function(resolve,reject){
@@ -47,31 +49,27 @@
     }
     return fallbackCopy(FEED_URL);
   }
-  function showRssCopied(link){
-    if(link._rssTimer){clearTimeout(link._rssTimer);link._rssTimer=null;}
-    link.textContent='Feed link copied';
-    link.classList.remove('rss-fade');
-    link.classList.add('rss-copied');
-    link.setAttribute('aria-live','polite');
-    function restore(){
-      link.textContent='RSS';
-      link.classList.remove('rss-copied','rss-fade');
-      link._rssTimer=null;
+  function showRssCopied(){
+    if(!note)return;
+    if(note._rssTimer){clearTimeout(note._rssTimer);note._rssTimer=null;}
+    note.textContent='RSS link copied';
+    note.classList.add('show');
+    function hide(){
+      note.classList.remove('show');
+      if(reduceMotion()){note.textContent='';note._rssTimer=null;return;}
+      note._rssTimer=setTimeout(function(){
+        if(!note.classList.contains('show')) note.textContent='';
+        note._rssTimer=null;
+      },300);
     }
-    if(reduceMotion()){
-      link._rssTimer=setTimeout(restore,2000);
-      return;
-    }
-    link._rssTimer=setTimeout(function(){
-      link.classList.add('rss-fade');
-      link._rssTimer=setTimeout(restore,300);
-    },2000);
+    note._rssTimer=setTimeout(hide,1800);
   }
   if(rss){
     rss.addEventListener('click',function(e){
       if(e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
-      copyFeedLink().then(function(){showRssCopied(rss);rss.focus();}, function(){window.location.href=rss.href;});
+      setMenu(false);
+      copyFeedLink().then(function(){showRssCopied();rss.focus();}, function(){window.location.href=rss.href;});
     });
   }
 })();
